@@ -1,0 +1,227 @@
+{
+  "title": "提交错了怎么办：Git 撤销的 3 种方式",
+  "name": "night-doc-demo",
+  "series": "git-undo",
+  "byline": "@你的账号",
+  "ratio": "3:4",
+  "style": "night-doc",
+  "showcase": [2, 8, 9],
+  "scenes": [
+    {
+      "type": "cover",
+      "kicker": "git undo --guide",
+      "title": "提交错了怎么办\nGit 撤销的 3 种方式",
+      "sub": "小修补、安全回滚、撤回重来，按是否已推送一眼分清",
+      "tags": ["--amend", "revert", "reset --soft"],
+      "meta": "branch: main · 3 个核心命令 · 避开 --hard 误删",
+      "say": [
+        "刚敲完 git commit 就发现提交错了，先别慌。",
+        "Git 撤销提交常用的有三种方式，选错可能丢代码，今天一次讲清。"
+      ]
+    },
+    {
+      "type": "list",
+      "kicker": "git log --oneline -n 3",
+      "title": "写代码最常遇到的 3 种失误",
+      "mode": "bullet",
+      "items": [
+        {
+          "text": "提交说明写错字，或漏加了一个文件",
+          "note": "刚提交到本地，还没 push"
+        },
+        {
+          "text": "有问题的代码已经【推送到远端】",
+          "note": "队友可能已经拉取了这段提交历史",
+          "on": true
+        },
+        {
+          "text": "整次提交拆分不对，想退回重新整理",
+          "note": "需要保留代码改动，只撤回提交记录"
+        }
+      ],
+      "say": [
+        "平时最常踩的坑有三种：刚提交就发现写错说明或漏了文件，",
+        "或者有问题的代码已经【推送到远端】共享分支，",
+        "又或者想撤回这次提交，保留代码重新整理。"
+      ]
+    },
+    {
+      "type": "chapter",
+      "num": "01",
+      "title": "方式一：commit --amend",
+      "note": "修补最近一次本地提交 · 会生成新的提交哈希",
+      "say": [
+        "第一种方式，用 git commit 加上 amend 参数，专门修补最近一次提交。"
+      ]
+    },
+    {
+      "type": "steps",
+      "kicker": "amend-workflow.sh",
+      "title": "补文件或改说明，三步搞定",
+      "items": [
+        {
+          "title": "git add missed.js",
+          "text": "把漏掉的文件加入暂存区（只改提交说明可跳过）"
+        },
+        {
+          "title": "git commit --amend -m \"fix: 补校验\"",
+          "text": "替换最近一次提交，生成【新提交哈希】",
+          "on": true
+        },
+        {
+          "title": "确认尚未推送到共享分支",
+          "text": "amend 会改写历史，已 push 的提交慎用"
+        }
+      ],
+      "say": [
+        "如果漏了文件，先 git add 加进暂存区，",
+        "再执行 commit amend，它会把改动合进上一次提交，并生成【新提交哈希】。",
+        "因为改写了历史，已经推送到远端的提交一定要慎用。"
+      ]
+    },
+    {
+      "type": "chapter",
+      "num": "02",
+      "title": "方式二：git revert",
+      "note": "新建提交抵消错误 · 原有历史完整保留",
+      "say": [
+        "如果错误代码已经推送到远端了，就该用第二种方式：git revert。"
+      ]
+    },
+    {
+      "type": "timeline",
+      "kicker": "git log --graph --oneline",
+      "title": "不删历史，用新提交【反向抵消】",
+      "items": [
+        {
+          "time": "9a4c10e",
+          "text": "feat: 正常功能提交"
+        },
+        {
+          "time": "e3b82f1",
+          "text": "fix: 包含问题的提交（已推送到远端）"
+        },
+        {
+          "time": "7c1d9a4",
+          "text": "Revert \"fix: ...\" 新增反向提交抵消改动",
+          "on": true
+        }
+      ],
+      "note": "历史只增不删，适合已推送到远端共享分支的场景",
+      "say": [
+        "假设提交 e3b82f1 出了问题并且已经推送。",
+        "执行 git revert 加上它的哈希，原来的提交原样保留，",
+        "Git 另外新建一条提交来【反向抵消】改动，历史完整，队友拉取最安全。"
+      ]
+    },
+    {
+      "type": "chapter",
+      "num": "03",
+      "title": "方式三：git reset",
+      "note": "把分支指针退回上一步 · 参数决定改动去留",
+      "say": [
+        "第三种方式是 git reset，直接撤回最近一次提交，但参数千万别选错。"
+      ]
+    },
+    {
+      "type": "compare",
+      "kicker": "diff --git a/hard b/soft",
+      "title": "reset --hard 和 --soft 差在哪",
+      "left": {
+        "tag": "危险 · 慎用",
+        "label": "reset --hard HEAD~1",
+        "points": [
+          { "text": "撤回最近一次提交记录", "ok": false },
+          { "text": "暂存区和工作区改动【全部丢弃】", "ok": false },
+          { "text": "未提交的改动极难找回", "ok": false }
+        ]
+      },
+      "right": {
+        "tag": "安全 · 推荐",
+        "label": "reset --soft HEAD~1",
+        "win": true,
+        "points": [
+          { "text": "撤回最近一次提交记录", "ok": true },
+          { "text": "代码改动完整【保留在暂存区】", "ok": true },
+          { "text": "可直接修改或拆分后重新提交", "ok": true }
+        ]
+      },
+      "verdict": "日常撤回本地提交，优先用【--soft】",
+      "say": [
+        "reset hard 会连工作区和暂存区的改动【全部丢弃】，非常危险。",
+        "而 reset soft 只撤回提交，代码改动完整【保留在暂存区】，",
+        "日常撤回本地提交，优先用【soft】。"
+      ]
+    },
+    {
+      "type": "cards",
+      "kicker": "tmux · 3 panes",
+      "title": "怎么选？只看有没有推送到远端",
+      "items": [
+        {
+          "tag": "未推送 · 小修",
+          "title": "commit --amend",
+          "text": "改说明或补文件，生成新哈希替换最近一次提交"
+        },
+        {
+          "tag": "已推送 · 首选",
+          "title": "git revert <提交>",
+          "text": "新增反向提交抵消改动，保留完整历史，团队协作安全",
+          "on": true
+        },
+        {
+          "tag": "未推送 · 重来",
+          "title": "reset --soft HEAD~1",
+          "text": "撤回最近一次提交，改动留在暂存区方便重新整理"
+        }
+      ],
+      "say": [
+        "怎么选其实很简单：还没推送时，小修补用 commit amend，",
+        "想撤回重来用 reset soft；",
+        "只要已经推送到远端，优先用 git revert。"
+      ]
+    },
+    {
+      "type": "code",
+      "kicker": "cheatsheet.sh",
+      "title": "三条命令直接存下来",
+      "file": "git-undo.sh",
+      "lang": "sh",
+      "code": "# 1. 本地小修补（改说明 / 补文件）\ngit commit --amend\n\n# 2. 已推送到远端，安全回滚\ngit revert a1b2c3d\n\n# 3. 撤回本地提交，改动留暂存区\ngit reset --soft HEAD~1",
+      "hl": [2, 5, 8],
+      "say": [
+        "这三条命令可以直接存下来：本地小修补用 amend，",
+        "已推送回滚用 revert，",
+        "撤回本地提交并保留改动用 reset soft。"
+      ]
+    },
+    {
+      "type": "image",
+      "kicker": "decision-tree.svg",
+      "title": "一张图记住撤销决策",
+      "image": "assets/git-decision.svg",
+      "frame": "window",
+      "windowTitle": "git-decision.svg · 100%",
+      "points": [
+        "先确认：错误提交是否已经 push？",
+        "没推送 → amend 或 reset --soft",
+        "已推送 → 直接用【git revert】"
+      ],
+      "say": [
+        "最后记住这张决策图：先问自己提交有没有 push。",
+        "没推送就用 amend 或 reset soft，已经推送就直接用【git revert】。"
+      ]
+    },
+    {
+      "type": "ending",
+      "kicker": "git status · working tree clean",
+      "title": "少敲一次 --hard\n少加一晚班",
+      "tags": ["#Git", "#开发技巧", "#夜航文档"],
+      "cta": "收藏这份【Git 撤销速查】，下次提交错了不慌",
+      "say": [
+        "少敲一次 hard，少加一晚班。",
+        "收藏这份【Git 撤销速查】，下次提交错了直接翻出来用。"
+      ]
+    }
+  ]
+}

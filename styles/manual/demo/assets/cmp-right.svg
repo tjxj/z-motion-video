@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none">
+  <!-- Tube Surface -->
+  <rect x="26" y="108" width="268" height="44" rx="10" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+  <!-- Clean Matte Dry Zone -->
+  <rect x="106" y="114" width="108" height="30" rx="5" fill="#EFECE4" stroke="#111111" stroke-width="2" stroke-dasharray="4 4"/>
+  <!-- Patch Seated Flat & Firm -->
+  <rect x="116" y="96" width="88" height="24" rx="4" fill="#FF5B1F" stroke="#111111" stroke-width="4"/>
+  <rect x="132" y="102" width="56" height="12" rx="2" fill="#FBFBF8" stroke="#111111" stroke-width="2"/>
+
+  <!-- Firm Downward Press Arrows (Center + Outward) -->
+  <line x1="160" y1="42" x2="160" y2="84" stroke="#168A4C" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M149 74 L160 86 L171 74" stroke="#168A4C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M138 72 L114 86 M182 72 L206 86" stroke="#111111" stroke-width="3" stroke-dasharray="4 4" stroke-linecap="round"/>
+
+  <!-- Small Timer Clock on Left Showing Wait -->
+  <g transform="translate(64, 54)">
+    <circle cx="0" cy="0" r="26" fill="#FBFBF8" stroke="#111111" stroke-width="3.5"/>
+    <line x1="0" y1="-16" x2="0" y2="0" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="12" y2="8" stroke="#168A4C" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="3" fill="#111111"/>
+  </g>
+</svg>

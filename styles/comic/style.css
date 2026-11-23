@@ -1,0 +1,747 @@
+/* 漫画分镜 comic
+ * 纸白 #FFFDF5 + 漫画黑描边 #111 + 明黄 #FFD23F + 天蓝 #3FA9F5 + 番茄红 #F2545B
+ */
+#stage.st-comic {
+  --bg: #FFFDF5;
+  --fg: #111111;
+  --fg2: #3A3936;
+  --fg3: #7A766D;
+  --accent: #F2545B;
+  --accent2: #3FA9F5;
+  --yellow: #FFD23F;
+  --blue: #3FA9F5;
+  --red: #F2545B;
+  --on-accent: #FFFFFF;
+  --hl: #F2545B;
+  --line: rgba(17, 17, 17, 0.22);
+  --line-strong: #111111;
+  --card-bg: #FFFFFF;
+  --card-bd: #111111;
+  --radius: 10px;
+  --ink: #111111;
+  --bw: 4.5px;
+  --shadow: 7px 7px 0 #111111;
+  --shadow-sm: 4px 4px 0 #111111;
+  --code-bg: #1B1D24;
+  --code-fg: #FAF8F0;
+  --code-bar: #FFD23F;
+  --code-hl: rgba(255, 210, 63, 0.24);
+  --sub-fg: #111111;
+  --sub-hl: #F2545B;
+  --dim: 0.36;
+
+  --f-title: "MV Fun", "MV Sans", sans-serif;
+  --f-body: "MV Sans", sans-serif;
+  --f-num: "MV Comic", "MV Fun", "MV Sans", sans-serif;
+  --f-kicker: "MV Fun", "MV Sans", sans-serif;
+  --f-subl: "MV Fun", "MV Sans", sans-serif;
+  --f-quote: "MV Fun", "MV Sans", sans-serif;
+  --f-mono: "MV Mono", "MV Sans", monospace;
+
+  --w-title: 900;
+  --w-body: 600;
+  --w-num: 900;
+  --w-kicker: 700;
+  --w-subl: 700;
+  --w-strong: 900;
+  --lh-title: 1.18;
+  --lh-body: 1.46;
+  --track-title: 0.02em;
+  --track-kicker: 0.06em;
+
+  --dots: radial-gradient(circle, rgba(17, 17, 17, 0.14) 24%, transparent 26%) 0 0 / 10px 10px;
+  --dots-blue: radial-gradient(circle, rgba(63, 169, 245, 0.22) 25%, transparent 27%) 0 0 / 11px 11px;
+  --dots-yellow: radial-gradient(circle, rgba(235, 168, 0, 0.24) 25%, transparent 27%) 0 0 / 11px 11px;
+}
+
+#stage.st-comic.r34 {
+  --ct: 146px; --cb: 266px; --cl: 68px; --cr: 68px;
+  --fs-title: 78px; --fs-title-xl: 102px; --fs-dek: 36px; --fs-body: 42px; --fs-note: 31px;
+  --fs-num: 286px; --fs-stat: 102px; --fs-text: 72px; --fs-quote: 64px; --fs-subl: 44px;
+  --gap: 30px;
+}
+#stage.st-comic.r916 {
+  --ct: 224px; --cb: 556px; --cl: 64px; --cr: 64px;
+  --fs-title: 82px; --fs-title-xl: 108px; --fs-dek: 38px; --fs-body: 44px; --fs-note: 32px;
+  --fs-num: 296px; --fs-stat: 106px; --fs-text: 74px; --fs-quote: 66px; --fs-subl: 46px;
+  --gap: 34px;
+}
+#stage.st-comic.r169 {
+  --ct: 130px; --cb: 204px; --cl: 112px; --cr: 112px;
+  --fs-title: 80px; --fs-title-xl: 104px; --fs-dek: 36px; --fs-body: 40px; --fs-note: 30px;
+  --fs-num: 280px; --fs-stat: 106px; --fs-text: 74px; --fs-quote: 64px; --fs-subl: 44px;
+  --gap: 28px;
+}
+
+/* 封面隐藏常规页眉；结尾隐藏左下重复署名 */
+.st-comic #chrome[data-type="cover"] .cm-top { opacity: 0; }
+.st-comic #chrome[data-type="ending"] .cm-by { opacity: 0; }
+.st-comic .tpl-cover { --ct: 62px; }
+.st-comic.r916 .tpl-cover { --ct: 120px; }
+.st-comic.r169 .tpl-cover { --ct: 64px; }
+
+/* ───────────── 页眉与页脚（漫画单行本装帧） ───────────── */
+.st-comic .cm-top {
+  position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 96px);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.st-comic .cm-top-l { display: flex; align-items: center; gap: 0; min-width: 0; }
+.st-comic .cm-ep {
+  flex: none; padding: 8px 16px; background: #111; color: #FFD23F;
+  font: 900 26px/1 "MV Comic", "MV Sans", sans-serif; letter-spacing: 0.08em;
+  border: 3.5px solid #111; box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.25);
+}
+.st-comic .cm-ser {
+  padding: 8px 18px; background: #FFFFFF; color: #111;
+  font: 700 23px/1 "MV Fun", "MV Sans", sans-serif; letter-spacing: 0.04em;
+  border: 3.5px solid #111; border-left: none; box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.25);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 520px;
+}
+.st-comic .cm-pg {
+  flex: none; padding: 8px 18px; background: #FFD23F; color: #111;
+  font: 900 24px/1 "MV Comic", "MV Sans", sans-serif; letter-spacing: 0.08em;
+  border: 3.5px solid #111; box-shadow: 4px 4px 0 #111; transform: rotate(2deg);
+}
+.st-comic .cm-foot {
+  position: absolute; left: var(--cl); right: var(--cr); bottom: 68px;
+  display: flex; justify-content: space-between; align-items: center;
+  font: 700 22px/1 "MV Fun", "MV Sans", sans-serif; color: #111; letter-spacing: 0.04em;
+}
+.st-comic.r169 .cm-foot { bottom: 42px; }
+.st-comic .cm-by {
+  background: #FFF; padding: 5px 14px; border: 3px solid #111; box-shadow: 3px 3px 0 #111;
+}
+.st-comic .cm-sec {
+  background: #FFD23F; padding: 5px 14px; border: 3px solid #111; box-shadow: 3px 3px 0 #111;
+}
+.st-comic .cm-sec:empty { display: none; }
+
+/* 底部漫画分格进度条 */
+.st-comic .cm-prog {
+  position: absolute; left: var(--cl); right: var(--cr); bottom: 32px; height: 18px;
+  background: #FFFFFF; border: 3.5px solid #111; box-shadow: 3px 3px 0 #111; overflow: hidden;
+}
+.st-comic.r169 .cm-prog { bottom: 16px; height: 14px; }
+.st-comic .cm-prog-fill {
+  position: absolute; inset: 0; transform-origin: 0 50%; scale: 0 1;
+  background: linear-gradient(90deg, #3FA9F5 0%, #FFD23F 52%, #F2545B 100%);
+}
+.st-comic .cm-prog-ticks { position: absolute; inset: 0; pointer-events: none; }
+.st-comic .cm-prog-ticks span {
+  position: absolute; top: 0; bottom: 0; width: 3px; background: #111;
+}
+
+/* ───────────── 通用漫画组件：分镜格、速度线、拟声字、气泡、旁白 ───────────── */
+.st-comic .cm-panel {
+  position: relative; background: #FFFFFF; border: var(--bw) solid var(--ink);
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.st-comic .cm-speed {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+}
+.st-comic .cm-halftone-corner {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: var(--dots-blue);
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.75) 0%, transparent 45%, transparent 65%, rgba(0, 0, 0, 0.7) 100%);
+  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.75) 0%, transparent 45%, transparent 65%, rgba(0, 0, 0, 0.7) 100%);
+}
+.st-comic .cm-sfx { position: relative; z-index: 4; display: inline-grid; place-items: center; pointer-events: none; }
+.st-comic .cm-sfx-in { position: relative; display: grid; place-items: center; width: 100%; height: 100%; }
+.st-comic .cm-sfx-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.st-comic .cm-sfx-tx {
+  position: absolute; font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 900;
+  line-height: 1; white-space: nowrap; letter-spacing: 0.04em;
+  -webkit-text-stroke: 3.5px #111; paint-order: stroke fill;
+  text-shadow: 3px 3px 0 #111;
+}
+.st-comic .cm-sfx-tx.latin { font-family: "MV Comic", "MV Sans", sans-serif; letter-spacing: 0.08em; }
+
+/* 对话气泡 */
+.st-comic .cm-bubble {
+  position: relative; z-index: 3; background: #FFFFFF; color: #111;
+  border: var(--bw) solid #111; border-radius: calc(28px * var(--s));
+  box-shadow: var(--shadow); padding: calc(26px * var(--s)) calc(34px * var(--s));
+}
+.st-comic .cm-tail { position: absolute; pointer-events: none; z-index: 2; }
+.st-comic .cm-tail.t-r { right: -34px; top: 50%; width: 38px; height: 46px; translate: 0 -50%; }
+.st-comic .cm-tail.t-l { left: -34px; top: 50%; width: 38px; height: 46px; translate: 0 -50%; }
+.st-comic .cm-tail.t-d { left: 50%; bottom: -35px; width: 54px; height: 38px; translate: -50% 0; }
+.st-comic .cm-tail.t-dr { right: 56px; bottom: -35px; width: 54px; height: 39px; }
+.st-comic .cm-tail.t-dl { left: 56px; bottom: -35px; width: 54px; height: 39px; }
+
+.st-comic .cm-char { position: relative; z-index: 3; flex: none; }
+.st-comic .cm-char-in { width: 100%; height: 100%; }
+.st-comic .cm-char-svg { width: 100%; height: 100%; display: block; }
+
+/* ───────────── 标题区：黄色旁白框 + 漫画粗描边标题 ───────────── */
+.st-comic .head { position: relative; padding-right: 6px; }
+.st-comic .head.has-sfx { padding-right: calc(168px * var(--s)); }
+.st-comic .kicker { margin-bottom: calc(14px * var(--s)); }
+.st-comic .kicker .kt {
+  display: inline-block; background: #FFD23F; color: #111;
+  padding: 0.2em 0.72em 0.22em; border: 3.5px solid #111; box-shadow: 4px 4px 0 #111;
+  transform: rotate(-1.2deg);
+}
+.st-comic .title {
+  color: #111; text-shadow: 3px 3px 0 #FFD23F;
+}
+.st-comic .dek {
+  margin-top: calc(16px * var(--s)); color: #222; font-weight: 700;
+}
+.st-comic .note {
+  margin-top: calc(18px * var(--s)); padding: calc(12px * var(--s)) calc(20px * var(--s));
+  background: #FFD23F; color: #111; border: 3.5px solid #111; box-shadow: 4px 4px 0 #111;
+  font-weight: 700; align-self: flex-start;
+}
+.st-comic .cm-head-sfx {
+  position: absolute; right: 2px; top: calc(-16px * var(--s));
+  width: calc(156px * var(--s)); height: calc(106px * var(--s));
+}
+.st-comic .cm-head-sfx .cm-sfx { width: 100%; height: 100%; }
+
+/* 【】重点强调：番茄红字 + 黄色漫画高光底带 */
+.st-comic .hl {
+  color: color-mix(in srgb, var(--hl) calc(var(--p, 1) * 100%), currentColor);
+  background: linear-gradient(transparent 54%, rgba(255, 210, 63, 0.92) 54%, rgba(255, 210, 63, 0.92) 96%, transparent 96%) 0 0 / calc(var(--p, 1) * 100%) 100% no-repeat;
+  padding: 0 0.08em; border-radius: 4px;
+}
+.st-comic :is(.subl, .formula, .cta) .hl { background: none; padding: 0; }
+.st-comic .cta .hl { color: color-mix(in srgb, #FFD23F calc(var(--p, 1) * 100%), #FFFFFF); }
+.st-comic .formula .hl { color: color-mix(in srgb, #F2545B calc(var(--p, 1) * 100%), currentColor); }
+
+/* ───────────── 1) 漫画单行本封面 ───────────── */
+.st-comic .cm-cover {
+  gap: calc(20px * var(--s)); justify-content: stretch; padding: 4px 8px 8px 4px;
+}
+.st-comic .cm-cov-head { display: flex; flex-direction: column; gap: calc(18px * var(--s)); flex: none; }
+.st-comic .cm-cov-mast {
+  display: flex; align-items: center; gap: calc(16px * var(--s));
+  background: #FFFFFF; border: var(--bw) solid #111; box-shadow: var(--shadow);
+  padding: calc(10px * var(--s)) calc(18px * var(--s));
+}
+.st-comic .cm-cov-vol {
+  flex: none; background: #111; color: #FFD23F; padding: calc(8px * var(--s)) calc(16px * var(--s));
+  font: 900 calc(32px * var(--s)) / 1 "MV Comic", "MV Sans", sans-serif; letter-spacing: 0.08em;
+}
+.st-comic .cm-cov-series {
+  flex: 1; min-width: 0; font: 700 calc(30px * var(--s)) / 1.15 "MV Fun", "MV Sans", sans-serif;
+  color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.st-comic .cm-cov-code { flex: none; display: block; height: calc(44px * var(--s)); }
+.st-comic .cm-barcode { height: 100%; width: auto; display: block; }
+
+.st-comic .cm-cov-tbox {
+  background: #FFD23F; border: var(--bw) solid #111; box-shadow: 9px 9px 0 #111;
+  padding: calc(24px * var(--s)) calc(30px * var(--s)); transform: rotate(-1.1deg);
+  background-image: var(--dots-yellow);
+}
+.st-comic .cm-cov-tbox .title {
+  color: #111; text-shadow: 4px 4px 0 #FFFFFF, 7px 7px 0 #F2545B;
+}
+
+.st-comic .cm-cov-splash {
+  flex: 1 1 auto; min-height: 0; background: #3FA9F5;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center; gap: calc(14px * var(--s)); padding: calc(24px * var(--s)) calc(26px * var(--s));
+}
+.st-comic .cm-cov-hero {
+  position: relative; z-index: 2; grid-column: 2; grid-row: 1;
+  display: grid; place-items: center; height: 100%; max-height: calc(430px * var(--s));
+}
+.st-comic .cm-hero-mascot { width: min(100%, calc(370px * var(--s))); aspect-ratio: 1; }
+.st-comic .cm-cov-imgwrap {
+  position: relative; z-index: 2; grid-column: 1 / -1; width: 100%; height: 100%; display: flex;
+}
+.st-comic .cm-cov-bub {
+  grid-column: 1; grid-row: 1; align-self: center;
+  padding: calc(28px * var(--s)) calc(28px * var(--s));
+}
+.st-comic .cm-bub-tx {
+  font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 700;
+  font-size: calc(40px * var(--s)); line-height: 1.38; color: #111; text-wrap: balance;
+}
+.st-comic .cm-cov-sfx {
+  position: absolute; right: calc(16px * var(--s)); top: calc(10px * var(--s));
+  width: calc(176px * var(--s)); height: calc(122px * var(--s)); z-index: 5;
+}
+.st-comic .cm-cov-sfx .cm-sfx { width: 100%; height: 100%; }
+
+.st-comic .cm-cov-foot { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: calc(12px * var(--s)); }
+.st-comic .cm-cov-foot .chips { margin-top: 0; }
+.st-comic .cm-cov-foot .meta { margin-top: 0; }
+
+/* 9:16 竖屏封面：上下堆叠，超大主视觉与对话气泡（不与 GO! 重叠） */
+.st-comic.r916 .cm-cov-splash {
+  grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr;
+  padding: calc(28px * var(--s)) calc(28px * var(--s)); align-content: center; gap: calc(26px * var(--s));
+}
+.st-comic.r916 .cm-cov-bub { grid-column: 1; grid-row: 1; margin-right: 0; text-align: center; }
+.st-comic.r916 .cm-cov-hero { grid-column: 1; grid-row: 2; max-height: calc(440px * var(--s)); }
+.st-comic.r916 .cm-hero-mascot { width: min(100%, calc(400px * var(--s))); }
+.st-comic.r916 .cm-cov-sfx { top: auto; bottom: calc(24px * var(--s)); right: calc(18px * var(--s)); }
+
+/* 16:9 横屏封面：左右双分镜跨页 */
+.st-comic.r169 .cm-cover {
+  display: grid; grid-template-columns: minmax(0, 1.24fr) minmax(0, 0.96fr);
+  gap: calc(30px * var(--s)); align-items: stretch;
+}
+.st-comic.r169 .cm-cov-head { justify-content: center; gap: calc(22px * var(--s)); }
+.st-comic.r169 .cm-cov-splash {
+  grid-template-columns: minmax(0, 1fr); place-items: center;
+}
+.st-comic.r169 .cm-cov-hero { grid-column: 1; max-height: calc(520px * var(--s)); }
+.st-comic.r169 .cm-hero-mascot { width: min(100%, calc(460px * var(--s))); }
+.st-comic.r169 .cm-cov-bub { width: 100%; align-self: stretch; }
+.st-comic.r169 .cm-bub-tx { font-size: calc(38px * var(--s)); }
+
+/* ───────────── 2) 漫画回目扉页 (chapter) ───────────── */
+.st-comic .cm-chapter { justify-content: stretch; padding: 4px 8px 8px 4px; }
+.st-comic .cm-chap-panel {
+  flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(36px * var(--s)) calc(40px * var(--s));
+  background: rgba(255, 255, 255, 0.16);
+}
+.st-comic .cm-chap-top { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; }
+.st-comic .cm-chap-badge {
+  display: inline-flex; flex-direction: column; align-items: flex-start;
+  background: #111; color: #FFD23F; padding: calc(14px * var(--s)) calc(26px * var(--s));
+  border: var(--bw) solid #111; box-shadow: 7px 7px 0 #FFFFFF; transform: rotate(-3deg);
+}
+.st-comic .cm-chap-ep { font: 900 calc(26px * var(--s)) / 1 "MV Comic", sans-serif; letter-spacing: 0.14em; color: #FFFFFF; }
+.st-comic .cm-chap-badge .chap-num {
+  margin: 0; font-size: calc(116px * var(--s)); color: #FFD23F; line-height: 0.95;
+  text-shadow: 4px 4px 0 #F2545B;
+}
+.st-comic .cm-chap-sfx { width: calc(188px * var(--s)); height: calc(130px * var(--s)); }
+.st-comic .cm-chap-sfx .cm-sfx { width: 100%; height: 100%; }
+
+.st-comic .cm-chap-mid { position: relative; z-index: 2; margin: calc(14px * var(--s)) 0; }
+.st-comic .cm-chap-tbox {
+  background: #FFFFFF; border: var(--bw) solid #111; box-shadow: 10px 10px 0 #111;
+  padding: calc(30px * var(--s)) calc(34px * var(--s)); transform: rotate(-0.8deg);
+}
+.st-comic .cm-chap-tbox .title { text-shadow: 3px 3px 0 #FFD23F; }
+
+.st-comic .cm-chap-bot {
+  position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: calc(20px * var(--s));
+}
+.st-comic .cm-caption {
+  background: #FFD23F; color: #111; border: var(--bw) solid #111; box-shadow: var(--shadow-sm);
+  padding: calc(16px * var(--s)) calc(24px * var(--s)); text-wrap: balance;
+  font: 700 calc(36px * var(--s)) / 1.35 "MV Fun", "MV Sans", sans-serif; max-width: 72%;
+}
+.st-comic .cm-chap-char { width: calc(200px * var(--s)); height: calc(200px * var(--s)); flex: none; margin-left: auto; }
+.st-comic.r169 .cm-chap-char { width: calc(220px * var(--s)); height: calc(220px * var(--s)); }
+
+/* ───────────── 3) 一句话特写 (statement) ───────────── */
+.st-comic .cm-statement { gap: calc(22px * var(--s)); padding: 4px 8px 8px 4px; }
+.st-comic .cm-stmt-panel {
+  flex: 1 1 auto; min-height: 0; background: #FFFDF5;
+  display: flex; flex-direction: column; justify-content: center; align-items: stretch;
+  gap: calc(28px * var(--s)); padding: calc(44px * var(--s)) calc(42px * var(--s));
+}
+.st-comic .cm-stmt-sfx {
+  position: absolute; left: calc(22px * var(--s)); top: calc(14px * var(--s));
+  width: calc(170px * var(--s)); height: calc(116px * var(--s));
+}
+.st-comic .cm-stmt-sfx .cm-sfx { width: 100%; height: 100%; }
+.st-comic .cm-stmt-bub {
+  margin-top: calc(36px * var(--s)); padding: calc(40px * var(--s)) calc(42px * var(--s));
+}
+.st-comic .cm-stmt-bub .say { margin-top: 0; }
+.st-comic .cm-stmt-bub .sl { font-size: calc(var(--fs-text) * var(--s)); line-height: 1.34; color: #111; }
+.st-comic .cm-stmt-char {
+  align-self: flex-end; width: calc(230px * var(--s)); height: calc(230px * var(--s)); margin-top: calc(-6px * var(--s));
+}
+.st-comic.r169 .cm-stmt-panel {
+  flex-direction: row-reverse; align-items: center; gap: calc(44px * var(--s));
+  padding: calc(38px * var(--s)) calc(48px * var(--s));
+}
+.st-comic.r169 .cm-stmt-bub { flex: 1; margin-top: 0; }
+.st-comic.r169 .cm-stmt-char { align-self: center; width: calc(280px * var(--s)); height: calc(280px * var(--s)); }
+
+/* ───────────── 4) 大数字速度线分镜 (bignum) ───────────── */
+.st-comic .cm-bignum { gap: calc(22px * var(--s)); padding: 4px 8px 8px 4px; }
+.st-comic .cm-bn-panel {
+  flex: 1 1 auto; min-height: 0; background: #FFD23F;
+  display: flex; align-items: center; justify-content: center;
+  padding: calc(36px * var(--s)) calc(40px * var(--s));
+}
+.st-comic .cm-bn-sfx {
+  position: absolute; right: calc(20px * var(--s)); top: calc(14px * var(--s));
+  width: calc(176px * var(--s)); height: calc(122px * var(--s));
+}
+.st-comic .cm-bn-sfx .cm-sfx { width: 100%; height: 100%; }
+.st-comic .cm-bn-panel .bn { position: relative; z-index: 2; width: 100%; align-items: center; }
+.st-comic .cm-bn-panel .bn-row {
+  justify-content: center; color: #FFFFFF; padding: 0 calc(16px * var(--s));
+  -webkit-text-stroke: calc(9px * var(--s)) #111; paint-order: stroke fill;
+  text-shadow: calc(10px * var(--s)) calc(10px * var(--s)) 0 #F2545B, calc(15px * var(--s)) calc(15px * var(--s)) 0 #111;
+}
+.st-comic .cm-bn-panel .bn-u {
+  color: #111; -webkit-text-stroke: 0; text-shadow: none;
+  background: #FFFFFF; border: 3.5px solid #111; box-shadow: 4px 4px 0 #111;
+  padding: 0.08em 0.28em; margin-left: 0.22em; font-family: "MV Fun", "MV Sans", sans-serif;
+  transform: rotate(-3deg);
+}
+.st-comic .cm-bn-talk {
+  flex: none; display: flex; align-items: center; gap: calc(26px * var(--s));
+}
+.st-comic .cm-bn-char { width: calc(168px * var(--s)); height: calc(168px * var(--s)); flex: none; }
+.st-comic .cm-bn-bub { flex: 1; padding: calc(22px * var(--s)) calc(30px * var(--s)); }
+.st-comic .cm-bn-bub .bn-l { margin-top: 0; font-size: calc(44px * var(--s)); line-height: 1.35; color: #111; }
+
+/* ───────────── Chips 漫画贴纸 ───────────── */
+.st-comic .chip {
+  background: #FFFFFF; color: #111; border: 3.5px solid #111; border-radius: 8px;
+  box-shadow: 4px 4px 0 #111; font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 700;
+  padding: 0.3em 0.8em; transform: rotate(-1.6deg);
+}
+.st-comic .chip:nth-child(3n+2) { background: #FFD23F; transform: rotate(1.4deg); }
+.st-comic .chip:nth-child(3n) { background: #D9F0FF; transform: rotate(-1deg); }
+.st-comic .chip.hot { background: #F2545B; color: #FFFFFF; border-color: #111; }
+
+/* ───────────── 5) 数据卡分镜墙 (stats) ───────────── */
+.st-comic .stats { padding: 6px 10px 10px 6px; gap: calc(22px * var(--si)); }
+.st-comic .stats.cm-tri { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.st-comic .stats.cm-tri .stat:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: calc(28px * var(--si)); }
+.st-comic .stats.cm-tri .stat:first-child .stat-l { margin-top: 0; }
+
+.st-comic .stat {
+  position: relative; background: #FFFFFF; border: var(--bw) solid #111; border-radius: 6px;
+  box-shadow: var(--shadow); padding: calc(26px * var(--si)) calc(28px * var(--si));
+  background-image: var(--dots);
+}
+.st-comic .stat:nth-child(3n+2) { background-color: #FFF9DC; background-image: var(--dots-yellow); }
+.st-comic .stat:nth-child(3n) { background-color: #EAF6FF; background-image: var(--dots-blue); }
+.st-comic .stat.on { background-color: #FFD23F; box-shadow: 8px 8px 0 #F2545B; }
+.st-comic .stat-v { color: #111; text-shadow: 3px 3px 0 #FFD23F; }
+.st-comic .stat.on .stat-v { color: #F2545B; text-shadow: 3px 3px 0 #111; }
+.st-comic .stat-u { color: #111; font-family: "MV Fun", "MV Sans", sans-serif; }
+.st-comic .stat-l { color: #111; }
+.st-comic .stat-n { color: #3A3936; font-weight: 600; }
+
+/* ───────────── 6) 列表：条漫分镜条 (list) ───────────── */
+.st-comic .list { padding: 4px 8px 8px 4px; row-gap: calc(18px * var(--si)); column-gap: calc(28px * var(--si)); }
+.st-comic .item {
+  background: #FFFFFF; border: var(--bw) solid #111; box-shadow: var(--shadow-sm);
+  padding: calc(18px * var(--si)) calc(24px * var(--si)); align-items: center;
+  background-image: linear-gradient(90deg, transparent 84%, rgba(63, 169, 245, 0.14) 84%);
+}
+.st-comic .item.is-cur { background-color: #FFF8D6; box-shadow: 6px 6px 0 #F2545B; }
+.st-comic .item.on { background-color: #FFD23F; }
+.st-comic .item .mk { min-width: 0; display: grid; place-items: center; }
+.st-comic .cm-mk-n {
+  display: inline-grid; place-items: center; min-width: 1.65em; height: 1.55em; padding: 0 0.28em;
+  background: #111; color: #FFD23F; border: 3px solid #111; box-shadow: 3px 3px 0 #F2545B;
+  font: 900 0.72em/1 "MV Comic", sans-serif; letter-spacing: 0.04em;
+}
+.st-comic .cm-mk-star {
+  display: inline-grid; place-items: center; width: 1.35em; height: 1.35em;
+  background: #FFD23F; color: #111; border: 3px solid #111; border-radius: 50%;
+  font-size: 0.72em; line-height: 1;
+}
+.st-comic .cm-mk-ok {
+  display: inline-grid; place-items: center; width: 1.35em; height: 1.35em;
+  background: #3FA9F5; color: #FFF; border: 3px solid #111; border-radius: 6px;
+  font-size: 0.74em; font-weight: 900; line-height: 1;
+}
+.st-comic .cm-mk-no {
+  display: inline-grid; place-items: center; width: 1.35em; height: 1.35em;
+  background: #F2545B; color: #FFF; border: 3px solid #111; border-radius: 6px;
+  font-size: 0.74em; font-weight: 900; line-height: 1;
+}
+.st-comic .item .tx { font-weight: 700; color: #111; }
+.st-comic .item .nt { color: #4A4740; font-weight: 600; }
+
+/* ───────────── 7) 步骤：连环画分镜格 (steps) ───────────── */
+.st-comic .steps { padding: 6px 10px 10px 6px; }
+.st-comic .steps.col { gap: calc(32px * var(--si)); }
+.st-comic .steps.row { gap: calc(26px * var(--si)); align-items: stretch; }
+.st-comic .step {
+  background: #FFFFFF; border: var(--bw) solid #111; box-shadow: var(--shadow);
+  padding: calc(22px * var(--si)) calc(26px * var(--si));
+  background-image: var(--dots-blue);
+}
+.st-comic .step:nth-of-type(3n+2) { background-image: var(--dots-yellow); }
+.st-comic .step.is-cur { background-color: #FFF8D6; box-shadow: 8px 8px 0 #F2545B; }
+.st-comic .step .badge {
+  border-radius: 8px; background: #FFD23F; color: #111;
+  border: 4px solid #111; box-shadow: 4px 4px 0 #111;
+  width: calc(84px * var(--si)); height: calc(84px * var(--si));
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  font-size: calc(36px * var(--si)); transform: rotate(-4deg);
+}
+.st-comic .cm-step-lbl {
+  font: 900 calc(15px * var(--si)) / 1 "MV Comic", sans-serif; letter-spacing: 0.12em; opacity: 0.85;
+}
+.st-comic .step:nth-of-type(3n+2) .badge { background: #3FA9F5; color: #FFF; transform: rotate(3deg); }
+.st-comic .step:nth-of-type(3n) .badge { background: #F2545B; color: #FFF; transform: rotate(-3deg); }
+.st-comic .steps.col .step .badge { width: calc(86px * var(--si)); height: calc(86px * var(--si)); font-size: calc(38px * var(--si)); }
+.st-comic .steps.row .step { justify-content: flex-start; padding: calc(26px * var(--si)) calc(22px * var(--si)); }
+.st-comic .links path { stroke: #111; stroke-width: 5.5; stroke-linecap: round; }
+
+/* ───────────── 8) 卡片：漫画档案分镜格 (cards) ───────────── */
+.st-comic .cards { padding: 8px 10px 10px 6px; gap: calc(22px * var(--si)); }
+.st-comic .card {
+  position: relative; background: #FFFFFF; border: var(--bw) solid #111; border-radius: 6px;
+  box-shadow: var(--shadow); padding: calc(26px * var(--si)) calc(26px * var(--si));
+  background-image: var(--dots);
+}
+.st-comic .card:nth-child(3n+2) { background-color: #F4FAFF; background-image: var(--dots-blue); }
+.st-comic .card.on { background-color: #FFD23F; background-image: var(--dots-yellow); box-shadow: 8px 8px 0 #F2545B; }
+.st-comic .card-k {
+  display: inline-block; background: #111; color: #FFD23F;
+  padding: 0.2em 0.55em; border: 3px solid #111; box-shadow: 3px 3px 0 #3FA9F5;
+  font-family: "MV Comic", "MV Fun", "MV Sans", sans-serif;
+  font-size: calc(var(--fs-body) * var(--si) * 0.78); transform: rotate(-2.5deg);
+}
+.st-comic .card.on .card-k { background: #F2545B; color: #FFF; box-shadow: 3px 3px 0 #111; }
+.st-comic .card-t { color: #111; }
+.st-comic .card-x { color: #36342F; font-weight: 600; }
+
+/* ───────────── 9) 左右对比：红蓝漫画对决 (compare) ───────────── */
+.st-comic .cmp { padding: 10px 10px 10px 6px; column-gap: calc(18px * var(--si)); }
+.st-comic .side {
+  border: var(--bw) solid #111; border-radius: 6px; box-shadow: var(--shadow);
+  padding: calc(28px * var(--si)) calc(24px * var(--si)); background-color: #EAF6FF; background-image: var(--dots-blue);
+}
+.st-comic .side.right { background-color: #FFF4D6; background-image: var(--dots-yellow); }
+.st-comic .side.win {
+  background-color: color-mix(in srgb, #FFD23F calc(var(--p, 1) * 55%), #FFF4D6);
+  box-shadow: 9px 9px 0 color-mix(in srgb, #F2545B calc(var(--p, 1) * 100%), #111);
+}
+.st-comic .side-k {
+  display: inline-block; align-self: flex-start; background: #111; color: #FFF;
+  padding: 0.2em 0.6em; font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 700;
+}
+.st-comic .side.right .side-k { background: #F2545B; }
+.st-comic .side-l { color: #111; }
+.st-comic .side-v {
+  color: #111; font-family: "MV Comic", "MV Fun", "MV Sans", sans-serif;
+  text-shadow: 3px 3px 0 #FFFFFF;
+}
+.st-comic .side.win .side-v {
+  color: color-mix(in srgb, #F2545B calc(var(--p, 1) * 100%), #111);
+  text-shadow: 2.5px 2.5px 0 #FFFFFF;
+}
+.st-comic .side-p li { font-weight: 700; color: #111; }
+.st-comic .side-p .mk { color: #3FA9F5; }
+.st-comic .side-p li.no .mk { color: #F2545B; }
+.st-comic .cm-win-tag {
+  position: absolute; right: 12px; top: 10px;
+  background: #F2545B; color: #FFD23F; border: 3px solid #111; box-shadow: 3px 3px 0 #111;
+  padding: 4px 12px; font: 900 calc(26px * var(--si)) / 1 "MV Comic", sans-serif;
+  letter-spacing: 0.08em; transform: rotate(8deg);
+  opacity: var(--p, 1);
+}
+.st-comic .vs {
+  position: relative; z-index: 5; width: calc(114px * var(--si)); height: calc(88px * var(--si));
+  margin: 0 calc(-8px * var(--si)); display: grid; place-items: center;
+}
+.st-comic.r169 .vs { width: calc(130px * var(--si)); height: calc(98px * var(--si)); margin: 0 calc(-16px * var(--si)); }
+.st-comic .cm-vs-sfx { width: 100%; height: 100%; }
+.st-comic .cm-vs-sfx .cm-sfx-tx { font-size: calc(40px * var(--si)) !important; }
+.st-comic .verdict {
+  background: #111; color: #FFFFFF; border: var(--bw) solid #111; box-shadow: 6px 6px 0 #FFD23F;
+  padding: calc(16px * var(--s)) calc(28px * var(--s)); margin-top: calc(24px * var(--s));
+}
+.st-comic .verdict .hl { background: none; color: color-mix(in srgb, #FFD23F calc(var(--p, 1) * 100%), #FFFFFF); }
+
+/* 16:9 对比页紧凑纵向间距，保证 scale ≥ 92% 无警告 */
+.st-comic.r169 .tpl-compare .body { margin-top: calc(18px * var(--s)); }
+.st-comic.r169 .tpl-compare .cmp { padding: 6px 10px; --lk: 1.04; }
+.st-comic.r169 .tpl-compare .side { padding: calc(18px * var(--si)) calc(24px * var(--si)); }
+.st-comic.r169 .tpl-compare .side-v { margin-top: calc(10px * var(--si)); font-size: calc(82px * var(--si) * var(--fk)); }
+.st-comic.r169 .tpl-compare .side-p { margin-top: calc(14px * var(--si)); gap: calc(8px * var(--si)); }
+.st-comic.r169 .tpl-compare .verdict { margin-top: calc(18px * var(--s)); padding: calc(12px * var(--s)) calc(24px * var(--s)); }
+
+/* ───────────── 10) 条形图：漫画能量槽 (bars) ───────────── */
+.st-comic .bars {
+  padding: calc(30px * var(--si)) calc(32px * var(--si)); gap: calc(24px * var(--si));
+  background: #FFFFFF;
+}
+.st-comic .bar-row { position: relative; z-index: 2; }
+.st-comic .bar-l { color: #111; }
+.st-comic .bar-track {
+  height: calc(54px * var(--si)); background: #F4EFE0;
+  border: 3.5px solid #111; border-radius: 6px; padding: 4px;
+  box-shadow: inset 3px 3px 0 rgba(17, 17, 17, 0.12);
+}
+.st-comic .bar-fill {
+  height: 100%; min-width: 18px; border-radius: 3px; border-right: 3.5px solid #111;
+  background-color: #3FA9F5;
+  background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.28) 0 8px, transparent 8px 16px);
+}
+.st-comic .bar-row:nth-of-type(3n+2) .bar-fill { background-color: #FFD23F; }
+.st-comic .bar-row.on .bar-fill {
+  background-color: #F2545B;
+  background-image: repeating-linear-gradient(-45deg, rgba(255, 210, 63, 0.36) 0 8px, transparent 8px 16px);
+}
+.st-comic .bar-v {
+  color: #111; margin-left: calc(14px * var(--si));
+  font-family: "MV Comic", "MV Fun", "MV Sans", sans-serif;
+}
+.st-comic .bar-row.on .bar-v { color: #F2545B; }
+
+/* ───────────── 11) 时间线：漫画旅程轨迹 (timeline) ───────────── */
+.st-comic .tl { padding: 6px 10px 10px 6px; gap: calc(22px * var(--si)); }
+.st-comic .tl-item { align-items: center; }
+.st-comic .tl-dot {
+  width: calc(30px * var(--si)); height: calc(30px * var(--si)); border-radius: 6px;
+  background: #FFD23F; border: 4px solid #111; transform: rotate(45deg);
+  box-shadow: 0 0 0 4px #FFFDF5; margin-top: 0;
+}
+.st-comic .tl-item.on .tl-dot, .st-comic .tl-item.is-cur .tl-dot { background: #F2545B; }
+.st-comic .tl-time {
+  display: inline-block; justify-self: start;
+  background: #111; color: #FFD23F; padding: 0.18em 0.6em;
+  border: 3px solid #111; box-shadow: 3px 3px 0 #3FA9F5;
+  font-family: "MV Fun", "MV Comic", "MV Sans", sans-serif;
+  font-size: calc(var(--fs-body) * var(--si) * 0.84);
+}
+.st-comic .tl-item.on .tl-time { background: #F2545B; color: #FFF; box-shadow: 3px 3px 0 #111; }
+.st-comic .tl-text {
+  background: #FFFFFF; border: 3.5px solid #111; box-shadow: 4px 4px 0 #111;
+  padding: calc(12px * var(--si)) calc(18px * var(--si)); margin-top: calc(10px * var(--si));
+  font-weight: 700; color: #111;
+}
+.st-comic .tl.row .tl-item {
+  grid-template-areas: "dot" "time" "text"; row-gap: calc(14px * var(--si));
+}
+.st-comic .tl.row .tl-time { justify-self: center; }
+.st-comic .tl.row .tl-text { width: 100%; }
+
+/* ───────────── 12) 引用：云朵思考气泡 (quote) ───────────── */
+.st-comic .cm-quote { gap: calc(20px * var(--s)); padding: 4px 8px 8px 4px; }
+.st-comic .cm-qt-panel {
+  flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center;
+  gap: calc(24px * var(--s)); padding: calc(40px * var(--s)) calc(40px * var(--s));
+  background: #EAF6FF;
+}
+.st-comic .cm-thought {
+  position: relative; z-index: 2; background: #FFFFFF; color: #111;
+  border: var(--bw) solid #111; border-radius: calc(56px * var(--s));
+  box-shadow: 10px 10px 0 #111; padding: calc(36px * var(--s)) calc(44px * var(--s));
+}
+.st-comic .cm-thought .qmark {
+  color: #F2545B; font-family: "MV Comic", serif; font-size: calc(128px * var(--s));
+  height: calc(68px * var(--s)); line-height: 0.9;
+}
+.st-comic .cm-thought .q-text { color: #111; line-height: 1.42; }
+.st-comic .cm-qt-bot {
+  position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: flex-end; gap: calc(22px * var(--s));
+}
+.st-comic .cm-thought-dots {
+  position: absolute; right: calc(210px * var(--s)); top: calc(-14px * var(--s));
+  display: flex; gap: 10px; align-items: flex-end;
+}
+.st-comic .cm-thought-dots i {
+  display: block; border-radius: 50%; background: #FFF; border: 4px solid #111; box-shadow: 3px 3px 0 #111;
+}
+.st-comic .cm-thought-dots .d1 { width: 30px; height: 30px; translate: 0 -10px; }
+.st-comic .cm-thought-dots .d2 { width: 22px; height: 22px; }
+.st-comic .cm-thought-dots .d3 { width: 15px; height: 15px; translate: 0 8px; }
+.st-comic .cm-qt-bot .q-src {
+  margin-top: 0; background: #111; color: #FFD23F; border: 3.5px solid #111;
+  box-shadow: 4px 4px 0 #F2545B; padding: calc(12px * var(--s)) calc(22px * var(--s));
+  font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 700;
+}
+.st-comic .cm-qt-char { width: calc(190px * var(--s)); height: calc(190px * var(--s)); }
+
+/* ───────────── 13) 代码 & 公式 & 图片 ───────────── */
+.st-comic .code-win {
+  border: var(--bw) solid #111; border-radius: 8px; box-shadow: 9px 9px 0 #FFD23F, 13px 13px 0 #111;
+  max-width: calc(100% - 16px); align-self: center;
+}
+.st-comic .code-bar {
+  background: #FFD23F; color: #111; border-bottom: 4px solid #111; font-weight: 800;
+}
+.st-comic .code-bar::after {
+  content: 'CODE!'; margin-left: auto; background: #111; color: #FFD23F;
+  padding: 4px 12px; font: 900 calc(20px * var(--s)) / 1 "MV Comic", sans-serif; letter-spacing: 0.1em;
+}
+.st-comic .code-bar i { border: 2.5px solid #111; width: 16px; height: 16px; }
+.st-comic .code-bar span { color: #111; }
+
+.st-comic .tpl-formula .formula {
+  background: #FFFFFF; border: var(--bw) solid #111; box-shadow: var(--shadow);
+  padding: calc(36px * var(--s)) calc(28px * var(--s)); background-image: var(--dots-blue);
+}
+
+.st-comic .f-plain {
+  background: #FFFFFF; border: var(--bw) solid #111; padding: 10px; box-shadow: var(--shadow);
+}
+.st-comic .f-plain .shot { border-radius: 0; border: 2px solid #111; }
+.st-comic .cap {
+  background: #FFD23F; color: #111; border: 3px solid #111; box-shadow: 4px 4px 0 #111;
+  padding: 5px 16px; font-weight: 700; margin-top: calc(14px * var(--s));
+}
+/* 竖屏图片页紧凑解说条，把更多面积留给漫画插画格 */
+.st-comic:not(.r169) .tpl-image .body.split { margin-top: calc(14px * var(--s)); }
+.st-comic:not(.r169) .tpl-image .body.split .list { margin-top: calc(14px * var(--s)); row-gap: calc(10px * var(--si)); --lk: 0.9; }
+.st-comic:not(.r169) .tpl-image .body.split .item { padding: calc(10px * var(--si)) calc(18px * var(--si)); }
+
+/* ───────────── 14) 结尾页 (ending) ───────────── */
+.st-comic .cm-ending { justify-content: stretch; padding: 4px 8px 8px 4px; }
+.st-comic .cm-end-panel {
+  flex: 1 1 auto; background: rgba(255, 255, 255, 0.14);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(30px * var(--s)) calc(34px * var(--s)); gap: calc(18px * var(--s));
+}
+.st-comic .cm-tbc {
+  position: relative; z-index: 2; align-self: flex-start;
+  background: #111; color: #FFD23F; padding: calc(10px * var(--s)) calc(22px * var(--s));
+  font: 900 calc(28px * var(--s)) / 1 "MV Comic", sans-serif; letter-spacing: 0.12em;
+  box-shadow: 5px 5px 0 #FFFFFF;
+}
+.st-comic .cm-end-mid {
+  position: relative; z-index: 2; display: flex; flex-direction: column; align-items: stretch; gap: calc(18px * var(--s));
+}
+.st-comic .cm-end-bub { padding: calc(32px * var(--s)) calc(34px * var(--s)); }
+.st-comic .cm-end-char { align-self: flex-end; width: calc(236px * var(--s)); height: calc(236px * var(--s)); }
+.st-comic .cm-end-sfx {
+  position: absolute; right: calc(18px * var(--s)); top: calc(12px * var(--s));
+  width: calc(168px * var(--s)); height: calc(116px * var(--s));
+}
+.st-comic .cm-end-sfx .cm-sfx { width: 100%; height: 100%; }
+.st-comic .cm-end-bot { position: relative; z-index: 2; display: flex; flex-direction: column; gap: calc(16px * var(--s)); }
+.st-comic .cm-end-bot .chips { margin-top: 0; }
+.st-comic .cm-end-bot .cta {
+  margin-top: 0; background: #F2545B; color: #FFFFFF; border: var(--bw) solid #111;
+  box-shadow: 6px 6px 0 #111; padding: calc(18px * var(--s)) calc(26px * var(--s));
+  font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 700;
+  text-shadow: 2px 2px 0 #111;
+}
+.st-comic .cm-end-bot .meta.byline {
+  margin-top: 0; align-self: flex-end; background: #111; color: #FFD23F;
+  padding: 6px 18px; font-weight: 700;
+}
+
+.st-comic.r169 .cm-end-mid { flex-direction: row; align-items: center; gap: calc(36px * var(--s)); }
+.st-comic.r169 .cm-end-bub { flex: 1; }
+.st-comic.r169 .cm-end-char { align-self: center; width: calc(240px * var(--s)); height: calc(240px * var(--s)); }
+.st-comic.r169 .cm-end-bot { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.st-comic.r169 .cm-end-bot .cta { flex: 1 1 auto; }
+
+/* ───────────── 印章 (stamp) ───────────── */
+.st-comic .stamp {
+  background: #F2545B; color: #FFFFFF; border: 4.5px solid #111; border-radius: 12px;
+  box-shadow: 5px 5px 0 #111; padding: 0.22em 0.68em;
+  font-family: "MV Fun", "MV Sans", sans-serif; font-weight: 900; transform: rotate(-8deg);
+  text-shadow: 2px 2px 0 #111;
+}
+/* 引用页右下有角色与名牌，印章放到左下空白区避免重叠 */
+.st-comic .tpl-quote .stamp {
+  left: calc(var(--cl) + 46px); right: auto; bottom: calc(var(--cb) + 46px);
+}
+
+/* ───────────── 漫画字幕条 (#subs) ───────────── */
+.st-comic .subl {
+  background: #FFFFFF; color: #111; border: 3.5px solid #111; border-radius: 12px;
+  box-shadow: 4px 4px 0 #111; padding: 8px 22px;
+}
+.st-comic .subl:empty { display: none; }
+.st-comic .subl .hl { color: #F2545B; }
+.st-comic #subs[data-tone="blue"] .subl { background: #FFD23F; }
+.st-comic #subs[data-tone="yellow"] .subl { background: #FFFFFF; }

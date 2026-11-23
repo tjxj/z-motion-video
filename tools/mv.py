@@ -4,13 +4,14 @@
 
   python3 tools/mv.py check                                  检查环境（Playwright / Chromium / ffmpeg / 字体）
   python3 tools/mv.py styles                                 列出全部风格
-  python3 tools/mv.py new <项目目录> [--example leap-year]    新建项目（复制示例 story.json）
+  python3 tools/mv.py new <项目目录> [--style S | --example leap-year]  新建项目（复制风格示范稿或示例）
   python3 tools/mv.py fonts [--style S | --all]              预下载字体到本机缓存
   python3 tools/mv.py tts <项目> [--engine say|edge]          逐句合成配音（可选）
   python3 tools/mv.py timing <项目> [--estimate | --lines DIR | --audio FILE | --words JSON --voice FILE]
   python3 tools/mv.py build <项目> [--style S] [--ratio 3:4|9:16|16:9|all]
   python3 tools/mv.py snap <项目> [--style S] [--ratio R] [--at 3.5,8]
   python3 tools/mv.py compare <项目> [--ratio R] [--styles a,b,c] [--scene N]
+  python3 tools/mv.py showcase [--ratio R|all] [--styles a,b] [--pages 3] [--out DIR]  各风格示范稿总览图
   python3 tools/mv.py render <项目> [--style S] [--ratio R] [--workers 6] [--fps 30] [--bgm music.mp3]
   python3 tools/mv.py verify <项目> [--style S] [--ratio R]
   python3 tools/mv.py preview <项目> [--style S] [--ratio R]
@@ -69,6 +70,14 @@ FONTS = {
     'ital': dict(family='MV Ital', pkg='@fontsource/instrument-serif', ver='5.3.0', css=['400.css', '400-italic.css'], weights=['400'], styles=['normal', 'italic']),
     'grot': dict(family='MV Grot', pkg='@fontsource-variable/inter', ver='5.3.0', css=['wght.css'], weights=['400', '700', '900']),
     'type': dict(family='MV Type', pkg='@fontsource/courier-prime', ver='5.3.0', css=['400.css', '700.css'], weights=['400', '700']),
+    'brush': dict(family='MV Brush', pkg='@fontsource/ma-shan-zheng', ver='5.3.1', css=['400.css'], weights=['400']),
+    'fun': dict(family='MV Fun', pkg='@fontsource/zcool-kuaile', ver='5.3.0', css=['400.css'], weights=['400']),
+    'poster': dict(family='MV Poster', pkg='@fontsource/zcool-qingke-huangyou', ver='5.3.0', css=['400.css'], weights=['400']),
+    'elegant': dict(family='MV Elegant', pkg='@fontsource/zcool-xiaowei', ver='5.3.0', css=['400.css'], weights=['400']),
+    'script': dict(family='MV Script', pkg='@fontsource/long-cang', ver='5.3.0', css=['400.css'], weights=['400']),
+    'bebas': dict(family='MV Bebas', pkg='@fontsource/bebas-neue', ver='5.3.0', css=['400.css'], weights=['400']),
+    'comic': dict(family='MV Comic', pkg='@fontsource/bangers', ver='5.3.0', css=['400.css'], weights=['400']),
+    'black': dict(family='MV Black', pkg='@fontsource/archivo-black', ver='5.3.0', css=['400.css'], weights=['400']),
 }
 LOCAL_FONT_DIRS = [Path.home() / 'Library/Fonts', Path('/Library/Fonts'), Path('/System/Library/Fonts/Supplemental'),
                    Path.home() / '.local/share/fonts', Path.home() / '.fonts', Path('/usr/share/fonts'), Path('/usr/local/share/fonts'),
@@ -687,7 +696,7 @@ def open_stage(br, out: Path, ratio: str, check=True):
     pg = br.new_page(viewport={'width': W, 'height': H}, device_scale_factor=1)
     errs = []
     pg.on('pageerror', lambda e: errs.append(str(e)))
-    pg.goto((out / 'index.html').as_uri())
+    pg.goto((out / 'index.html').resolve().as_uri())
     pg.wait_for_function('window.READY===true', timeout=240000)
     be = pg.evaluate('window.BOOT_ERROR')
     if be:
@@ -718,8 +727,8 @@ def contact_sheet(br, files: list, labels: list, out: Path, tile_w: int, cols: i
            f'{"<h1>" + html.escape(title) + "</h1>" if title else ""}<main>{cells}</main>')
     hp = out.with_suffix('.html')
     hp.write_text(doc, encoding='utf-8')
-    pg = br.new_page(viewport={'width': cols * (tile_w + 12) + 20, 'height': 600}, device_scale_factor=1)
-    pg.goto(hp.as_uri())
+    pg = br.new_page(viewport={'width': cols * (tile_w + 12) + 20, 'height': 120}, device_scale_factor=1)
+    pg.goto(hp.resolve().as_uri())
     pg.wait_for_function('Array.from(document.images).every(i => i.complete)')
     pg.screenshot(path=str(out), full_page=True)
     pg.close()
@@ -924,17 +933,31 @@ def cmd_styles(a):
 
 def cmd_new(a):
     dst = Path(a.dir)
-    src = EXAMPLES / a.example
+    if a.style and not (STYLES / a.style / 'style.json').exists():
+        die(f'没有风格 {a.style}，可用：{", ".join(m["name"] for m in style_list())}')
+    demo = STYLES / a.style / 'demo' if a.style else None
+    if a.example:
+        src, what = EXAMPLES / a.example, f'示例 {a.example}'
+    elif demo and (demo / 'story.json').exists():
+        src, what = demo, f'风格 {a.style} 的示范稿'
+    else:
+        src, what = EXAMPLES / 'leap-year', '示例 leap-year'
     if not src.exists():
         die(f'没有示例 {a.example}，可用：{", ".join(p.name for p in EXAMPLES.iterdir() if p.is_dir())}')
     if dst.exists() and any(dst.iterdir()):
         die(f'{dst} 已存在且非空')
     dst.mkdir(parents=True, exist_ok=True)
     for f in src.iterdir():
-        if f.name in ('build', 'out', 'timing.json', 'audio'):
+        if f.name in ('build', 'out', 'timing.json', 'audio') or f.name.startswith('.'):
             continue
         (shutil.copytree if f.is_dir() else shutil.copy2)(f, dst / f.name)
-    ok(f'新建项目 {dst}（来自示例 {a.example}）。改 story.json 后运行：mv.py snap {dst}')
+    if a.style:
+        sp = dst / 'story.json'
+        st = json.loads(sp.read_text(encoding='utf-8'))
+        if st.get('style') != a.style:
+            st['style'] = a.style
+            sp.write_text(json.dumps(st, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    ok(f'新建项目 {dst}（来自{what}）。改 story.json 后运行：mv.py snap {dst}')
 
 
 def cmd_fonts(a):
@@ -1043,6 +1066,76 @@ def cmd_compare(a):
         ok(f'风格对比 → {sheet}')
 
 
+def showcase_picks(st: dict, si: list, n: int) -> list:
+    """示范稿里挑 n 页内容页：优先 story.showcase（从 1 开始的场景序号），否则均匀取"""
+    want = [k for k in (st.get('showcase') or []) if isinstance(k, int) and 1 <= k <= len(si)]
+    if len(want) < n:
+        rest = [k for k in range(2, len(si) + 1) if k not in want]
+        step = max(1, len(rest) // max(1, n - len(want)))
+        want += rest[step // 2::step][:n - len(want)]
+    return want[:n]
+
+
+def cmd_showcase(a):
+    """每个风格用自己的示范稿（styles/<风格>/demo）出图：封面 + 几页内容页"""
+    styles = a.styles.split(',') if a.styles else [m['name'] for m in style_list() if (STYLES / m['name'] / 'demo' / 'story.json').exists()]
+    if not styles:
+        die('没有找到带示范稿的风格（styles/<风格>/demo/story.json）')
+    out_dir = Path(a.out)
+    work = out_dir / 'work'
+    for ratio in ratios_of(a.ratio or '3:4'):
+        tdir = out_dir / 'tiles' / RTAG[ratio]
+        tdir.mkdir(parents=True, exist_ok=True)
+        files, labels, covers, clabels = [], [], [], []
+        with playwright() as p:
+            br = chromium(p)
+            for s in styles:
+                src = STYLES / s / 'demo'
+                if not (src / 'story.json').exists():
+                    info(f'{s} 没有示范稿，跳过')
+                    continue
+                proj = work / s
+                if proj.exists():
+                    shutil.rmtree(proj)
+                shutil.copytree(src, proj, ignore=shutil.ignore_patterns('build', 'out', 'timing.json', 'audio', '.*'))
+                st = load_story(proj)
+                out = build(proj, s, ratio, quiet=True)
+                pg = open_stage(br, out, ratio)
+                si = pg.evaluate('window.SCENE_INFO')
+                row, rl = [], []
+                pg.evaluate('renderCover()')
+                f = tdir / f'{s}-cover.png'
+                pg.screenshot(path=str(f))
+                row.append(f)
+                rl.append(f'{style_meta(s).get("label", s)} · {s}')
+                for k in showcase_picks(st, si, a.pages):
+                    pg.evaluate(f'renderAt({si[k - 1]["snap"]})')
+                    f = tdir / f'{s}-s{k:02d}.png'
+                    pg.screenshot(path=str(f))
+                    row.append(f)
+                    rl.append(f'{k:02d} {si[k - 1]["type"]}')
+                issues = pg.evaluate('window.ISSUES') or []
+                pg.close()
+                for it in issues:
+                    print(f'  ⚠ {s} 第 {it["scene"]} 个场景（{it["type"]}）：{it["msg"]}')
+                tile = 300 if ratio != '16:9' else 420
+                strip = out_dir / f'showcase-{s}-{RTAG[ratio]}.png'
+                contact_sheet(br, row, rl, strip, tile, len(row))
+                files += row
+                labels += rl
+                covers.append(row[0])
+                clabels.append(rl[0])
+                info(f'{s} ✓')
+            tile = 300 if ratio != '16:9' else 420
+            sheet = out_dir / f'showcase-{RTAG[ratio]}.png'
+            contact_sheet(br, files, labels, sheet, tile if ratio != '16:9' else 340, 1 + a.pages, f'示范稿 · {ratio}')
+            csheet = out_dir / f'showcase-covers-{RTAG[ratio]}.png'
+            contact_sheet(br, covers, clabels, csheet, tile, 5 if ratio != '16:9' else 3)
+            br.close()
+        ok(f'示范稿总览 → {sheet}')
+        ok(f'封面总览 → {csheet}')
+
+
 def cmd_render(a):
     proj = Path(a.proj)
     st = load_story(proj)
@@ -1083,7 +1176,8 @@ def main():
     sp.add_parser('styles', help='列出风格').set_defaults(fn=cmd_styles)
     s = sp.add_parser('new', help='新建项目')
     s.add_argument('dir')
-    s.add_argument('--example', default='leap-year')
+    s.add_argument('--style', help='风格名：复制这个风格的示范稿，并把稿子的风格设成它')
+    s.add_argument('--example', help='复制 examples/ 下的示例（默认 leap-year）')
     s.set_defaults(fn=cmd_new)
     s = sp.add_parser('fonts', help='预下载字体')
     s.add_argument('--style')
@@ -1126,6 +1220,12 @@ def main():
     s.add_argument('--styles')
     s.add_argument('--scene', type=int)
     s.set_defaults(fn=cmd_compare)
+    s = sp.add_parser('showcase', help='每个风格用自己的示范稿出总览图')
+    s.add_argument('--ratio', help='3:4 / 9:16 / 16:9 / all')
+    s.add_argument('--styles', help='逗号分隔，默认所有带示范稿的风格')
+    s.add_argument('--pages', type=int, default=3, help='每个风格取几页内容页')
+    s.add_argument('--out', default='showcase', help='输出目录')
+    s.set_defaults(fn=cmd_showcase)
     a = ap.parse_args()
     a.fn(a)
 

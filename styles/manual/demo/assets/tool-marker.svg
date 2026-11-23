@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130" fill="none">
+  <!-- Technical Marker Pen -->
+  <g transform="translate(36, 76) rotate(-28)">
+    <rect x="24" y="0" width="96" height="24" rx="4" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+    <rect x="104" y="0" width="22" height="24" rx="3" fill="#111111"/>
+    <path d="M24 2 L6 8 L6 16 L24 22 Z" fill="#FBFBF8" stroke="#111111" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M6 9 L-4 12 L6 15 Z" fill="#FF5B1F" stroke="#111111" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="38" y="4" width="16" height="16" fill="#FF5B1F"/>
+  </g>
+  <!-- Drawn Crosshair Mark -->
+  <circle cx="40" cy="96" r="14" stroke="#FF5B1F" stroke-width="3" stroke-dasharray="4 4"/>
+  <line x1="33" y1="96" x2="47" y2="96" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <line x1="40" y1="89" x2="40" y2="103" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+</svg>

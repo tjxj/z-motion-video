@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" fill="none">
+  <!-- Subtle Blueprint Background Lines -->
+  <g stroke="#111111" stroke-opacity="0.09" stroke-width="1.5">
+    <line x1="20" y1="354" x2="620" y2="354"/>
+    <line x1="20" y1="190" x2="410" y2="190" stroke-dasharray="6 6"/>
+  </g>
+
+  <!-- Water Basin (Left/Center) -->
+  <path d="M46 184 L388 184 L354 342 L80 342 Z" fill="#FBFBF8" stroke="#111111" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="34" y="168" width="366" height="18" rx="6" fill="#FBFBF8" stroke="#111111" stroke-width="5"/>
+
+  <!-- Water Surface Waves -->
+  <path d="M58 214 Q94 202 130 214 T202 214 T274 214 T374 214" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M74 298 Q122 290 170 298 T266 298 T358 298" stroke="#111111" stroke-width="2" stroke-dasharray="7 6" stroke-linecap="round" stroke-opacity="0.45"/>
+
+  <!-- Submerged Inner Tube Section (U-bend) -->
+  <path d="M98 118 C98 242 152 276 218 276 C284 276 334 242 334 118" stroke="#111111" stroke-width="46" stroke-linecap="round"/>
+  <path d="M98 118 C98 242 152 276 218 276 C284 276 334 242 334 118" stroke="#FBFBF8" stroke-width="36" stroke-linecap="round"/>
+  <!-- Inner Tube Center Seam Line -->
+  <path d="M98 124 C98 240 152 276 218 276 C284 276 334 240 334 124" stroke="#111111" stroke-width="2" stroke-dasharray="8 8" stroke-opacity="0.5"/>
+
+  <!-- Simplified Hands Holding Tube Down -->
+  <!-- Left Hand -->
+  <path d="M62 112 L124 112 C132 112 134 126 124 128 L76 128" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Right Hand -->
+  <path d="M372 112 L310 112 C302 112 300 126 310 128 L358 128" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Downward Push Arrows -->
+  <line x1="98" y1="60" x2="98" y2="94" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+  <path d="M88 84 L98 96 L108 84" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="334" y1="60" x2="334" y2="94" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+  <path d="M324 84 L334 96 L344 84" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Puncture Target Ring on Tube -->
+  <circle cx="222" cy="256" r="14" fill="#FF5B1F" fill-opacity="0.2" stroke="#FF5B1F" stroke-width="3"/>
+  <circle cx="222" cy="256" r="4" fill="#FF5B1F"/>
+
+  <!-- Rising Stream of Bubbles -->
+  <circle cx="222" cy="232" r="5" fill="#FF5B1F" stroke="#111111" stroke-width="2.5"/>
+  <circle cx="216" cy="212" r="7" fill="#FF5B1F" stroke="#111111" stroke-width="2.5"/>
+  <circle cx="228" cy="190" r="8.5" fill="#FBFBF8" stroke="#FF5B1F" stroke-width="3.5"/>
+  <circle cx="218" cy="164" r="6" fill="#FBFBF8" stroke="#FF5B1F" stroke-width="3"/>
+  <circle cx="226" cy="142" r="4.5" fill="#FF5B1F"/>
+
+  <!-- Leader Line to Circular Loupe Zoom Box -->
+  <line x1="236" y1="250" x2="424" y2="174" stroke="#111111" stroke-width="3" stroke-dasharray="8 6"/>
+  <circle cx="236" cy="250" r="5" fill="#111111"/>
+
+  <!-- Circular Loupe Zoom Callout (Right Side) -->
+  <g transform="translate(508, 152)">
+    <!-- Outer Thick Black Lens Ring -->
+    <circle cx="0" cy="0" r="102" fill="#FBFBF8" stroke="#111111" stroke-width="6"/>
+    <circle cx="0" cy="0" r="92" stroke="#111111" stroke-width="1.5" stroke-dasharray="4 4" stroke-opacity="0.4"/>
+    <!-- Zoomed Tube Rubber Surface -->
+    <path d="M-84 36 Q0 14 84 36" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+    <path d="M-76 62 Q0 42 76 62" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+    <!-- Zoomed Pinhole + Crosshair Mark -->
+    <circle cx="0" cy="24" r="7" fill="#FF5B1F" stroke="#111111" stroke-width="3"/>
+    <line x1="-24" y1="24" x2="-12" y2="24" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+    <line x1="12" y1="24" x2="24" y2="24" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+    <line x1="0" y1="36" x2="0" y2="48" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+    <!-- Big Zoomed Rising Bubbles -->
+    <circle cx="-4" cy="-4" r="10" fill="#FF5B1F" stroke="#111111" stroke-width="3"/>
+    <circle cx="12" cy="-32" r="14" fill="#FBFBF8" stroke="#FF5B1F" stroke-width="4"/>
+    <path d="M7 -37 A 6 6 0 0 1 16 -36" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="-10" cy="-60" r="9" fill="#FF5B1F" fill-opacity="0.25" stroke="#FF5B1F" stroke-width="3"/>
+    <!-- Loupe Handle Stub -->
+    <line x1="72" y1="72" x2="96" y2="96" stroke="#111111" stroke-width="12" stroke-linecap="round"/>
+  </g>
+
+  <!-- Loupe Spec Tag -->
+  <rect x="434" y="278" width="148" height="32" rx="3" fill="#111111"/>
+  <text x="508" y="299" text-anchor="middle" font-family="monospace" font-weight="700" font-size="16" fill="#FBFBF8">ZOOM · 3X</text>
+</svg>

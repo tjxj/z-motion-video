@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 210" fill="none">
+  <!-- Outer Tire Inner Casing (Large Arch) -->
+  <path d="M48 186 C76 58 144 26 220 26 C296 26 364 58 392 186" stroke="#111111" stroke-width="22" stroke-linecap="round"/>
+  <path d="M48 186 C76 58 144 26 220 26 C296 26 364 58 392 186" stroke="#FBFBF8" stroke-width="14" stroke-linecap="round"/>
+  <!-- Outer Tread Marks -->
+  <path d="M36 184 C66 44 138 12 220 12 C302 12 374 44 404 184" stroke="#111111" stroke-width="3" stroke-dasharray="6 14" stroke-linecap="round"/>
+
+  <!-- Embedded Thorn / Glass Shard Highlighted in Orange -->
+  <g transform="translate(268, 42)">
+    <polygon points="0,-16 8,16 -8,14" fill="#FF5B1F" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="0" cy="6" r="24" fill="#FF5B1F" fill-opacity="0.18" stroke="#FF5B1F" stroke-width="3" stroke-dasharray="6 5"/>
+  </g>
+
+  <!-- Simplified Line-Art Hand Sweeping Inside Tire -->
+  <g transform="translate(132, 92)">
+    <!-- Wrist & Palm -->
+    <path d="M18 92 L18 52 C18 32 34 22 48 22 L76 22 C86 22 90 32 82 38 L58 38 L58 76" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Index Finger Pointing Up-Right Along Casing -->
+    <path d="M32 24 L54 -8 C60 -16 72 -12 68 -2 L52 24" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Sweeping Curved Dashed Motion Arrow -->
+  <path d="M140 126 A 92 92 0 0 1 242 64" stroke="#FF5B1F" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round"/>
+  <path d="M230 56 L245 64 L234 76" stroke="#FF5B1F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,883 @@
+/* 孔版印刷 riso：双色油墨（荧光粉 #FF48B0 + 孔版蓝 #0078BF）· 再生纸 #F3EEE3 · 错版叠印 · 粗网点 */
+
+#stage.st-riso {
+  /* 严格双色油墨 + 再生纸 + 叠印深紫 */
+  --paper-c: #F3EEE3;
+  --pink: #FF48B0;
+  --blue: #0078BF;
+  --blue-ink: rgba(0, 120, 191, 0.88);
+  --overprint: #2A166B;
+
+  --bg: #F3EEE3;
+  --fg: #1E155C;
+  --fg2: #005F99;
+  --fg3: #6D7EA8;
+  --accent: #FF48B0;
+  --accent2: #0078BF;
+  --on-accent: #F3EEE3;
+  --hl: #FF48B0;
+  --line: rgba(0, 120, 191, .28);
+  --line-strong: #0078BF;
+  --card-bg: #F3EEE3;
+  --card-bd: #0078BF;
+  --radius: 0px;
+
+  --code-bg: #1B1452;
+  --code-fg: #F3EEE3;
+  --code-bar: #0078BF;
+  --code-hl: rgba(255, 72, 176, .28);
+  --sub-fg: #1E155C;
+  --sub-hl: #FF48B0;
+  --dim: 0.42;
+
+  /* 字体：poster 中文标题 + black 英文数字 + sans 正文 */
+  --f-title: "MV Poster", "MV Sans", sans-serif;
+  --f-body: "MV Sans", sans-serif;
+  --f-num: "MV Black", "MV Poster", "MV Sans", sans-serif;
+  --f-kicker: "MV Black", "MV Sans", sans-serif;
+  --f-subl: "MV Sans", sans-serif;
+  --f-quote: "MV Poster", "MV Sans", sans-serif;
+  --f-mono: "MV Mono", monospace;
+
+  --w-title: 400;
+  --w-body: 400;
+  --w-num: 400;
+  --w-kicker: 700;
+  --w-subl: 700;
+  --w-strong: 700;
+  --lh-title: 1.12;
+  --lh-body: 1.48;
+  --track-title: .02em;
+  --track-kicker: .1em;
+  --tt-kicker: uppercase;
+
+  /* 错版位移默认量 */
+  --mis-x: 6px;
+  --mis-y: 5px;
+}
+
+/* 三画幅微调安全区与字号 */
+#stage.st-riso.r34 {
+  --ct: 162px; --cb: 264px; --cl: 76px; --cr: 76px;
+  --fs-title: 88px; --fs-title-xl: 120px; --fs-body: 42px; --fs-note: 34px; --fs-dek: 38px;
+  --fs-kicker: 28px; --fs-num: 248px; --fs-stat: 108px; --fs-chap: 250px;
+}
+#stage.st-riso.r916 {
+  --ct: 236px; --cb: 556px; --cl: 72px; --cr: 72px;
+  --fs-title: 90px; --fs-title-xl: 126px; --fs-body: 44px; --fs-note: 34px; --fs-dek: 40px;
+  --fs-kicker: 29px; --fs-num: 256px; --fs-stat: 110px; --fs-chap: 270px;
+}
+#stage.st-riso.r169 {
+  --ct: 142px; --cb: 204px; --cl: 130px; --cr: 130px;
+  --fs-title: 88px; --fs-title-xl: 126px; --fs-body: 42px; --fs-note: 32px; --fs-dek: 38px;
+  --fs-kicker: 28px; --fs-num: 268px; --fs-stat: 112px; --fs-chap: 260px;
+}
+
+/* 顶层粗颗粒叠加层微放大，支持 tick 8fps 微闪不露白边 */
+#stage.st-riso #ovl {
+  width: 104%; height: 104%; left: -2%; top: -2%;
+  opacity: 0.72;
+  mix-blend-mode: multiply;
+}
+
+/* ───────────── 全局 Chrome：四角套准靶标 + 双色测试点 + 网点进度条 ───────────── */
+.st-riso .rs-reg {
+  position: absolute; width: 34px; height: 34px; opacity: 0.85;
+}
+.st-riso .rs-reg.tl { left: 26px; top: 26px; }
+.st-riso .rs-reg.tr { right: 26px; top: 26px; }
+.st-riso .rs-reg.bl { left: 26px; bottom: 26px; }
+.st-riso .rs-reg.br { right: 26px; bottom: 26px; }
+.st-riso .r916 .rs-reg.tl, .st-riso .r916 .rs-reg.tr { top: 68px; }
+.st-riso .r916 .rs-reg.bl, .st-riso .r916 .rs-reg.br { bottom: 38px; }
+
+.st-riso .rs-top {
+  position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 96px);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.st-riso.r169 .rs-top { top: 54px; }
+.st-riso.r916 .rs-top { top: 132px; }
+
+.st-riso .rs-brand {
+  display: flex; align-items: center; gap: 14px; min-width: 0;
+}
+.st-riso .rs-swatches {
+  position: relative; width: 42px; height: 26px; flex: none;
+}
+.st-riso .rs-swatches i {
+  position: absolute; top: 1px; width: 24px; height: 24px; border-radius: 50%;
+  mix-blend-mode: multiply;
+}
+.st-riso .rs-swatches i:first-child { left: 0; background: var(--pink); }
+.st-riso .rs-swatches i:last-child { left: 14px; background: var(--blue-ink); }
+.st-riso .rs-ser {
+  font: 700 22px/1.2 var(--f-kicker); letter-spacing: .08em; color: var(--fg);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.st-riso .rs-pg-wrap {
+  display: flex; align-items: center; gap: 12px; flex: none;
+}
+.st-riso .rs-ink-tag {
+  font: 700 18px/1 var(--f-num); letter-spacing: .06em; padding: 6px 11px;
+  border: 2.5px solid var(--blue); color: var(--blue); background: rgba(243, 238, 227, 0.85);
+}
+.st-riso .rs-pg {
+  font: 400 28px/1 var(--f-num); color: var(--fg); letter-spacing: .04em;
+}
+.st-riso .rs-pg b { color: var(--pink); font-weight: 400; }
+
+.st-riso .rs-foot {
+  position: absolute; left: var(--cl); right: var(--cr); bottom: 54px;
+  display: flex; align-items: center; justify-content: space-between;
+  font: 700 22px/1 var(--f-body); color: var(--fg2); letter-spacing: .04em;
+}
+.st-riso.r169 .rs-foot { bottom: 38px; font-size: 20px; }
+.st-riso.r916 .rs-foot { bottom: 64px; }
+
+.st-riso .rs-prog {
+  position: absolute; left: var(--cl); right: var(--cr); bottom: 30px; height: 10px;
+  background: repeating-linear-gradient(90deg, rgba(0, 120, 191, .28) 0 6px, transparent 6px 12px);
+  overflow: hidden;
+}
+.st-riso.r169 .rs-prog { bottom: 18px; height: 8px; }
+.st-riso.r916 .rs-prog { bottom: 40px; }
+.st-riso .rs-prog-fill {
+  position: absolute; inset: 0; transform-origin: 0 50%; scale: 0 1;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 60%, var(--pink) 100%);
+}
+.st-riso .rs-prog-pink {
+  position: absolute; inset: 0; top: 3px; transform-origin: 0 50%; scale: 0 1;
+  background: var(--pink); mix-blend-mode: multiply; opacity: 0.78;
+}
+
+/* Chrome 随页面色调切换（蓝满版章扉页 / 粉调页） */
+.st-riso #chrome[data-tone="blue"] .rs-ser,
+.st-riso #chrome[data-tone="blue"] .rs-pg,
+.st-riso #chrome[data-tone="blue"] .rs-foot { color: var(--paper-c); }
+.st-riso #chrome[data-tone="blue"] .rs-pg b { color: var(--pink); }
+.st-riso #chrome[data-tone="blue"] .rs-ink-tag {
+  border-color: var(--paper-c); color: var(--paper-c); background: transparent;
+}
+.st-riso #chrome[data-tone="blue"] .rs-reg svg { color: var(--paper-c); }
+.st-riso #chrome[data-tone="blue"] .rs-swatches i { mix-blend-mode: normal; }
+.st-riso #chrome[data-tone="blue"] .rs-swatches i:last-child { border: 2px solid var(--paper-c); }
+
+.st-riso #chrome[data-tone="pink"] .rs-ser,
+.st-riso #chrome[data-tone="pink"] .rs-pg,
+.st-riso #chrome[data-tone="pink"] .rs-foot { color: var(--fg); }
+.st-riso #chrome[data-tone="pink"] .rs-pg b { color: var(--paper-c); }
+
+/* 封面页隐藏页码和底部小节，让海报感彻底满格 */
+.st-riso #chrome[data-type="cover"] .rs-pg-wrap { opacity: 0.85; }
+.st-riso #chrome[data-type="cover"] .rs-sec { opacity: 0; }
+
+/* ───────────── 背景几何图腾容器（置于 .scene 内、.content 外，不触发溢出） ───────────── */
+.st-riso .rs-art {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.st-riso .scene > .content { z-index: 2; }
+
+/* ───────────── 双色错版文字装置（标题行 / 大数字） ───────────── */
+.st-riso .kicker {
+  margin-bottom: calc(16px * var(--s));
+}
+.st-riso .kicker .kt {
+  display: inline-block; position: relative;
+  padding: .24em .78em .22em;
+  background: var(--blue); color: var(--paper-c);
+  font-family: var(--f-kicker); font-weight: 700;
+  transform: rotate(-1.4deg);
+  box-shadow: calc(5px * var(--s)) calc(5px * var(--s)) 0 var(--pink);
+}
+
+.st-riso .title {
+  color: var(--blue);
+  text-transform: none;
+}
+.st-riso .title .ln {
+  position: relative; display: block; width: 100%;
+  --reg: 0;
+}
+/* 荧光粉错版叠印副版：由 JS 填 data-text，蓝+粉 multiply 叠出深紫核 + 双色边 */
+.st-riso .title .ln[data-text]::after {
+  content: attr(data-text);
+  position: absolute; left: 0; top: 0; right: 0;
+  color: var(--pink);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transform: translate(
+    calc(var(--mis-x, 5px) * var(--s) + var(--reg, 0) * 30px),
+    calc(var(--mis-y, 4px) * var(--s) - var(--reg, 0) * 14px)
+  );
+  opacity: 0.94;
+}
+
+.st-riso .dek {
+  color: var(--fg); font-weight: 700;
+  margin-top: calc(18px * var(--s));
+}
+.st-riso .note {
+  color: var(--fg2); font-weight: 700;
+  padding: calc(12px * var(--s)) calc(18px * var(--s));
+  background: rgba(243, 238, 227, .92);
+  border-left: calc(6px * var(--s)) solid var(--pink);
+  box-shadow: calc(4px * var(--s)) calc(4px * var(--s)) 0 rgba(0, 120, 191, .2);
+  margin-top: calc(22px * var(--s));
+}
+
+/* 【】高亮：孔版荧光粉油墨色带刷底 + 反白/深紫高亮 */
+.st-riso .hl {
+  color: color-mix(in srgb, var(--paper-c) calc(var(--p, 1) * 100%), currentColor);
+  background: linear-gradient(var(--pink), var(--pink)) 0 55% / calc(var(--p, 1) * 100%) 1.05em no-repeat;
+  padding: 0 .14em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.st-riso .title .hl {
+  /* 标题内已有双色错版，【】用底划线+色块避免破坏 data-text 错位对齐 */
+  color: inherit;
+  background: linear-gradient(rgba(255, 72, 176, .35), rgba(255, 72, 176, .35)) 0 92% / calc(var(--p, 1) * 100%) .32em no-repeat;
+  padding: 0;
+}
+.st-riso :is(.subl, .formula) .hl { background: none; padding: 0; }
+.st-riso .subl .hl { color: var(--sub-hl); }
+.st-riso .formula .hl { color: color-mix(in srgb, var(--pink) calc(var(--p, 1) * 100%), currentColor); }
+
+/* ───────────── 通用双色纸色贴块工具类 ───────────── */
+.st-riso .rs-box {
+  background: var(--paper-c);
+  border: calc(3.5px * var(--s)) solid var(--blue);
+  box-shadow: calc(7px * var(--s)) calc(7px * var(--s)) 0 var(--pink);
+}
+
+/* ───────────── 1. COVER 音乐节 / 独立出版物海报封面 ───────────── */
+.st-riso .tpl-cover .content {
+  justify-content: space-between;
+  padding: calc(10px * var(--s)) calc(14px * var(--s)) calc(12px * var(--s)) calc(8px * var(--s));
+}
+.st-riso .rs-cov-grid {
+  display: flex; flex-direction: column; justify-content: space-between;
+  height: 100%; width: 100%; gap: calc(16px * var(--s));
+}
+.st-riso .rs-cov-top {
+  flex: none; position: relative;
+  transform: rotate(-1.4deg); transform-origin: 20% 50%;
+  margin: 0 calc(8px * var(--s));
+  padding-right: calc(120px * var(--s));
+}
+.st-riso .rs-cov-seal {
+  position: absolute; right: calc(4px * var(--s)); top: calc(2px * var(--s));
+  width: calc(108px * var(--s)); height: calc(108px * var(--s));
+  pointer-events: none;
+}
+.st-riso .rs-cov-seal svg { width: 100%; height: 100%; display: block; }
+.st-riso .tpl-cover .title.xl {
+  font-size: calc(var(--fs-title-xl) * var(--s) * var(--ts));
+  line-height: 1.08;
+  --mis-x: 7px; --mis-y: 5px;
+}
+.st-riso .rs-cov-hero {
+  flex: 1 1 0; min-height: calc(180px * var(--s)); position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.st-riso .rs-cov-art {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.st-riso .rs-cov-svg {
+  width: 100%; height: 100%; max-height: 100%; display: block;
+}
+.st-riso .rs-cov-bill {
+  flex: none;
+  background: var(--paper-c);
+  border: calc(4px * var(--s)) solid var(--blue);
+  box-shadow: calc(8px * var(--s)) calc(8px * var(--s)) 0 var(--pink);
+  padding: calc(18px * var(--s)) calc(24px * var(--s));
+  margin-right: calc(8px * var(--s));
+  display: flex; flex-direction: column; gap: calc(12px * var(--s));
+}
+.st-riso .rs-cov-bill .dek {
+  margin: 0; font-size: calc(var(--fs-dek) * var(--s) * .95); color: var(--fg); line-height: 1.35;
+}
+.st-riso .rs-cov-bill-row {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: calc(12px * var(--s));
+  padding-top: calc(10px * var(--s));
+  border-top: calc(3px * var(--s)) dashed rgba(0, 120, 191, .45);
+}
+.st-riso .tpl-cover .chips { margin: 0; gap: calc(10px * var(--s)); }
+.st-riso .rs-cov-meta {
+  font: 400 calc(20px * var(--s))/1.1 var(--f-num); letter-spacing: .08em;
+  color: var(--blue); text-transform: uppercase;
+}
+
+/* Cover 16:9 左右海报分栏重排 */
+.st-riso.r169 .rs-cov-grid {
+  display: grid; grid-template-columns: minmax(0, 56%) minmax(0, 44%);
+  grid-template-rows: 1fr auto;
+  column-gap: calc(38px * var(--s)); row-gap: calc(18px * var(--s));
+  align-items: center;
+}
+.st-riso.r169 .rs-cov-top { grid-column: 1; grid-row: 1; align-self: end; }
+.st-riso.r169 .rs-cov-bill { grid-column: 1; grid-row: 2; align-self: start; }
+.st-riso.r169 .rs-cov-hero { grid-column: 2; grid-row: 1 / 3; height: 100%; }
+
+/* Cover explicit split 变体 */
+.st-riso .tpl-cover.rs-layout-split .rs-cov-grid {
+  display: grid; grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+  grid-template-rows: 1fr auto; column-gap: calc(32px * var(--s)); align-items: center;
+}
+.st-riso .tpl-cover.rs-layout-split .rs-cov-top { grid-column: 1; grid-row: 1; }
+.st-riso .tpl-cover.rs-layout-split .rs-cov-bill { grid-column: 1; grid-row: 2; }
+.st-riso .tpl-cover.rs-layout-split .rs-cov-hero { grid-column: 2; grid-row: 1 / 3; height: 100%; }
+
+/* Cover 带外链图片时 */
+.st-riso .tpl-cover .rs-cov-hero .media { height: 100%; width: 100%; margin: 0; }
+
+/* Chips：油墨印章票签 */
+.st-riso .chip {
+  border-radius: 0; border: calc(3px * var(--s)) solid var(--blue);
+  background: var(--paper-c); color: var(--fg);
+  font-family: var(--f-body); font-weight: 700;
+  padding: .28em .78em;
+  box-shadow: calc(4px * var(--s)) calc(4px * var(--s)) 0 var(--pink);
+}
+.st-riso .chip:nth-child(even) {
+  border-color: var(--pink); color: var(--blue);
+  box-shadow: calc(4px * var(--s)) calc(4px * var(--s)) 0 var(--blue);
+}
+.st-riso .chip.hot {
+  background: var(--pink); border-color: var(--fg); color: var(--paper-c);
+  box-shadow: calc(4px * var(--s)) calc(4px * var(--s)) 0 var(--blue);
+}
+
+/* ───────────── 2. CHAPTER 孔版蓝满版章扉页 ───────────── */
+.st-riso .tpl-chapter .content {
+  justify-content: center; align-items: stretch;
+  padding: calc(16px * var(--s)) calc(22px * var(--s));
+}
+.st-riso .rs-chap-wrap {
+  display: flex; flex-direction: column; gap: calc(20px * var(--s));
+  position: relative; width: 100%;
+  padding: calc(10px * var(--s)) calc(16px * var(--s)) calc(16px * var(--s)) calc(8px * var(--s));
+}
+.st-riso .tpl-chapter .chap-num {
+  font-family: var(--f-num); font-size: calc(var(--fs-chap) * var(--s));
+  line-height: 0.88; color: var(--pink); margin: 0;
+  text-shadow: calc(10px * var(--s)) calc(8px * var(--s)) 0 rgba(30, 21, 92, .75);
+  letter-spacing: -.02em;
+}
+.st-riso .rs-chap-card {
+  background: var(--paper-c);
+  border: calc(5px * var(--s)) solid var(--fg);
+  box-shadow: calc(12px * var(--s)) calc(12px * var(--s)) 0 var(--pink);
+  padding: calc(38px * var(--s)) calc(42px * var(--s));
+  transform: rotate(-1.2deg);
+}
+.st-riso .rs-chap-card .kicker .kt { background: var(--pink); color: var(--paper-c); box-shadow: calc(4px * var(--s)) calc(4px * var(--s)) 0 var(--blue); }
+.st-riso .rs-chap-card .title.xl { --mis-x: 6px; --mis-y: 5px; }
+.st-riso .rs-chap-card .note {
+  margin-top: calc(20px * var(--s)); background: transparent; box-shadow: none;
+  border-left-color: var(--blue); padding: calc(6px * var(--s)) 0 calc(6px * var(--s)) calc(16px * var(--s));
+}
+.st-riso.r169 .rs-chap-wrap {
+  flex-direction: row; align-items: center; gap: calc(48px * var(--s));
+}
+.st-riso.r169 .tpl-chapter .chap-num { flex: none; font-size: calc(260px * var(--s)); }
+.st-riso.r169 .rs-chap-card { flex: 1; min-width: 0; }
+
+/* ───────────── 3. BIGNUM 巨幅错版数字海报 ───────────── */
+.st-riso .tpl-bignum .content { justify-content: center; padding: calc(8px * var(--s)) calc(14px * var(--s)); }
+.st-riso .rs-bn-stage {
+  display: flex; flex-direction: column; align-items: flex-start; gap: calc(26px * var(--s));
+  width: 100%;
+  padding-right: calc(16px * var(--s));
+}
+.st-riso .tpl-bignum .bn-row {
+  position: relative; color: var(--blue);
+  --reg: 0;
+}
+.st-riso .tpl-bignum .bn-row .val,
+.st-riso .tpl-bignum .bn-row .pre,
+.st-riso .tpl-bignum .bn-row .suf,
+.st-riso .tpl-bignum .bn-row .bn-u {
+  position: relative;
+}
+.st-riso .tpl-bignum .bn-row [data-text]::after {
+  content: attr(data-text);
+  position: absolute; left: 0; top: 0; pointer-events: none;
+  color: var(--pink); mix-blend-mode: multiply;
+  transform: translate(
+    calc(8px * var(--s) + var(--reg, 0) * 32px),
+    calc(6px * var(--s) - var(--reg, 0) * 14px)
+  );
+  opacity: 0.92;
+}
+.st-riso .tpl-bignum .bn-u {
+  font-family: var(--f-title); color: var(--blue); font-size: .34em; margin-left: .14em;
+}
+.st-riso .rs-bn-ribbon {
+  background: var(--paper-c);
+  border: calc(4px * var(--s)) solid var(--blue);
+  box-shadow: calc(10px * var(--s)) calc(10px * var(--s)) 0 var(--pink);
+  padding: calc(22px * var(--s)) calc(32px * var(--s));
+  transform: rotate(-1.1deg);
+  margin: 0 calc(8px * var(--s));
+  max-width: calc(100% - 16px);
+}
+.st-riso .rs-bn-ribbon .bn-l {
+  margin: 0; font-size: calc(var(--fs-text) * var(--s) * .68); color: var(--fg); line-height: 1.32;
+}
+
+/* ───────────── 4. STATEMENT 双色撞击宣言海报 ───────────── */
+.st-riso .tpl-statement .content { justify-content: center; }
+.st-riso .tpl-statement .say {
+  background: var(--paper-c);
+  border: calc(5px * var(--s)) solid var(--blue);
+  box-shadow: calc(14px * var(--s)) calc(14px * var(--s)) 0 var(--blue);
+  padding: calc(52px * var(--s)) calc(46px * var(--s));
+  transform: rotate(-1.5deg);
+  margin: calc(14px * var(--s)) calc(14px * var(--s)) 0;
+  position: relative;
+}
+.st-riso .tpl-statement .say::before {
+  content: '★ ★ ★'; position: absolute; right: calc(24px * var(--s)); top: calc(-22px * var(--s));
+  padding: calc(4px * var(--s)) calc(14px * var(--s));
+  background: var(--blue); color: var(--paper-c);
+  font: 400 calc(22px * var(--s))/1.2 var(--f-num); letter-spacing: .16em;
+}
+.st-riso .tpl-statement .say .sl {
+  font-family: var(--f-title); color: var(--fg); line-height: 1.32;
+}
+.st-riso .tpl-statement .say .hl {
+  background: linear-gradient(var(--blue), var(--blue)) 0 55% / calc(var(--p, 1) * 100%) 1.06em no-repeat;
+  color: color-mix(in srgb, var(--paper-c) calc(var(--p, 1) * 100%), currentColor);
+}
+.st-riso .tpl-statement .kicker .kt {
+  background: var(--fg); color: var(--paper-c);
+  box-shadow: calc(5px * var(--s)) calc(5px * var(--s)) 0 var(--blue);
+}
+.st-riso .tpl-statement .note {
+  background: var(--paper-c); border-left: calc(6px * var(--s)) solid var(--blue);
+  color: var(--fg); margin-left: calc(14px * var(--s)); margin-right: calc(14px * var(--s));
+}
+
+/* ───────────── 5. LIST 音乐节演出阵容表 / 清单 ───────────── */
+.st-riso .list {
+  row-gap: calc(18px * var(--si));
+  column-gap: calc(34px * var(--si));
+  padding: calc(6px * var(--si)) calc(10px * var(--si)) calc(10px * var(--si)) 0;
+}
+.st-riso .list .item {
+  align-items: stretch; gap: 0;
+  background: var(--paper-c);
+  border: calc(3.5px * var(--si)) solid var(--blue);
+  box-shadow: calc(6px * var(--si)) calc(6px * var(--si)) 0 var(--pink);
+  overflow: visible;
+}
+.st-riso .list .item:nth-child(even) {
+  border-color: var(--fg);
+  box-shadow: calc(6px * var(--si)) calc(6px * var(--si)) 0 var(--blue);
+}
+.st-riso .list .item .mk {
+  display: flex; align-items: center; justify-content: center;
+  min-width: calc(82px * var(--si)); padding: calc(14px * var(--si)) calc(14px * var(--si));
+  background: var(--blue); color: var(--paper-c);
+  font-family: var(--f-num); font-size: calc(var(--fs-body) * var(--si) * .88);
+  border-right: calc(3.5px * var(--si)) solid var(--blue);
+}
+.st-riso .list .item:nth-child(even) .mk {
+  background: var(--pink); border-right-color: var(--fg); color: var(--paper-c);
+}
+.st-riso .list .item.on {
+  background: var(--paper-c); border-color: var(--pink);
+  border-width: calc(4.5px * var(--si));
+  box-shadow: calc(8px * var(--si)) calc(8px * var(--si)) 0 var(--blue);
+}
+.st-riso .list .item.on .mk {
+  background: var(--pink); color: var(--paper-c); border-right-color: var(--pink);
+}
+.st-riso .list .item.on .tx { color: var(--fg); }
+.st-riso .list .item.on .nt { color: var(--fg2); border-top-color: rgba(255, 72, 176, .45); }
+.st-riso .list .item .tx {
+  padding: calc(16px * var(--si)) calc(22px * var(--si));
+  font-weight: 700; color: var(--fg); line-height: 1.34;
+}
+.st-riso .list .item .nt {
+  font-weight: 400; color: var(--fg2);
+  margin-top: calc(7px * var(--si)); padding-top: calc(7px * var(--si));
+  border-top: 2px dashed rgba(0, 120, 191, .32);
+}
+.st-riso .list .item.no .mk { background: var(--paper-c); color: var(--pink); }
+.st-riso .ic path { stroke-width: 6; }
+.st-riso .rs-star-mk { font-size: 1.05em; line-height: 1; }
+
+/* ───────────── 6. BARS 粗颗粒网点色条图 ───────────── */
+.st-riso .bars {
+  gap: calc(26px * var(--si));
+  padding: calc(6px * var(--si)) calc(10px * var(--si)) calc(10px * var(--si)) 0;
+}
+.st-riso .bar-row {
+  background: rgba(243, 238, 227, .9);
+  border: calc(3px * var(--si)) solid var(--blue);
+  box-shadow: calc(5px * var(--si)) calc(5px * var(--si)) 0 rgba(255, 72, 176, .45);
+  padding: calc(14px * var(--si)) calc(20px * var(--si));
+}
+.st-riso .bar-row.on {
+  border-color: var(--fg);
+  box-shadow: calc(6px * var(--si)) calc(6px * var(--si)) 0 var(--pink);
+}
+.st-riso .bar-l {
+  color: var(--fg); font-family: var(--f-body); font-weight: 700;
+}
+.st-riso .bar-track {
+  height: calc(56px * var(--si));
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 120, 191, .16) 0 2px, transparent 2px 28px),
+    rgba(0, 120, 191, .06);
+  border: calc(2.5px * var(--si)) solid rgba(0, 120, 191, .45);
+  padding: calc(5px * var(--si)) calc(10px * var(--si)) calc(5px * var(--si)) calc(5px * var(--si));
+}
+.st-riso .bar-fill {
+  position: relative; border-radius: 0; height: 100%;
+  /* 粗网点质感 + 孔版蓝 */
+  background-color: var(--blue);
+  background-image: radial-gradient(rgba(243, 238, 227, .36) 25%, transparent 30%);
+  background-size: 9px 9px;
+  box-shadow: calc(4px * var(--si)) calc(4px * var(--si)) 0 rgba(255, 72, 176, .82);
+}
+.st-riso .bar-row.on .bar-track {
+  border-color: var(--pink);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 72, 176, .2) 0 2px, transparent 2px 28px),
+    rgba(255, 72, 176, .07);
+}
+.st-riso .bar-row.on .bar-fill {
+  background-color: var(--pink);
+  background-image: radial-gradient(rgba(0, 120, 191, .55) 28%, transparent 33%);
+  background-size: 9px 9px;
+  box-shadow: calc(4px * var(--si)) calc(4px * var(--si)) 0 var(--blue);
+}
+.st-riso .bar-v {
+  font-family: var(--f-num); color: var(--fg);
+}
+.st-riso .bar-row.on .bar-v { color: var(--pink); }
+.st-riso .bar-u { color: var(--fg2); font-weight: 700; }
+
+/* ───────────── 7. CARDS 音乐节门票 / 贴纸卡 ───────────── */
+.st-riso .cards {
+  gap: calc(24px * var(--si));
+  padding: calc(10px * var(--si)) calc(14px * var(--si)) calc(14px * var(--si)) calc(8px * var(--si));
+}
+.st-riso .card {
+  position: relative; padding: 0; border-radius: 0;
+  background: var(--paper-c);
+  border: calc(3.5px * var(--si)) solid var(--blue);
+  box-shadow: calc(7px * var(--si)) calc(7px * var(--si)) 0 var(--pink);
+  transform: rotate(-0.9deg);
+  display: flex; flex-direction: column;
+}
+.st-riso .card:nth-child(even) {
+  transform: rotate(0.9deg);
+  border-color: var(--fg);
+  box-shadow: calc(7px * var(--si)) calc(7px * var(--si)) 0 var(--blue);
+}
+.st-riso .card-k {
+  margin: 0; padding: calc(12px * var(--si)) calc(20px * var(--si));
+  background: var(--blue); color: var(--paper-c);
+  font-family: var(--f-num); font-size: calc(var(--fs-chip) * var(--si) * .96);
+  letter-spacing: .06em;
+  border-bottom: calc(3px * var(--si)) dashed var(--paper-c);
+}
+.st-riso .card:nth-child(even) .card-k { background: var(--pink); color: var(--paper-c); }
+.st-riso .card.on {
+  border-color: var(--fg);
+  box-shadow: calc(9px * var(--si)) calc(9px * var(--si)) 0 var(--pink);
+}
+.st-riso .card.on .card-k { background: var(--fg); color: var(--pink); }
+.st-riso .card-tx {
+  padding: calc(20px * var(--si)) calc(22px * var(--si)) calc(22px * var(--si));
+  flex: 1;
+}
+.st-riso .card-t { color: var(--fg); font-family: var(--f-body); font-weight: 700; }
+.st-riso .card-x { color: var(--fg2); font-weight: 400; margin-top: calc(10px * var(--si)); }
+
+/* cards 单列横排门票（票根在左，内容在右） */
+.st-riso .cards.rows .card {
+  display: grid; grid-template-columns: calc(170px * var(--si)) minmax(0, 1fr);
+  align-items: stretch;
+}
+.st-riso .cards.rows .card-k {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  border-bottom: none; border-right: calc(3px * var(--si)) dashed var(--paper-c);
+  padding: calc(16px * var(--si));
+  font-size: calc(var(--fs-body) * var(--si) * .78);
+}
+
+/* ───────────── 8. STATS 双色油墨数据块 ───────────── */
+.st-riso .stats {
+  gap: calc(24px * var(--si));
+  padding: calc(8px * var(--si)) calc(12px * var(--si)) calc(12px * var(--si)) calc(6px * var(--si));
+}
+.st-riso .stat {
+  position: relative; border-radius: 0;
+  background: var(--paper-c);
+  border: calc(3.5px * var(--si)) solid var(--blue);
+  box-shadow: calc(8px * var(--si)) calc(8px * var(--si)) 0 var(--pink);
+  padding: calc(24px * var(--si)) calc(26px * var(--si));
+}
+.st-riso .stat::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: calc(10px * var(--si));
+  background: repeating-linear-gradient(90deg, var(--blue) 0 12px, transparent 12px 20px);
+}
+.st-riso .stat.on {
+  border-color: var(--fg);
+  box-shadow: calc(9px * var(--si)) calc(9px * var(--si)) 0 var(--blue);
+}
+.st-riso .stat.on::after {
+  background: repeating-linear-gradient(90deg, var(--pink) 0 12px, var(--blue) 12px 20px);
+}
+.st-riso .stat-v {
+  color: var(--blue);
+  text-shadow: calc(4px * var(--si)) calc(3px * var(--si)) 0 rgba(255, 72, 176, .75);
+}
+.st-riso .stat.on .stat-v {
+  color: var(--pink);
+  text-shadow: calc(4px * var(--si)) calc(3px * var(--si)) 0 rgba(0, 120, 191, .75);
+}
+.st-riso .stat-u { color: var(--fg); font-family: var(--f-body); font-weight: 700; }
+.st-riso .stat-l { color: var(--fg); font-family: var(--f-body); font-weight: 700; }
+.st-riso .stat-n { color: var(--fg2); }
+
+/* ───────────── 9. TIMELINE 音乐节日程表 ───────────── */
+.st-riso .tl {
+  gap: calc(22px * var(--si));
+  padding: calc(6px * var(--si)) calc(10px * var(--si)) calc(10px * var(--si)) 0;
+}
+.st-riso .tl .links path {
+  stroke: var(--blue); stroke-width: 4; stroke-dasharray: 10 8;
+}
+.st-riso .tl.col .tl-item {
+  grid-template-columns: calc(48px * var(--si)) auto minmax(0, 1fr);
+  grid-template-areas: "dot time text";
+  align-items: center; column-gap: calc(18px * var(--si));
+}
+.st-riso .tl-dot {
+  position: relative; width: calc(30px * var(--si)); height: calc(30px * var(--si));
+  border-radius: 50%; background: var(--blue);
+  box-shadow: calc(5px * var(--si)) calc(4px * var(--si)) 0 var(--pink), 0 0 0 calc(4px * var(--si)) var(--paper-c);
+  margin-top: 0;
+}
+.st-riso .tl-item.on .tl-dot {
+  background: var(--pink);
+  box-shadow: calc(5px * var(--si)) calc(4px * var(--si)) 0 var(--blue), 0 0 0 calc(5px * var(--si)) var(--paper-c);
+}
+.st-riso .tl-time {
+  font-family: var(--f-num); font-size: calc(var(--fs-body) * var(--si) * .84);
+  background: var(--blue); color: var(--paper-c);
+  padding: calc(10px * var(--si)) calc(16px * var(--si));
+  white-space: nowrap;
+  box-shadow: calc(4px * var(--si)) calc(4px * var(--si)) 0 var(--pink);
+}
+.st-riso .tl-item.on .tl-time {
+  background: var(--pink); color: var(--paper-c);
+  box-shadow: calc(4px * var(--si)) calc(4px * var(--si)) 0 var(--blue);
+}
+.st-riso .tl-text {
+  background: var(--paper-c);
+  border: calc(3px * var(--si)) solid var(--blue);
+  box-shadow: calc(5px * var(--si)) calc(5px * var(--si)) 0 rgba(255, 72, 176, .45);
+  padding: calc(14px * var(--si)) calc(20px * var(--si));
+  margin-top: 0; color: var(--fg); font-weight: 700;
+}
+.st-riso .tl-item.on .tl-text {
+  border-color: var(--fg);
+  box-shadow: calc(6px * var(--si)) calc(6px * var(--si)) 0 var(--pink);
+}
+/* 16:9 横排日程表 */
+.st-riso .tl.row { gap: calc(20px * var(--si)); align-items: stretch; }
+.st-riso .tl.row .tl-item {
+  grid-template-columns: minmax(0, 1fr); grid-template-areas: "time" "dot" "text";
+  row-gap: calc(16px * var(--si)); justify-items: center; align-content: start;
+}
+.st-riso .tl.row .tl-text { width: 100%; text-align: left; }
+
+/* ───────────── 10. COMPARE 蓝滚筒 vs 粉滚筒对决 ───────────── */
+.st-riso .cmp {
+  padding: calc(8px * var(--si)) calc(10px * var(--si)) calc(12px * var(--si)) calc(6px * var(--si));
+  column-gap: calc(18px * var(--si));
+}
+.st-riso .side {
+  border-radius: 0; background: var(--paper-c);
+  border: calc(4px * var(--si)) solid var(--blue);
+  box-shadow: calc(7px * var(--si)) calc(7px * var(--si)) 0 rgba(0, 120, 191, .32);
+  padding: calc(24px * var(--si)) calc(24px * var(--si));
+}
+.st-riso .side.right {
+  border-color: var(--pink);
+  box-shadow: calc(7px * var(--si)) calc(7px * var(--si)) 0 rgba(255, 72, 176, .35);
+}
+.st-riso .side-k {
+  display: inline-block; align-self: flex-start;
+  padding: .22em .64em; background: var(--blue); color: var(--paper-c);
+  font-family: var(--f-kicker); font-weight: 700;
+}
+.st-riso .side.right .side-k { background: var(--pink); color: var(--paper-c); }
+.st-riso .side-l { color: var(--fg); font-family: var(--f-body); font-weight: 700; margin-top: calc(8px * var(--si)); }
+.st-riso .side-v { color: var(--blue); }
+.st-riso .side.right .side-v { color: var(--pink); }
+.st-riso .side-p li { color: var(--fg); font-weight: 700; }
+.st-riso .side-p li.ok .mk { color: var(--blue); }
+.st-riso .side-p li.no .mk { color: var(--pink); }
+.st-riso .side.win {
+  border-color: color-mix(in srgb, var(--fg) calc(var(--p, 1) * 100%), var(--pink));
+  box-shadow: calc(10px * var(--si)) calc(10px * var(--si)) 0 color-mix(in srgb, var(--pink) calc(var(--p, 1) * 100%), rgba(255, 72, 176, .3));
+}
+.st-riso .vs {
+  width: calc(68px * var(--si)); height: calc(68px * var(--si));
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--fg); color: var(--paper-c);
+  font-size: calc(28px * var(--si));
+  box-shadow: calc(5px * var(--si)) calc(4px * var(--si)) 0 var(--pink), calc(-4px * var(--si)) calc(-3px * var(--si)) 0 var(--blue);
+}
+.st-riso .verdict {
+  align-self: center;
+  background: var(--paper-c); border: calc(3.5px * var(--s)) solid var(--fg);
+  box-shadow: calc(7px * var(--s)) calc(7px * var(--s)) 0 var(--pink);
+  padding: calc(14px * var(--s)) calc(28px * var(--s));
+  color: var(--fg); margin-top: calc(28px * var(--s));
+}
+
+/* ───────────── 11. STEPS 套印步骤 ───────────── */
+.st-riso .steps {
+  gap: calc(28px * var(--si));
+  padding: calc(6px * var(--si)) calc(10px * var(--si)) calc(10px * var(--si)) 0;
+}
+.st-riso .steps .links path { stroke: var(--pink); stroke-width: 4; stroke-dasharray: 10 8; }
+.st-riso .step .badge {
+  background: var(--blue); color: var(--paper-c); border-radius: 50%;
+  border: calc(4px * var(--si)) solid var(--paper-c);
+  box-shadow: calc(6px * var(--si)) calc(5px * var(--si)) 0 var(--pink);
+  font-family: var(--f-num);
+}
+.st-riso .step:nth-of-type(even) .badge {
+  background: var(--pink);
+  box-shadow: calc(6px * var(--si)) calc(5px * var(--si)) 0 var(--blue);
+}
+.st-riso .step .st-tx {
+  background: var(--paper-c);
+  border: calc(3.5px * var(--si)) solid var(--blue);
+  box-shadow: calc(6px * var(--si)) calc(6px * var(--si)) 0 rgba(255, 72, 176, .55);
+  padding: calc(16px * var(--si)) calc(22px * var(--si));
+}
+.st-riso .step .st-t { color: var(--fg); font-family: var(--f-body); font-weight: 700; }
+.st-riso .step .st-n { color: var(--fg2); font-weight: 400; }
+
+/* ───────────── 12. QUOTE 独立杂志拉引 ───────────── */
+.st-riso .tpl-quote .qt {
+  position: relative;
+  background: var(--paper-c);
+  border: calc(5px * var(--s)) solid var(--blue);
+  box-shadow: calc(12px * var(--s)) calc(12px * var(--s)) 0 var(--pink);
+  padding: calc(44px * var(--s)) calc(48px * var(--s));
+  transform: rotate(-1.2deg);
+  margin: 0 calc(14px * var(--s));
+}
+.st-riso .tpl-quote .qmark {
+  font-family: var(--f-num); color: var(--pink);
+  text-shadow: calc(6px * var(--s)) calc(5px * var(--s)) 0 var(--blue);
+  height: calc(84px * var(--s)); line-height: 0.9;
+}
+.st-riso .tpl-quote .q-text { color: var(--fg); line-height: 1.38; }
+.st-riso .tpl-quote .q-src {
+  display: inline-block; margin-top: calc(26px * var(--s));
+  padding: calc(8px * var(--s)) calc(18px * var(--s));
+  background: var(--blue); color: var(--paper-c); font-weight: 700;
+}
+
+/* ───────────── 13. IMAGE 孔版双色相框 ───────────── */
+.st-riso .f-riso, .st-riso .f-paper, .st-riso .f-plain {
+  padding: calc(14px * var(--s));
+  background: var(--paper-c);
+  border: calc(4px * var(--s)) solid var(--blue);
+  box-shadow: calc(10px * var(--s)) calc(10px * var(--s)) 0 var(--pink);
+}
+.st-riso .f-riso .shot, .st-riso .f-plain .shot { border-radius: 0; }
+.st-riso .cap {
+  color: var(--fg); font-weight: 700;
+  background: rgba(243, 238, 227, .9); padding: calc(6px * var(--s)) calc(14px * var(--s));
+}
+
+/* ───────────── 14. CODE & FORMULA 通用稿适配 ───────────── */
+.st-riso .code-win {
+  border-radius: 0; border: calc(4px * var(--s)) solid var(--fg);
+  box-shadow: calc(10px * var(--s)) calc(10px * var(--s)) 0 var(--pink);
+}
+.st-riso .code-bar { color: var(--paper-c); font-weight: 700; }
+.st-riso .code-bar i { background: var(--pink); }
+.st-riso .code-bar i:nth-child(2) { background: var(--paper-c); }
+.st-riso .code-bar i:nth-child(3) { background: #67B8E8; }
+.st-riso .tok-k { color: #FF7BC6; font-weight: 700; }
+.st-riso .tok-f { color: #6DC7FF; }
+.st-riso .tok-s { color: #F3EEE3; text-decoration: underline rgba(255, 72, 176, .6); }
+.st-riso .tok-n { color: #FF48B0; font-weight: 700; }
+.st-riso .tok-c { color: #8BA2D0; }
+.st-riso .tok-o { color: #A6D6F5; }
+
+.st-riso .tpl-formula .formula {
+  background: var(--paper-c);
+  border: calc(4px * var(--s)) solid var(--blue);
+  box-shadow: calc(10px * var(--s)) calc(10px * var(--s)) 0 var(--pink);
+  padding: calc(36px * var(--s)) calc(28px * var(--s));
+  color: var(--fg);
+}
+
+/* ───────────── 15. ENDING 返场海报结尾 ───────────── */
+.st-riso .tpl-ending .content { justify-content: center; align-items: flex-start; }
+.st-riso .rs-end-card {
+  width: 100%;
+  background: rgba(243, 238, 227, .95);
+  border: calc(5px * var(--s)) solid var(--blue);
+  box-shadow: calc(12px * var(--s)) calc(12px * var(--s)) 0 var(--pink);
+  padding: calc(36px * var(--s)) calc(38px * var(--s));
+}
+.st-riso .rs-end-card .title.xl { --mis-x: 7px; --mis-y: 5px; }
+.st-riso .tpl-ending .cta {
+  display: inline-block; margin-top: calc(28px * var(--s));
+  padding: calc(16px * var(--s)) calc(26px * var(--s));
+  background: var(--blue); color: var(--paper-c);
+  font-weight: 700;
+  box-shadow: calc(6px * var(--s)) calc(6px * var(--s)) 0 var(--pink);
+}
+.st-riso .tpl-ending .cta .hl {
+  background: linear-gradient(var(--pink), var(--pink)) 0 55% / calc(var(--p, 1) * 100%) 1.06em no-repeat;
+  color: var(--paper-c);
+}
+.st-riso .tpl-ending .meta.byline {
+  margin-top: calc(24px * var(--s));
+  font-family: var(--f-num); color: var(--fg2); letter-spacing: .08em;
+}
+
+/* ───────────── STAMP 印章 ───────────── */
+.st-riso .stamp {
+  border-radius: 0; border: calc(5px * var(--s)) solid var(--pink);
+  background: var(--paper-c); color: var(--pink);
+  box-shadow: calc(6px * var(--s)) calc(6px * var(--s)) 0 var(--blue);
+  font-family: var(--f-title);
+  padding: .24em .68em;
+}
+
+/* ───────────── 字幕 ───────────── */
+.st-riso .subl {
+  padding: 6px 20px;
+  background: rgba(243, 238, 227, 0.92);
+  border: 2.5px solid var(--blue);
+  box-shadow: 4px 4px 0 var(--pink);
+  color: var(--fg);
+}
+.st-riso #subs[data-tone="blue"] .subl {
+  background: var(--paper-c); border-color: var(--fg); box-shadow: 4px 4px 0 var(--pink);
+}
+.st-riso #subs[data-tone="pink"] .subl {
+  background: var(--paper-c); border-color: var(--fg); box-shadow: 4px 4px 0 var(--blue);
+}

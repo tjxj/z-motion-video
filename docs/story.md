@@ -28,7 +28,12 @@ my-video/
 | `subtitles` | 写 `false` 关闭字幕 |
 | `pace` | 估算时间轴的参数，见下文「时间轴」 |
 | `seal` | `rice-paper` 专用：封面和结尾的印章文字，2～4 个字 |
-| `masthead` | `newsprint` 专用：报头名，不写时用 `series` |
+| `masthead` | `newsprint` 的报头名、`porcelain` 的刊名、`receipt` 的小票抬头，不写时用 `series` |
+| `column` | `porcelain` 专用：栏目名，跟在刊名后面 |
+| `mascot` | `comic` 专用：写 `"box"` 启用纸箱主角「小箱」，场景里用 `mood` 换表情 |
+| `lineCode` | `metro` 专用：线路代号，最多 3 个字符，不写时用 `M1` |
+| `date` | `receipt` 专用：小票上印的日期，例如 `2026-03-08`，不写时印 `2026-11-23` |
+| `showcase` | 只在风格示范稿 `demo/story.json` 里用：`showcase` 命令出总览图时优先取的场景序号（从 1 开始，封面算第 1 个） |
 
 ## 场景通用字段
 
@@ -47,6 +52,7 @@ my-video/
 | `hold` | 最后一句口播说完后再停多久（秒），默认 0.6 |
 | `stamp` | 印章 / 角标文字，样式和位置由风格决定，在这一页最后出场 |
 | `bg` | 背景变体，各风格支持的值不同（见 SKILL.md「风格」一节） |
+| `layout` | 版式变体，例如封面换一种构图。可选值由风格决定，见 `styles/<风格>/DESIGN.md`，不写时用风格的默认构图 |
 | `accent` | 这一页的强调色，例如 `#E4002B` |
 | `trans` | 进入这一页时的转场，覆盖风格默认：`cut`、`fade`、`fadeblur`、`rise`、`cross`、`push`、`slide`、`paper`、`columns`、`wipe` |
 | `cls` | 给这一页加额外 class，配合 `custom.css` 使用 |

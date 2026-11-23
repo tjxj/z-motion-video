@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130" fill="none">
+  <!-- Sandpaper Sheet with Folded Corner -->
+  <path d="M36 22 L140 22 L166 48 L166 108 L36 108 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M140 22 L140 48 L166 48 Z" fill="#FF5B1F" stroke="#111111" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- Abrasive Grit Dots -->
+  <g fill="#111111">
+    <circle cx="56" cy="42" r="2.6"/><circle cx="76" cy="42" r="2.6"/><circle cx="96" cy="42" r="2.6"/><circle cx="116" cy="42" r="2.6"/>
+    <circle cx="66" cy="58" r="2.6"/><circle cx="86" cy="58" r="2.6"/><circle cx="106" cy="58" r="2.6"/><circle cx="126" cy="58" r="2.6"/>
+    <circle cx="56" cy="74" r="2.6"/><circle cx="76" cy="74" r="2.6"/><circle cx="96" cy="74" r="2.6"/><circle cx="116" cy="74" r="2.6"/><circle cx="136" cy="74" r="2.6"/><circle cx="150" cy="74" r="2.6"/>
+    <circle cx="66" cy="90" r="2.6"/><circle cx="86" cy="90" r="2.6"/><circle cx="106" cy="90" r="2.6"/><circle cx="126" cy="90" r="2.6"/><circle cx="146" cy="90" r="2.6"/>
+  </g>
+</svg>

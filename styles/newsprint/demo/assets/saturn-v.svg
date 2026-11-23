@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760">
+  <defs>
+    <pattern id="skyLines" width="10" height="10" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="5" x2="10" y2="5" stroke="#2B2823" stroke-width="1.2" opacity="0.24"/>
+    </pattern>
+    <pattern id="crossHatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#1A1917" stroke-width="1.8"/>
+    </pattern>
+    <pattern id="dotTone" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.2" fill="#1A1917" opacity="0.32"/>
+    </pattern>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3C3831"/>
+      <stop offset="55%" stop-color="#8C8373"/>
+      <stop offset="100%" stop-color="#DED5C0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky backdrop -->
+  <rect width="1200" height="760" fill="url(#skyGrad)"/>
+  <rect width="1200" height="760" fill="url(#skyLines)"/>
+
+  <!-- Radiating engraving beams from liftoff -->
+  <g stroke="#EFE6D2" stroke-width="2" opacity="0.28">
+    <line x1="600" y1="540" x2="80" y2="60"/>
+    <line x1="600" y1="540" x2="260" y2="0"/>
+    <line x1="600" y1="540" x2="430" y2="0"/>
+    <line x1="600" y1="540" x2="770" y2="0"/>
+    <line x1="600" y1="540" x2="940" y2="0"/>
+    <line x1="600" y1="540" x2="1120" y2="60"/>
+    <line x1="600" y1="540" x2="0" y2="290"/>
+    <line x1="600" y1="540" x2="1200" y2="290"/>
+  </g>
+
+  <!-- Launch Umbilical Tower (Left) -->
+  <g stroke="#1A1917" stroke-width="2.6" fill="none">
+    <rect x="330" y="135" width="76" height="480" fill="#2A2824" opacity="0.88"/>
+    <!-- Truss cross braces -->
+    <path d="M330,135 L406,195 M406,135 L330,195
+             M330,195 L406,255 M406,195 L330,255
+             M330,255 L406,315 M406,255 L330,315
+             M330,315 L406,375 M406,315 L330,375
+             M330,375 L406,435 M406,375 L330,435
+             M330,435 L406,495 M406,435 L330,495
+             M330,495 L406,555 M406,495 L330,555" stroke="#EFE6D2" stroke-width="1.8" opacity="0.65"/>
+    <!-- Swing arms retracting -->
+    <line x1="406" y1="205" x2="495" y2="188" stroke-width="5"/>
+    <line x1="406" y1="285" x2="505" y2="265" stroke-width="5"/>
+    <line x1="406" y1="365" x2="498" y2="352" stroke-width="5"/>
+    <line x1="406" y1="445" x2="492" y2="438" stroke-width="5"/>
+    <!-- Crane on top -->
+    <path d="M342,135 L368,95 L432,102" stroke-width="4"/>
+  </g>
+
+  <!-- Distant coast / launch pad horizon -->
+  <rect x="0" y="610" width="1200" height="150" fill="#2A2824"/>
+  <rect x="0" y="610" width="1200" height="150" fill="url(#crossHatch)" opacity="0.4"/>
+
+  <!-- Billowing exhaust clouds -->
+  <g stroke="#1A1917" stroke-width="3">
+    <path d="M80,760 Q60,645 165,610 Q215,540 325,565 Q410,505 515,535 Q600,480 685,535 Q795,500 885,565 Q990,545 1045,618 Q1145,650 1125,760 Z"
+          fill="#EFE6D2"/>
+    <path d="M140,760 Q145,675 235,655 Q295,605 390,630 Q475,580 600,595 Q720,575 815,630 Q915,605 970,660 Q1055,680 1060,760 Z"
+          fill="#D9CEB8"/>
+    <path d="M140,760 Q145,675 235,655 Q295,605 390,630 Q475,580 600,595 Q720,575 815,630 Q915,605 970,660 Q1055,680 1060,760 Z"
+          fill="url(#dotTone)"/>
+  </g>
+
+  <!-- Engine flame column -->
+  <polygon points="562,505 638,505 688,690 512,690" fill="#F8F2E4" stroke="#1A1917" stroke-width="3"/>
+  <polygon points="582,505 618,505 642,650 558,650" fill="#FFFFFF"/>
+
+  <!-- SATURN V ROCKET (Center) -->
+  <g transform="translate(600, 0)" stroke="#1A1917" stroke-width="3" stroke-linejoin="round">
+    <!-- Escape tower needle -->
+    <line x1="0" y1="36" x2="0" y2="86" stroke-width="3.5"/>
+    <polygon points="-7,86 7,86 11,116 -11,116" fill="#EFE6D2"/>
+    <!-- Command & Service Module -->
+    <polygon points="-14,116 14,116 20,164 -20,164" fill="#EFE6D2"/>
+    <!-- Spacecraft Lunar Module Adapter (conical) -->
+    <polygon points="-20,164 20,164 31,218 -31,218" fill="#E6DEC9"/>
+    <!-- S-IVB Third Stage -->
+    <rect x="-31" y="218" width="62" height="58" fill="#EFE6D2"/>
+    <rect x="-31" y="256" width="62" height="20" fill="#1A1917"/>
+    <!-- Interstage flare -->
+    <polygon points="-31,276 31,276 42,302 -42,302" fill="#1A1917"/>
+    <!-- S-II Second Stage -->
+    <rect x="-42" y="302" width="84" height="92" fill="#EFE6D2"/>
+    <rect x="-42" y="376" width="84" height="18" fill="#1A1917"/>
+    <!-- S-IC First Stage -->
+    <rect x="-42" y="394" width="84" height="110" fill="#EFE6D2"/>
+    <!-- Iconic black/white roll pattern -->
+    <rect x="-42" y="394" width="42" height="46" fill="#1A1917"/>
+    <rect x="0" y="458" width="42" height="46" fill="#1A1917"/>
+    <!-- Vertical right-side shading -->
+    <rect x="18" y="218" width="13" height="58" fill="url(#dotTone)" stroke="none"/>
+    <rect x="22" y="302" width="20" height="202" fill="url(#dotTone)" stroke="none"/>
+    <!-- Base fins -->
+    <polygon points="-42,462 -76,506 -42,506" fill="#1A1917"/>
+    <polygon points="42,462 76,506 42,506" fill="#1A1917"/>
+    <!-- F-1 Engine nozzles -->
+    <polygon points="-36,504 -22,504 -26,522 -40,522" fill="#2A2824"/>
+    <polygon points="-10,504 10,504 12,522 -12,522" fill="#2A2824"/>
+    <polygon points="22,504 36,504 40,522 26,522" fill="#2A2824"/>
+  </g>
+
+  <!-- Technical drafting callout lines (vintage newspaper diagram style) -->
+  <g stroke="#EFE6D2" stroke-width="1.8" font-family="monospace" font-size="22" font-weight="700" fill="#EFE6D2">
+    <line x1="628" y1="142" x2="770" y2="142"/>
+    <circle cx="628" cy="142" r="4" fill="#EFE6D2"/>
+    <text x="782" y="149">APOLLO CSM + LM</text>
+
+    <line x1="646" y1="340" x2="770" y2="340"/>
+    <circle cx="646" cy="340" r="4" fill="#EFE6D2"/>
+    <text x="782" y="347">STAGE II / III</text>
+
+    <line x1="652" y1="452" x2="770" y2="452"/>
+    <circle cx="652" cy="452" r="4" fill="#EFE6D2"/>
+    <text x="782" y="459">SATURN V · 110.6 M</text>
+  </g>
+
+  <rect x="10" y="10" width="1180" height="740" fill="none" stroke="#1A1917" stroke-width="3"/>
+</svg>

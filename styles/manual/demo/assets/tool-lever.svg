@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130" fill="none">
+  <!-- Back Tire Lever -->
+  <g transform="translate(22, 30) rotate(8)">
+    <path d="M8 22 C12 10 24 6 38 8 L138 8 C148 8 154 14 154 22 C154 30 148 36 138 36 L34 36 C22 36 12 32 8 22 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="136" cy="22" r="5" stroke="#111111" stroke-width="3"/>
+    <line x1="50" y1="22" x2="116" y2="22" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <!-- Front Tire Lever with Safety Orange Scoop Tip -->
+  <g transform="translate(24, 62) rotate(-10)">
+    <path d="M6 22 C10 10 24 6 38 8 L142 8 C152 8 158 14 158 22 C158 30 152 36 142 36 L34 36 C20 36 10 32 6 22 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M6 22 C10 10 24 6 38 8 L40 36 L34 36 C20 36 10 32 6 22 Z" fill="#FF5B1F" stroke="#111111" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M138 8 L148 0 L152 10" stroke="#111111" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="136" cy="22" r="5" fill="#FBFBF8" stroke="#111111" stroke-width="3"/>
+    <line x1="54" y1="22" x2="116" y2="22" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760">
+  <defs>
+    <pattern id="dustGrain" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#2B2823" opacity="0.28"/>
+      <circle cx="5" cy="4.5" r="0.9" fill="#1A1917" opacity="0.2"/>
+    </pattern>
+    <pattern id="treadShade" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#1A1917" stroke-width="2.2"/>
+    </pattern>
+    <linearGradient id="regolith" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#DFD6C2"/>
+      <stop offset="55%" stop-color="#C9BFA9"/>
+      <stop offset="100%" stop-color="#A79C86"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Lunar regolith surface -->
+  <rect width="1200" height="760" fill="url(#regolith)"/>
+  <rect width="1200" height="760" fill="url(#dustGrain)"/>
+
+  <!-- Top dark lunar horizon band -->
+  <path d="M0,0 L1200,0 L1200,152 Q900,128 600,148 T0,136 Z" fill="#181715"/>
+  <g fill="#EFE6D2">
+    <circle cx="155" cy="54" r="2"/><circle cx="340" cy="82" r="1.5"/><circle cx="520" cy="45" r="1.8"/>
+    <circle cx="770" cy="64" r="2.2"/><circle cx="980" cy="48" r="1.6"/><circle cx="1095" cy="92" r="1.8"/>
+  </g>
+  <path d="M0,136 Q300,160 600,148 T1200,152" fill="none" stroke="#1A1917" stroke-width="3.5"/>
+
+  <!-- Scattered lunar pebbles & small indentations -->
+  <g stroke="#1A1917" stroke-width="2">
+    <ellipse cx="165" cy="260" rx="58" ry="16" fill="#B5AB95"/>
+    <path d="M114,258 A52,13 0 0,1 216,258 A52,8 0 0,0 114,258 Z" fill="#2A2824"/>
+    <ellipse cx="1020" cy="310" rx="74" ry="20" fill="#B5AB95"/>
+    <path d="M956,308 A66,16 0 0,1 1084,308 A66,10 0 0,0 956,308 Z" fill="#2A2824"/>
+    <ellipse cx="965" cy="635" rx="52" ry="15" fill="#ABA08B"/>
+    <ellipse cx="220" cy="642" rx="44" ry="12" fill="#ABA08B"/>
+    <!-- Pebbles with crisp shadows -->
+    <ellipse cx="265" cy="455" rx="18" ry="8" fill="#2A2824"/>
+    <ellipse cx="275" cy="451" rx="14" ry="7" fill="#E6DEC9"/>
+    <ellipse cx="920" cy="472" rx="22" ry="9" fill="#2A2824"/>
+    <ellipse cx="932" cy="467" rx="16" ry="8" fill="#E6DEC9"/>
+    <ellipse cx="330" cy="295" rx="12" ry="5" fill="#2A2824"/>
+    <ellipse cx="336" cy="292" rx="9" ry="5" fill="#E6DEC9"/>
+  </g>
+
+  <!-- ICONIC APOLLO 11 BOOTPRINT (center, rotated slightly) -->
+  <g transform="translate(600, 462) rotate(-14)">
+    <!-- Outer displaced regolith rim -->
+    <path d="M-192,-225 C-220,-130 -212,60 -178,195 C-162,258 -82,272 0,268 C82,272 162,258 178,195 C212,60 220,-130 192,-225 C172,-292 86,-308 0,-306 C-86,-308 -172,-292 -192,-225 Z"
+          fill="#E5DCC7" stroke="#1A1917" stroke-width="3" opacity="0.82"/>
+    <!-- Deep recessed bootprint cavity -->
+    <path d="M-158,-204 C-180,-120 -172,52 -145,172 C-130,224 -68,236 0,234 C68,236 130,224 145,172 C172,52 180,-120 158,-204 C140,-258 70,-272 0,-270 C-70,-272 -140,-258 -158,-204 Z"
+          fill="#262420" stroke="#1A1917" stroke-width="4"/>
+
+    <!-- Sculpted horizontal boot tread ribs (high contrast sunlight from right) -->
+    <g stroke="#1A1917" stroke-width="2.5">
+      <!-- Rib 1 (toe) -->
+      <path d="M-126,-218 Q0,-234 126,-218 L134,-186 Q0,-200 -134,-186 Z" fill="#D5CCB7"/>
+      <path d="M-134,-186 Q0,-200 134,-186 L130,-172 Q0,-186 -130,-172 Z" fill="#1A1917"/>
+      <!-- Rib 2 -->
+      <path d="M-142,-156 Q0,-168 142,-156 L146,-124 Q0,-134 -146,-124 Z" fill="#DDD4BF"/>
+      <path d="M-146,-124 Q0,-134 146,-124 L144,-108 Q0,-118 -144,-108 Z" fill="#1A1917"/>
+      <!-- Rib 3 -->
+      <path d="M-150,-92 Q0,-102 150,-92 L152,-60 Q0,-68 -152,-60 Z" fill="#E3DAC6"/>
+      <path d="M-152,-60 Q0,-68 152,-60 L150,-44 Q0,-52 -150,-44 Z" fill="#1A1917"/>
+      <!-- Rib 4 -->
+      <path d="M-152,-28 Q0,-36 152,-28 L150,4 Q0,-2 -150,4 Z" fill="#DDD4BF"/>
+      <path d="M-150,4 Q0,-2 150,4 L148,20 Q0,14 -148,20 Z" fill="#1A1917"/>
+      <!-- Rib 5 (arch) -->
+      <path d="M-146,36 Q0,30 146,36 L142,68 Q0,62 -142,68 Z" fill="#D4CBB6"/>
+      <path d="M-142,68 Q0,62 142,68 L138,84 Q0,78 -138,84 Z" fill="#1A1917"/>
+      <!-- Rib 6 -->
+      <path d="M-138,100 Q0,96 138,100 L132,132 Q0,128 -132,132 Z" fill="#DDD4BF"/>
+      <path d="M-132,132 Q0,128 132,132 L128,148 Q0,144 -128,148 Z" fill="#1A1917"/>
+      <!-- Rib 7 (heel) -->
+      <path d="M-124,164 Q0,162 124,164 L112,196 Q0,202 -112,196 Z" fill="#D5CCB7"/>
+    </g>
+
+    <!-- Left-edge shadow inside cavity -->
+    <path d="M-158,-204 C-180,-120 -172,52 -145,172 C-135,205 -105,222 -72,230 L-108,185 C-132,65 -138,-110 -116,-195 Z"
+          fill="#1A1917" opacity="0.58"/>
+    <!-- Halftone hatching over the tread -->
+    <path d="M-158,-204 C-180,-120 -172,52 -145,172 C-130,224 -68,236 0,234 C68,236 130,224 145,172 C172,52 180,-120 158,-204 C140,-258 70,-272 0,-270 C-70,-272 -140,-258 -158,-204 Z"
+          fill="url(#treadShade)" opacity="0.22"/>
+  </g>
+
+  <!-- Corner camera reseau crosshairs (authentic Apollo Hasselblad markings!) -->
+  <g stroke="#1A1917" stroke-width="2.2" opacity="0.72">
+    <path d="M220,240 H250 M235,225 V255"/>
+    <path d="M950,240 H980 M965,225 V255"/>
+    <path d="M220,560 H250 M235,545 V575"/>
+    <path d="M950,560 H980 M965,545 V575"/>
+    <path d="M585,390 H615 M600,375 V405" stroke="#EFE6D2"/>
+  </g>
+
+  <rect x="10" y="10" width="1180" height="740" fill="none" stroke="#1A1917" stroke-width="3"/>
+</svg>

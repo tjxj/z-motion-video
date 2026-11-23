@@ -586,9 +586,11 @@
     document.getElementById('scenes').appendChild(el);
     const api = makeApi(sc);
     sc.api = api;
-    const tpl = MV.templates[sc.t];
+    // 风格可以用 templates 整体换掉某个模板的版式，第三个参数是引擎自带的同名模板
+    const base = MV.templates[sc.t];
+    const tpl = (STYLE.templates && STYLE.templates[sc.t]) || base;
     if (!tpl) throw new Error(`第 ${sc.i + 1} 个场景用了不存在的模板：${sc.t}`);
-    tpl(sc.d, api);
+    tpl(sc.d, api, base);
     if (sc.d.stamp) api.stamp(sc.d.stamp);
     if (STYLE.decorate) STYLE.decorate(sc, api);
   }
@@ -787,15 +789,27 @@
   }
   function fitScene(sc) {
     const el = sc.el, c = sc.content;
+    const over = () => { fitTitles(sc); return Math.max(c.scrollHeight - c.clientHeight, c.scrollWidth - c.clientWidth); };
     let s = 1;
     el.style.setProperty('--s', 1);
-    for (let k2 = 0; k2 < 18; k2++) {
-      fitTitles(sc);
-      const ov = c.scrollHeight - c.clientHeight, ow = c.scrollWidth - c.clientWidth;
-      if (ov <= 1 && ow <= 1) break;
-      s = +(s - 0.04).toFixed(3);
-      if (s < 0.46) break;
-      el.style.setProperty('--s', s);
+    let o = over();
+    // 每缩一档记一次溢出量。连着两档都没减少，说明溢出来自不跟着缩放的装饰（旋转的胶带、固定像素的偏移），
+    // 再缩只会让字变小，于是退回到溢出开始持平的那一档
+    const tried = [[s, o]];
+    while (o > 1) {
+      const s2 = +(s - 0.04).toFixed(3);
+      if (s2 < 0.46) break;
+      el.style.setProperty('--s', s2);
+      s = s2;
+      o = over();
+      tried.push([s, o]);
+      const n = tried.length;
+      if (n >= 3 && o >= tried[n - 3][1] - 1) break;
+    }
+    if (o > 1) {
+      const lo = Math.min(...tried.map(x => x[1]));
+      const pick = tried.find(x => x[1] <= lo + 1);
+      if (pick[0] !== s) { s = pick[0]; el.style.setProperty('--s', s); over(); }
     }
     sc.scale = s;
     const ov = c.scrollHeight - c.clientHeight, ow = c.scrollWidth - c.clientWidth;

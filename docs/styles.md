@@ -1,15 +1,19 @@
 # 做一套新风格
 
-一套风格是 `styles/<名字>/` 下的三个文件：
+一套风格是 `styles/<名字>/` 下的三个文件，加一份示范稿：
 
 ```text
 styles/my-style/
-├── style.json   名称、描述、适合题材、用到的字体
-├── style.css    颜色、字体、各模板元素的外观
-└── style.js     底纸绘制、页眉页脚、出场节奏、转场、每页配色
+├── style.json        名称、描述、适合题材、用到的字体
+├── style.css         颜色、字体、各模板元素的外观
+├── style.js          底纸绘制、页眉页脚、出场节奏、转场、每页配色，以及按本风格重写的模板版式
+├── DESIGN.md         设计说明（可选）：版式语法、标志性装置、版式变体
+└── demo/story.json   示范稿：最能体现这套风格的一份稿子（可带 demo/assets/）
 ```
 
-引擎（`engine/`）只管排版骨架、时间轴和逐帧渲染，风格只负责「长什么样、怎么动」。三个文件都只作用于本风格，不会影响别的风格。
+引擎（`engine/`）只管默认排版骨架、时间轴和逐帧渲染，风格决定「长什么样、怎么排、怎么动」。所有文件都只作用于本风格，不会影响别的风格。
+
+一套好风格除了颜色和字体，封面、列表、条形图这些页面的**构图**也应该是自己的（报纸的报头和分栏、地铁的线路和站牌、漫画的分镜格和气泡）。默认模板的版式只是兜底，用下文的 `templates` 按本风格重写。
 
 ## 起步
 
@@ -17,12 +21,15 @@ styles/my-style/
 
 ```bash
 cp -r $SK/styles/grid-notebook $SK/styles/my-style
-python3 $SK/tools/mv.py new ./style-demo
-python3 $SK/tools/mv.py snap ./style-demo --style my-style --ratio all
-python3 $SK/tools/mv.py compare ./style-demo --styles grid-notebook,my-style --scene 6
+python3 $SK/tools/mv.py snap $SK/styles/my-style/demo --style my-style --ratio all   # 示范稿
+python3 $SK/tools/mv.py new ./leap --example leap-year
+python3 $SK/tools/mv.py snap ./leap --style my-style --ratio all                    # 通用稿
+python3 $SK/tools/mv.py showcase --styles my-style --ratio all --out ./showcase      # 出总览图
 ```
 
-示例稿有 17 个场景，覆盖了大部分模板。每改一轮就 `snap` 三种画幅，看总览图和 ⚠ 提示，再用 `snap --at 12.3,12.6` 截转场中间的帧检查转场。
+示范稿用来展示这套风格最好的样子；闰年示例稿有 17 个场景、覆盖所有模板，用来确认别人的稿子套上来也不出错。每改一轮就 `snap` 三种画幅，看总览图和 ⚠ 提示，再用 `snap --at 12.3,12.6` 截转场中间的帧检查转场。
+
+`snap` 会在项目目录里生成 `build/`、`out/`、`timing.json`，直接对 `styles/<名字>/demo` 运行时也一样，它们已在 `.gitignore` 里。
 
 ## style.json
 
@@ -46,6 +53,8 @@ python3 $SK/tools/mv.py compare ./style-demo --styles grid-notebook,my-style --s
 | `order` | 列表里的排序 |
 | `preview` | 代表色 |
 
+示范稿 `demo/story.json` 顶层可以写 `"showcase": [3, 6, 9]`：`showcase` 命令出总览图时优先取这几页（场景序号从 1 开始，封面算第 1 个）。
+
 可用字体：
 
 | key | CSS 里的名字 | 字体 |
@@ -58,8 +67,16 @@ python3 $SK/tools/mv.py compare ./style-demo --styles grid-notebook,my-style --s
 | `ital` | `"MV Ital"` | Instrument Serif（衬线斜体英文和数字） |
 | `grot` | `"MV Grot"` | Inter（只含拉丁字符） |
 | `type` | `"MV Type"` | Courier Prime（打字机） |
+| `brush` | `"MV Brush"` | 马善政毛笔楷书（中文书法） |
+| `fun` | `"MV Fun"` | 站酷快乐体（中文圆润俏皮） |
+| `poster` | `"MV Poster"` | 站酷庆科黄油体（中文粗壮海报体） |
+| `elegant` | `"MV Elegant"` | 站酷小薇 LOGO 体（中文优雅衬线） |
+| `script` | `"MV Script"` | 龙藏体（中文手写行书） |
+| `bebas` | `"MV Bebas"` | Bebas Neue（窄体大写标题） |
+| `comic` | `"MV Comic"` | Bangers（漫画字） |
+| `black` | `"MV Black"` | Archivo Black（超粗黑） |
 
-`grot`、`cond`、`ital`、`type` 只有拉丁字符，写 `font-family` 时后面要跟一个中文字体，例如 `"MV Grot", "MV Sans", sans-serif`。字体文件优先用本机已安装的同款，没有时从 npm 镜像下载 Fontsource 包（OFL 协议），缓存在 `~/.cache/z-motion-video/fonts`（可用环境变量 `MV_CACHE` 改位置）。设置 `MV_NO_LOCAL_FONTS=1` 可以强制使用下载版，方便检查别人机器上的效果。
+`grot`、`cond`、`ital`、`type`、`bebas`、`comic`、`black` 只有拉丁字符；`brush`、`fun`、`poster`、`elegant`、`script` 是单字重的中文显示字体，字库不全。写 `font-family` 时后面都要跟一个思源字体兜底，例如 `"MV Grot", "MV Sans", sans-serif`、`"MV Brush", "MV Serif", serif`。字体文件优先用本机已安装的同款，没有时从 npm 镜像下载 Fontsource 包（OFL 协议），缓存在 `~/.cache/z-motion-video/fonts`（可用环境变量 `MV_CACHE` 改位置）。设置 `MV_NO_LOCAL_FONTS=1` 可以强制使用下载版，方便检查别人机器上的效果。
 
 ## style.css
 
@@ -163,6 +180,7 @@ python3 $SK/tools/mv.py compare ./style-demo --styles grid-notebook,my-style --s
 
 | 钩子 | 调用时机 | 用途 |
 |---|---|---|
+| `templates` | 每页搭建时 | 按本风格重写某个模板的版式，见下文「按风格重写模板」 |
 | `paint(g, W, H, R, u)` | 启动时画一次 | 底纸：在 canvas 2D 上下文 `g` 上画纸纹、网格、渐变。`R()` 是固定种子的随机数，`u` 里有 `rough`（手绘路径）、`rng`、`cl`、`lerp`、`EZ`（缓动函数）、`noise(强度, 种子, 单色)`、`story`、`rc`（画幅）、`land`（是否横屏）。画完会转成图片，每页默认都用它当背景 |
 | `overlay(g, W, H, R, u)` | 启动时画一次 | 盖在最上层的纹理（正片叠底），适合纸张颗粒、网点 |
 | `chrome(c)` | 启动时一次 | 在 `c.el` 里建页眉、页码、进度条、署名。返回一个函数，每帧收到 `info`：`t`、`i`、`page`、`total`（两位数字符串）、`progress`（0～1）、`section`、`chap`、`tone`、`type`、`cover`。`c` 里有 `h(tag, cls, html)`、`svg`、`esc`、`plain`、`story`、`scenes`、`W`、`H`、`rc`、`land` 等工具 |
@@ -173,6 +191,47 @@ python3 $SK/tools/mv.py compare ./style-demo --styles grid-notebook,my-style --s
 | `badge(i, item, api)` | 步骤每一步 | 返回步骤编号的 HTML |
 | `link(x1, y1, x2, y2, o)` | 步骤和时间线的连线 | 返回 SVG path 的 `d`。`o` 里有 `i`（第几条）、`R`、`rough`、`dash`（虚线）、`arrowHead(x1, y1, x2, y2, 大小, 张角)` |
 | `tick(t, o)` | 每帧 | 需要随时间变化的全局装饰（跑马灯、闪烁）。必须只依赖 `t` 计算，不能累加状态 |
+
+### 按风格重写模板
+
+`templates` 里写同名函数，就会代替引擎自带的模板。第三个参数 `base` 是自带的版本，可以先调用它再改 DOM，也可以完全自己搭：
+
+```js
+MV.style({
+  templates: {
+    // 完全自己搭：报头 + 跨栏大标题 + 三栏正文
+    cover(d, api) {
+      const mast = api.add(api.root, 'div', 'masthead', api.esc(api.story.masthead || '环球纪事报'));
+      api.beat(mast, 'kicker');
+      api.head({ big: true });
+      const cols = api.add(api.root, 'div', 'np-cols', [].concat(d.say || []).map(s => `<p>${api.esc(api.plain(s))}</p>`).join(''));
+      api.beat(cols, 'text', d.textAt);
+    },
+    // 在自带版式上加东西
+    list(d, api, base) {
+      base(d, api);
+      api.root.classList.add('np-list');
+    },
+  },
+});
+```
+
+规则：
+
+- 要出场的元素都用 `api.beat(元素, 角色, 时刻, { auto: 对应的文字 })` 登记，口播说到 `auto` 里的文字时它才出现；没登记的元素一直显示。
+- 标题用 `api.head()`，或者自己建 `.title > .ln` 再调用 `api.fitTitle(元素)`，这样长标题会自动缩字号。
+- 文字里有【】时，建好元素后调用 `api.marks(元素, beat)`，强调词才会跟口播点亮。
+- 需要量尺寸再排的（比如沿着元素画连线），写在 `api.layout(() => { … })` 里，它在字体加载、自动缩放之后执行；`api.rel(元素, 参考元素)` 返回相对位置。
+- 同一个模板可以读 `d.layout` 提供几种构图（例如封面 `'split'`、`'full'`），在 DESIGN.md 里写清楚可选值。
+- 也可以注册引擎没有的新模板名，但示范稿最好只用 17 个通用模板，这样用户的稿子换成这个风格也好看。
+
+### 自定义动画
+
+```js
+MV.kinds.clap = { f(el, p) { el.style.rotate = `${(-28 * (1 - MV.util.EZ.o3(p))).toFixed(2)}deg`; } };
+```
+
+`p` 从 0 到 1。注册后可以在 `motion` 里当 `kind` 用，也可以在模板里用 `api.track(元素, 'clap', 开始秒, 时长, 参数)` 在这一页的任意时间段驱动（例如列车沿线前进、拍板合上）。
 
 ### look()：每页换配色
 

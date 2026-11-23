@@ -1,0 +1,516 @@
+/* 电影胶片 film：35mm 齿孔 + 2.39:1 宽银幕遮幅 + 场记板 + 24fps 时间码 */
+#stage.st-film {
+  --bg: #0B0B0C; --fg: #E9E6DF; --fg2: #ACA79D; --fg3: #6E6A63;
+  --accent: #E8A33D; --accent2: #7D8894; --on-accent: #0B0B0C; --hl: #E8A33D;
+  --rec: #E5383B;
+  --acc-soft: rgba(232, 163, 61, .16);
+  --acc-line: rgba(232, 163, 61, .52);
+  --acc-glow: rgba(232, 163, 61, .34);
+  --line: rgba(233, 230, 223, .14); --line-strong: rgba(233, 230, 223, .38);
+  --card-bg: rgba(22, 20, 18, .82); --card-bd: rgba(233, 230, 223, .16); --radius: 6px;
+  --code-bg: #0E0E10; --code-fg: #E9E6DF; --code-bar: #171615; --code-hl: rgba(232, 163, 61, .18);
+  --sub-fg: #F5F2EB; --sub-hl: #E8A33D;
+  --dim: .44;
+  /* 字体体系：Bebas 数字/英文、站酷小薇+思源宋体标题、思源黑体正文、JetBrains Mono 时间码 */
+  --f-title: "MV Elegant", "MV Serif", serif;
+  --f-body: "MV Sans", sans-serif;
+  --f-num: "MV Bebas", "MV Sans", sans-serif;
+  --f-kicker: "MV Mono", "MV Sans", monospace;
+  --f-subl: "MV Sans", sans-serif;
+  --f-quote: "MV Serif", serif;
+  --f-mono: "MV Mono", ui-monospace, monospace;
+  --w-title: 400; --w-body: 400; --w-num: 400; --w-kicker: 400; --w-subl: 500; --w-strong: 700;
+  --lh-title: 1.24; --lh-body: 1.48; --track-title: .03em; --track-kicker: .16em; --tt-kicker: uppercase;
+  /* 画幅遮幅与齿孔尺寸默认值（3:4） */
+  --rail-w: 54px; --top-h: 132px; --bot-h: 238px;
+}
+
+/* 三种画幅安全区与遮幅黑边匹配 */
+#stage.st-film.r34 {
+  --rail-w: 54px; --top-h: 132px; --bot-h: 238px;
+  --ct: 164px; --cb: 266px; --cl: 84px; --cr: 84px;
+  --sub-y: 1290px; --sub-h: 120px; --sub-w: 900px;
+  --fs-title: 78px; --fs-title-xl: 106px; --fs-dek: 34px; --fs-text: 70px;
+  --fs-body: 42px; --fs-note: 30px; --fs-num: 270px; --fs-stat: 118px; --fs-quote: 64px;
+  --fs-subl: 46px; --fs-chip: 27px; --gap: 34px;
+}
+#stage.st-film.r916 {
+  --rail-w: 52px; --top-h: 204px; --bot-h: 530px;
+  --ct: 242px; --cb: 560px; --cl: 84px; --cr: 84px;
+  --sub-y: 1466px; --sub-h: 130px; --sub-w: 900px;
+  --fs-title: 82px; --fs-title-xl: 112px; --fs-dek: 36px; --fs-text: 74px;
+  --fs-body: 44px; --fs-note: 31px; --fs-num: 290px; --fs-stat: 122px; --fs-quote: 68px;
+  --fs-subl: 50px; --fs-chip: 28px; --gap: 40px;
+}
+#stage.st-film.r169 {
+  --rail-w: 64px; --top-h: 112px; --bot-h: 184px;
+  --ct: 140px; --cb: 204px; --cl: 112px; --cr: 112px;
+  --sub-y: 964px; --sub-h: 108px; --sub-w: 1520px;
+  --fs-title: 82px; --fs-title-xl: 110px; --fs-dek: 35px; --fs-text: 74px;
+  --fs-body: 40px; --fs-note: 29px; --fs-num: 280px; --fs-stat: 120px; --fs-quote: 66px;
+  --fs-subl: 48px; --fs-chip: 27px; --gap: 30px;
+}
+#stage.st-film.nosub.r34 { --bot-h: 130px; --cb: 162px; }
+#stage.st-film.nosub.r916 { --bot-h: 280px; --cb: 310px; }
+#stage.st-film.nosub.r169 { --bot-h: 106px; --cb: 134px; }
+
+/* 暗房胶片颗粒叠加（覆盖 base.css 的 multiply） */
+#stage.st-film #ovl { mix-blend-mode: screen; opacity: .34; }
+
+/* ───── 全局 35mm 放映门 Chrome ───── */
+.st-film .fl-flick { position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, rgba(255, 224, 170, .42), rgba(232, 163, 61, .08) 55%, transparent 80%); opacity: 0; pointer-events: none; }
+
+/* 双侧 35mm 胶片齿孔带 */
+.st-film .fl-rail { position: absolute; top: 0; bottom: 0; width: var(--rail-w); overflow: hidden; background: #060607; z-index: 4; }
+.st-film .fl-rail-l { left: 0; box-shadow: 2px 0 18px rgba(0, 0, 0, .75); }
+.st-film .fl-rail-r { right: 0; box-shadow: -2px 0 18px rgba(0, 0, 0, .75); }
+.st-film .fl-rail-track { position: absolute; top: 0; left: 0; width: 100%; will-change: translate; }
+.st-film .fl-rail-track svg { display: block; }
+
+/* 上下遮幅黑边（Letterbox Matte） */
+.st-film .fl-top {
+  position: absolute; left: var(--rail-w); right: var(--rail-w); top: 0; height: var(--top-h);
+  background: linear-gradient(180deg, #050506 0%, #08080A 92%, #0B0B0D 100%);
+  border-bottom: 1.5px solid rgba(232, 163, 61, .28);
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 28px 20px; z-index: 3;
+  font-family: var(--f-mono); font-size: 19px; letter-spacing: .08em; color: var(--fg2);
+}
+.st-film.r916 .fl-top { padding-bottom: 24px; }
+.st-film.r169 .fl-top { padding: 0 40px 18px; font-size: 20px; }
+
+.st-film .fl-top-l, .st-film .fl-top-r { display: flex; align-items: center; gap: 18px; min-width: 0; }
+.st-film .fl-rec {
+  display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px;
+  border: 1px solid rgba(229, 56, 59, .55); border-radius: 3px; background: rgba(229, 56, 59, .12);
+  color: #F5F2EB; font-weight: 700; font-size: 16px; letter-spacing: .12em;
+}
+.st-film .fl-rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 10px var(--rec); }
+.st-film .fl-spec { color: var(--fg3); font-size: 16px; white-space: nowrap; }
+.st-film .fl-ser { color: var(--fg2); font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+.st-film.r34 .fl-spec, .st-film.r916 .fl-spec { display: none; }
+.st-film .fl-tc { color: var(--accent); font-weight: 700; font-size: 20px; letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.st-film .fl-reel { color: var(--fg2); font-size: 17px; padding-left: 14px; border-left: 1px solid rgba(233, 230, 223, .2); white-space: nowrap; }
+
+.st-film .fl-bot {
+  position: absolute; left: var(--rail-w); right: var(--rail-w); bottom: 0; height: var(--bot-h);
+  background: linear-gradient(0deg, #050506 0%, #08080A 92%, #0B0B0D 100%);
+  border-top: 1.5px solid rgba(232, 163, 61, .28);
+  display: flex; align-items: flex-end; z-index: 3;
+}
+.st-film .fl-foot {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 22px;
+  padding: 0 28px 26px; font-family: var(--f-mono); font-size: 17px; color: var(--fg3); letter-spacing: .08em;
+}
+.st-film.r916 .fl-foot { padding-bottom: 34px; }
+.st-film.r169 .fl-foot { padding: 0 40px 20px; }
+.st-film .fl-by { color: var(--fg2); white-space: nowrap; }
+.st-film .fl-prog { flex: 1; display: flex; align-items: center; gap: 14px; max-width: 440px; }
+.st-film .fl-prog-track { flex: 1; height: 4px; background: rgba(233, 230, 223, .12); border-radius: 2px; overflow: hidden; }
+.st-film .fl-prog-fill { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; scale: 0 1; }
+.st-film .fl-sec { font-size: 15px; color: var(--fg2); opacity: .78; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+.st-film .fl-fps { color: var(--accent); opacity: .78; font-size: 16px; white-space: nowrap; }
+
+/* 取景框四角标记（紧贴放映画幅四角） */
+.st-film .fl-vf {
+  position: absolute;
+  top: calc(var(--top-h) + 14px); bottom: calc(var(--bot-h) + 14px);
+  left: calc(var(--rail-w) + 16px); right: calc(var(--rail-w) + 16px);
+  pointer-events: none; z-index: 2;
+}
+.st-film .fl-vf .c { position: absolute; width: 22px; height: 22px; border-color: rgba(233, 230, 223, .32); border-style: solid; border-width: 0; }
+.st-film .fl-vf .tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+.st-film .fl-vf .tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
+.st-film .fl-vf .bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
+.st-film .fl-vf .br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+.st-film .fl-vf .tick-t, .st-film .fl-vf .tick-b { position: absolute; left: 50%; width: 24px; height: 2px; margin-left: -12px; background: rgba(232, 163, 61, .42); }
+.st-film .fl-vf .tick-t { top: 0; }
+.st-film .fl-vf .tick-b { bottom: 0; }
+
+/* ───── 通用标题区与高亮 ───── */
+.st-film .kicker { color: var(--accent); margin-bottom: calc(14px * var(--s)); font-size: calc(25px * var(--s)); }
+.st-film .kicker .kt { display: inline-flex; align-items: center; gap: 10px; }
+.st-film .kicker .kt::before { content: ''; width: 18px; height: 2px; background: var(--accent); display: inline-block; }
+.st-film .content.center .kicker .kt::after { content: ''; width: 18px; height: 2px; background: var(--accent); display: inline-block; }
+.st-film .fl-cover .kicker .kt::after, .st-film .fl-chapter .kicker .kt::after, .st-film .fl-statement .kicker .kt::after { display: none; }
+.st-film .title { font-family: var(--f-title); font-weight: var(--w-title); letter-spacing: var(--track-title); color: var(--fg); }
+.st-film :is(.fl-credits, .fl-tc-body, .fl-slate-main) .title { width: 100%; }
+.st-film .dek { color: var(--fg2); margin-top: calc(16px * var(--s)); }
+.st-film .note { color: var(--fg2); font-size: calc(var(--fs-note) * var(--s)); margin-top: calc(22px * var(--s)); padding-left: 14px; border-left: 3px solid var(--acc-line); }
+.st-film .content.center .note { padding-left: 0; border-left: 0; }
+
+/* 【】高亮：琥珀电影荧光底扫过 */
+.st-film .hl {
+  color: color-mix(in srgb, var(--hl) calc(var(--p, 1) * 100%), currentColor);
+  background: linear-gradient(var(--acc-soft), var(--acc-soft)) 0 88% / calc(var(--p, 1) * 100%) .32em no-repeat;
+  padding: 0 .06em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.st-film :is(.formula, .subl) .hl { background: none; padding: 0; }
+
+/* ───── chips ───── */
+.st-film .chip {
+  font-family: var(--f-mono); font-size: calc(var(--fs-chip) * var(--s)); letter-spacing: .06em;
+  border-radius: 3px; border: 1.5px solid var(--line-strong); background: rgba(233, 230, 223, .04); color: var(--fg2);
+  padding: .34em .82em;
+}
+.st-film .chip.hot { border-color: var(--accent); background: var(--acc-soft); color: var(--accent); }
+
+/* ───── 1. 封面（倒计时片头 + 2.39:1 宽银幕标题卡）───── */
+.st-film .fl-cover { --align: center; --align-x: center; justify-content: space-between !important; padding: calc(10px * var(--s)) 0; }
+.st-film .fl-cov-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(26px * var(--s)); flex: 1 1 auto; width: 100%; min-height: 0; }
+
+/* Academy 倒计时片头准星 */
+.st-film .fl-cov-leader { width: calc(250px * var(--s)); height: calc(250px * var(--s)); flex: none; }
+.st-film.r916 .fl-cov-leader { width: calc(290px * var(--s)); height: calc(290px * var(--s)); }
+.st-film .fl-leader-svg { width: 100%; height: 100%; display: block; }
+.st-film .fl-leader-num { font-family: var(--f-num); font-size: 74px; fill: #E9E6DF; letter-spacing: .04em; }
+.st-film .fl-leader-lbl { font-family: var(--f-mono); font-size: 9px; fill: rgba(232, 163, 61, .86); letter-spacing: 1.6px; }
+
+/* 2.39:1 宽银幕标题卡 */
+.st-film .fl-title-card {
+  width: 100%; background: linear-gradient(180deg, rgba(24, 22, 19, .92) 0%, rgba(13, 12, 11, .96) 100%);
+  border: 1.5px solid rgba(232, 163, 61, .42); border-radius: 4px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .55), inset 0 0 80px rgba(232, 163, 61, .06);
+  overflow: hidden;
+}
+.st-film .fl-tc-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: calc(10px * var(--s)) calc(22px * var(--s));
+  background: rgba(232, 163, 61, .10); border-bottom: 1px solid rgba(232, 163, 61, .28);
+  font-family: var(--f-mono); font-size: calc(17px * var(--s)); letter-spacing: .14em; color: var(--accent);
+}
+.st-film .fl-tc-body { padding: calc(36px * var(--s)) calc(34px * var(--s)) calc(38px * var(--s)); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.st-film .fl-tc-body .kicker .kt::before { display: none; }
+.st-film .fl-tc-body .kicker .kt { letter-spacing: .24em; font-size: calc(22px * var(--s)); }
+.st-film .fl-tc-body .title.xl { text-shadow: 0 4px 28px rgba(0, 0, 0, .7); }
+.st-film .fl-tc-rule { width: calc(96px * var(--s)); height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin-top: calc(24px * var(--s)); }
+.st-film .fl-tc-body .dek { margin-top: calc(20px * var(--s)); max-width: 92%; font-size: calc(var(--fs-dek) * var(--s)); color: var(--fg2); }
+
+/* 底部演职员账单块 */
+.st-film .fl-billing { flex: none; width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: calc(18px * var(--s)); border-top: 1px solid var(--line); margin-top: calc(20px * var(--s)); }
+.st-film .fl-billing .chips { margin-top: 0; gap: calc(12px * var(--s)); }
+.st-film .fl-bill-meta { font-family: var(--f-mono); font-size: calc(18px * var(--s)); letter-spacing: .18em; color: var(--fg3); margin-top: calc(16px * var(--s)); text-transform: uppercase; }
+
+/* 16:9 左右分栏封面 */
+.st-film .fl-cover-split .fl-cov-stage { flex-direction: row; align-items: center; gap: calc(52px * var(--s)); }
+.st-film .fl-cover-split .fl-cov-leader { width: calc(340px * var(--s)); height: calc(340px * var(--s)); }
+.st-film .fl-cover-split .fl-title-card { flex: 1 1 auto; min-width: 0; }
+.st-film .fl-cover-split .fl-tc-body { align-items: flex-start; text-align: left; padding: calc(34px * var(--s)) calc(42px * var(--s)); }
+.st-film .fl-cover-split .fl-tc-rule { background: linear-gradient(90deg, var(--accent), transparent); }
+.st-film .fl-cover-split .fl-billing { flex-direction: row; justify-content: space-between; align-items: center; }
+.st-film .fl-cover-split .fl-bill-meta { margin-top: 0; }
+
+/* 封面带图时 */
+.st-film .fl-cov-visual { width: 100%; max-height: calc(360px * var(--s)); display: flex; }
+.st-film .fl-cover-split .fl-cov-visual { width: 42%; max-height: 100%; }
+
+/* ───── 2. 章节页：SVG 机械场记板 ───── */
+.st-film .fl-chapter { --align: center; --align-x: center; }
+.st-film .fl-slate {
+  width: 100%; max-width: calc(860px * var(--s)); margin: 0 auto;
+  border-radius: 8px; box-shadow: 0 28px 70px rgba(0, 0, 0, .65);
+}
+.st-film.r169 .fl-slate { max-width: calc(1060px * var(--s)); }
+.st-film .fl-clap-head { position: relative; width: 100%; padding-top: calc(50px * var(--s)); }
+.st-film .fl-clap-arm { position: absolute; left: 0; right: 0; top: 0; height: calc(46px * var(--s)); transform-origin: 18px 100%; z-index: 2; border-bottom: 3px solid #060607; }
+.st-film .fl-clap-base { position: relative; width: 100%; height: calc(44px * var(--s)); z-index: 1; border-bottom: 2px solid rgba(233, 230, 223, .32); }
+.st-film .fl-clap-arm svg, .st-film .fl-clap-base svg { width: 100%; height: 100%; display: block; }
+.st-film .fl-clap-hinge {
+  position: absolute; left: 0; top: calc(22px * var(--s)); width: calc(52px * var(--s)); height: calc(68px * var(--s));
+  background: linear-gradient(135deg, #3A3835, #1D1C1A); border: 1.5px solid rgba(233, 230, 223, .38);
+  border-radius: 4px 10px 4px 4px; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+}
+.st-film .fl-clap-hinge i { width: 8px; height: 8px; border-radius: 50%; background: #B8B3A9; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .6); }
+
+.st-film .fl-slate-body {
+  background: linear-gradient(180deg, #161514 0%, #101012 100%);
+  border: 2px solid rgba(233, 230, 223, .3); border-top: 0; border-radius: 0 0 8px 8px; overflow: hidden;
+}
+.st-film .fl-slate-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; border-bottom: 1.5px solid rgba(233, 230, 223, .22); }
+.st-film .fl-sg-cell { padding: calc(16px * var(--s)) calc(20px * var(--s)); border-right: 1px solid rgba(233, 230, 223, .16); text-align: left; }
+.st-film .fl-sg-cell:last-child { border-right: 0; }
+.st-film .fl-sg-cell small { display: block; font-family: var(--f-mono); font-size: calc(15px * var(--s)); letter-spacing: .14em; color: var(--fg3); }
+.st-film .fl-sg-cell b { display: block; font-family: var(--f-num); font-weight: 400; font-size: calc(52px * var(--s)); line-height: 1.05; color: var(--fg); margin-top: 4px; }
+.st-film .fl-sg-sc b { color: var(--accent); }
+
+.st-film .fl-slate-main { padding: calc(46px * var(--s)) calc(40px * var(--s)); text-align: center; border-bottom: 1.5px solid rgba(233, 230, 223, .22); }
+.st-film.r169 .fl-slate-main { padding: calc(34px * var(--s)) calc(44px * var(--s)); }
+.st-film .fl-slate-main .kicker .kt::before { display: none; }
+
+.st-film .fl-slate-foot { display: grid; grid-template-columns: 1.6fr 1fr; text-align: left; }
+.st-film .fl-sf-l, .st-film .fl-sf-r { padding: calc(18px * var(--s)) calc(24px * var(--s)); }
+.st-film .fl-sf-l { border-right: 1px solid rgba(233, 230, 223, .16); }
+.st-film .fl-slate-foot small { display: block; font-family: var(--f-mono); font-size: calc(14px * var(--s)); letter-spacing: .14em; color: var(--fg3); margin-bottom: 6px; }
+.st-film .fl-sf-note { margin-top: 0; font-size: calc(27px * var(--s)); color: var(--fg2); }
+.st-film .fl-sf-r span { font-family: var(--f-mono); font-size: calc(22px * var(--s)); color: var(--accent); letter-spacing: .06em; }
+
+/* ───── 3. 大数字（放映机锥形光束）───── */
+.st-film .fl-beam {
+  position: absolute; left: 50%; top: var(--top-h); width: 120%; height: 82%; transform: translateX(-50%);
+  background: conic-gradient(from 138deg at 50% -10%, transparent 0deg, rgba(232, 163, 61, .08) 18deg, rgba(248, 214, 152, .22) 42deg, rgba(232, 163, 61, .08) 66deg, transparent 84deg);
+  pointer-events: none; z-index: 0; transform-origin: 50% 0%;
+}
+.st-film .fl-bignum { --align: center; --align-x: center; }
+.st-film .fl-bn-stage { position: relative; width: 100%; padding: calc(40px * var(--s)) calc(28px * var(--s)); margin-top: calc(10px * var(--s)); }
+.st-film .fl-bn-reticle {
+  position: absolute; inset: 0; border: 1px solid rgba(232, 163, 61, .28); border-radius: 4px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 42%, rgba(232, 163, 61, .11), transparent 72%);
+}
+.st-film .fl-bn-reticle i { position: absolute; left: 50%; top: -10px; width: 1px; height: 20px; background: var(--accent); }
+.st-film .fl-bn-reticle i:last-child { top: auto; bottom: -10px; }
+.st-film .bn-row { color: var(--accent); text-shadow: 0 0 56px var(--acc-glow); letter-spacing: .02em; }
+.st-film .bn-u {
+  font-family: var(--f-mono); font-size: .19em; color: var(--fg); letter-spacing: .08em;
+  padding: .16em .42em; border: 1.5px solid var(--acc-line); border-radius: 3px; background: rgba(232, 163, 61, .10);
+  margin-left: .2em; vertical-align: .28em;
+}
+.st-film .fl-bn-rule { width: calc(120px * var(--s)); height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: calc(24px * var(--s)) auto 0; }
+.st-film .bn-l { font-family: var(--f-title); font-weight: 400; font-size: calc(var(--fs-text) * var(--s) * .68); margin-top: calc(22px * var(--s)); }
+
+/* ───── 4. 一句话（默片/影院双线字幕卡）───── */
+.st-film .fl-statement { --align: center; --align-x: center; }
+.st-film .fl-intertitle {
+  position: relative; width: 100%; padding: calc(56px * var(--s)) calc(44px * var(--s));
+  border: 2px solid rgba(233, 230, 223, .34); border-radius: 4px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(28, 25, 21, .9), rgba(10, 10, 11, .95));
+  box-shadow: inset 0 0 0 10px rgba(10, 10, 11, .9), inset 0 0 0 11px rgba(232, 163, 61, .35), 0 24px 60px rgba(0, 0, 0, .55);
+}
+.st-film .fl-it-tag {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  padding: 2px 16px; background: #0C0C0E; border: 1px solid var(--acc-line);
+  font-family: var(--f-mono); font-size: calc(16px * var(--s)); letter-spacing: .18em; color: var(--accent); white-space: nowrap;
+}
+.st-film .fl-intertitle .kicker .kt::before { display: none; }
+.st-film .fl-intertitle .say .sl { font-family: var(--f-title); font-weight: 400; line-height: 1.42; }
+.st-film .fl-intertitle .note { margin-top: calc(28px * var(--s)); color: var(--fg2); }
+
+/* ───── 5. 条形图（35mm 胶片帧格条形图）───── */
+.st-film .fl-bars { gap: calc(24px * var(--si)); }
+.st-film.r169 .fl-bars { gap: calc(15px * var(--si)); }
+.st-film .fl-bars .bar-row { display: flex; flex-direction: column; align-items: stretch; gap: calc(9px * var(--si)); }
+.st-film .fl-bar-hd { width: 100%; display: flex; justify-content: space-between; align-items: baseline; gap: 18px; }
+.st-film .fl-bar-hd .bar-l { display: flex; align-items: center; gap: 12px; text-align: left; font-family: var(--f-body); font-weight: 700; font-size: calc(var(--fs-body) * var(--si) * .78); }
+.st-film .fl-bar-idx { font-style: normal; font-family: var(--f-mono); font-size: .72em; color: var(--fg3); padding: 2px 7px; border: 1px solid var(--line); border-radius: 3px; }
+.st-film .fl-bar-row.on .fl-bar-idx { color: var(--accent); border-color: var(--acc-line); background: var(--acc-soft); }
+.st-film .fl-bar-hd .bar-v { margin-left: 0; font-size: calc(var(--fs-body) * var(--si) * 1.12); color: var(--fg); letter-spacing: .03em; }
+.st-film .fl-bar-row.on .bar-v { color: var(--accent); }
+.st-film .fl-bar-hd .bar-u { font-family: var(--f-mono); font-size: .46em; color: var(--fg2); margin-left: 6px; }
+
+.st-film .fl-bars .bar-track {
+  height: calc(54px * var(--si)); width: 100%; border-radius: 4px; padding: 4px;
+  background: #080809; border: 1.5px solid rgba(233, 230, 223, .14); overflow: hidden;
+}
+.st-film.r169 .fl-bars .bar-track { height: calc(42px * var(--si)); }
+.st-film .fl-bars .bar-row .bar-fill {
+  height: 100%; width: calc(var(--w) * 100%); min-width: 24px; border-radius: 2px;
+  /* 35mm 胶片帧格与上下微齿孔纹理（纯 CSS 渐变，零图片开销） */
+  background-color: #7D8894;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(8, 8, 9, .92) 0 4px, transparent 4px 12px),
+    repeating-linear-gradient(90deg, rgba(8, 8, 9, .92) 0 4px, transparent 4px 12px),
+    repeating-linear-gradient(90deg, transparent 0 48px, rgba(8, 8, 9, .78) 48px 52px);
+  background-size: 100% 7px, 100% 7px, 100% 100%;
+  background-position: 0 2px, 0 calc(100% - 2px), 0 0;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+}
+.st-film .fl-bars .bar-row.on .bar-fill {
+  background-color: #E8A33D;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(16, 11, 5, .86) 0 4px, transparent 4px 12px),
+    repeating-linear-gradient(90deg, rgba(16, 11, 5, .86) 0 4px, transparent 4px 12px),
+    repeating-linear-gradient(90deg, transparent 0 48px, rgba(16, 11, 5, .72) 48px 52px);
+  box-shadow: 0 0 22px rgba(232, 163, 61, .35), inset 0 0 0 1px rgba(255, 240, 210, .35);
+}
+
+/* ───── 6. 时间线（35mm 剪辑台胶片卷）───── */
+.st-film .fl-tl { gap: calc(22px * var(--si)); }
+.st-film .fl-tl .links path { stroke: var(--acc-line); stroke-width: 2.5; }
+.st-film .fl-tl-item {
+  grid-template-columns: calc(36px * var(--si)) minmax(0, 1fr);
+  grid-template-areas: "dot cell"; column-gap: calc(20px * var(--si)); align-items: center;
+}
+.st-film .fl-tl .tl-dot {
+  width: calc(22px * var(--si)); height: calc(22px * var(--si)); margin-top: 0;
+  background: #0B0B0C; border: 3px solid var(--accent); box-shadow: 0 0 14px var(--acc-glow);
+}
+.st-film .fl-tl-item.on .tl-dot { background: var(--accent); }
+.st-film .fl-tl-cell {
+  grid-area: cell; background: var(--card-bg); border: 1.5px solid var(--card-bd); border-radius: 5px;
+  overflow: hidden;
+}
+.st-film .fl-tl-item.on .fl-tl-cell { border-color: var(--accent); box-shadow: 0 0 28px rgba(232, 163, 61, .16); }
+.st-film .fl-tl-hd {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: calc(10px * var(--si)) calc(20px * var(--si));
+  background: rgba(233, 230, 223, .045); border-bottom: 1px solid var(--line);
+}
+.st-film .fl-tl-item.on .fl-tl-hd { background: var(--acc-soft); border-bottom-color: var(--acc-line); }
+.st-film .fl-tl-fr { font-family: var(--f-mono); font-size: calc(18px * var(--si)); color: var(--fg3); letter-spacing: .1em; }
+.st-film .fl-tl-item.on .fl-tl-fr { color: var(--accent); }
+.st-film .fl-tl .tl-time { font-family: var(--f-num); font-size: calc(var(--fs-body) * var(--si) * .96); letter-spacing: .04em; color: var(--accent); line-height: 1.1; }
+.st-film .fl-tl .tl-text { padding: calc(16px * var(--si)) calc(20px * var(--si)); margin-top: 0; font-size: calc(var(--fs-body) * var(--si) * .78); line-height: 1.42; }
+
+/* 16:9 横向剪辑台时间轴 */
+.st-film .fl-tl.row { align-items: stretch; gap: calc(22px * var(--si)); }
+.st-film .fl-tl.row .fl-tl-item {
+  grid-template-columns: minmax(0, 1fr); grid-template-areas: "dot" "cell";
+  justify-items: center; text-align: left; row-gap: calc(16px * var(--si)); align-content: start;
+}
+.st-film .fl-tl.row .fl-tl-cell { width: 100%; height: 100%; display: flex; flex-direction: column; }
+
+/* ───── 7. 列表（分镜通告单 Shot List）───── */
+.st-film .list { row-gap: calc(18px * var(--si)); }
+.st-film .item {
+  position: relative; padding: calc(18px * var(--si)) calc(22px * var(--si));
+  background: rgba(22, 20, 18, .66); border: 1px solid var(--line); border-left: 4px solid var(--line-strong);
+  border-radius: 4px; align-items: baseline;
+}
+.st-film .item.on, .st-film .item.is-cur { border-left-color: var(--accent); background: rgba(232, 163, 61, .08); border-color: var(--acc-line); }
+.st-film .fl-sh { font-family: var(--f-mono); font-size: .64em; font-weight: 700; color: var(--accent); letter-spacing: .06em; white-space: nowrap; }
+.st-film .fl-ap { display: inline-block; width: .44em; height: .44em; border: 2px solid var(--accent); transform: rotate(45deg); vertical-align: .12em; }
+.st-film .item.no .mk { color: var(--rec); }
+
+/* ───── 8. 数据卡（摄影机参数监视器）───── */
+.st-film .stat { position: relative; padding: 0; overflow: hidden; border: 1.5px solid var(--card-bd); background: var(--card-bg); }
+.st-film .stat.on { border-color: var(--accent); box-shadow: 0 0 32px rgba(232, 163, 61, .16); }
+.st-film .fl-mon-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: calc(9px * var(--si)) calc(20px * var(--si));
+  background: rgba(233, 230, 223, .04); border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: calc(16px * var(--si)); letter-spacing: .12em; color: var(--fg3);
+}
+.st-film .fl-mon-bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); }
+.st-film .stat.on .fl-mon-bar { background: var(--acc-soft); color: var(--accent); border-bottom-color: var(--acc-line); }
+.st-film .stat.on .fl-mon-bar i { background: var(--rec); box-shadow: 0 0 8px var(--rec); }
+.st-film .stat-v { padding: calc(22px * var(--si)) calc(24px * var(--si)) 0; color: var(--fg); letter-spacing: .02em; }
+.st-film .stat.on .stat-v { color: var(--accent); }
+.st-film .stat-u { font-family: var(--f-mono); font-size: .3em; color: var(--fg2); }
+.st-film .stat-tx { padding: calc(10px * var(--si)) calc(24px * var(--si)) calc(22px * var(--si)); }
+.st-film .stat-l { font-family: var(--f-body); font-weight: 700; font-size: calc(var(--fs-body) * var(--si) * .78); }
+.st-film .stats.rows .stat { display: block; }
+.st-film .stats.rows .stat-v { display: inline-flex; width: auto; padding-bottom: calc(18px * var(--si)); vertical-align: middle; }
+.st-film .stats.rows .stat-tx { display: inline-block; padding-top: calc(18px * var(--si)); vertical-align: middle; }
+
+/* ───── 9. 卡片（分镜故事板 Storyboard）───── */
+.st-film .card { padding: 0; overflow: hidden; border: 1.5px solid var(--card-bd); background: var(--card-bg); }
+.st-film .card.on { border-color: var(--accent); box-shadow: 0 0 32px rgba(232, 163, 61, .18); }
+.st-film .card-k {
+  margin-bottom: 0; padding: calc(11px * var(--si)) calc(24px * var(--si));
+  background: rgba(233, 230, 223, .05); border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: calc(20px * var(--si)); letter-spacing: .14em; color: var(--accent);
+}
+.st-film .card.on .card-k { background: var(--acc-soft); border-bottom-color: var(--acc-line); }
+.st-film .card-tx { padding: calc(22px * var(--si)) calc(24px * var(--si)) calc(24px * var(--si)); }
+.st-film .card-t { font-family: var(--f-title); font-weight: 400; font-size: calc(var(--fs-body) * var(--si) * 1.06); }
+.st-film .card-x { font-size: calc(var(--fs-note) * var(--si) * 1.06); color: var(--fg2); margin-top: calc(10px * var(--si)); }
+.st-film .cards.rows .card { display: block; }
+.st-film .cards.rows .card-k { font-size: calc(20px * var(--si)); }
+
+/* ───── 10. 步骤（制片流程）───── */
+.st-film .steps .links path { stroke: var(--acc-line); stroke-width: 2.5; }
+.st-film .step { padding: calc(16px * var(--si)) calc(22px * var(--si)); background: rgba(22, 20, 18, .66); border: 1px solid var(--line); border-radius: 5px; }
+.st-film .step .badge {
+  background: #0B0B0C; color: var(--accent); border: 2px solid var(--accent);
+  box-shadow: 0 0 20px var(--acc-soft); font-family: var(--f-num); font-size: calc(44px * var(--si));
+}
+.st-film .step.on { border-color: var(--accent); background: rgba(232, 163, 61, .08); }
+.st-film .st-t { font-family: var(--f-title); font-weight: 400; }
+.st-film .steps.row .step { padding: calc(24px * var(--si)) calc(18px * var(--si)); }
+
+/* ───── 11. 对比（AB 审片双监视器）───── */
+.st-film .side { padding: 0; overflow: hidden; background: var(--card-bg); border: 1.5px solid var(--card-bd); }
+.st-film .side-h { padding: calc(22px * var(--si)) calc(24px * var(--si)) calc(18px * var(--si)); background: rgba(233, 230, 223, .035); border-bottom: 1px solid var(--line); }
+.st-film .side-k { font-family: var(--f-mono); font-size: calc(18px * var(--si)); letter-spacing: .14em; color: var(--accent); margin-bottom: calc(8px * var(--si)); }
+.st-film .side-l { font-family: var(--f-title); font-weight: 400; font-size: calc(var(--fs-body) * var(--si) * .96); }
+.st-film .side-v { font-family: var(--f-num); color: var(--fg); letter-spacing: .02em; margin-top: calc(12px * var(--si)); }
+.st-film .side-u { font-family: var(--f-mono); font-size: .3em; }
+.st-film .side-p { margin: 0; padding: calc(20px * var(--si)) calc(24px * var(--si)) calc(24px * var(--si)); }
+.st-film .side-p li.no .mk { color: var(--rec); }
+.st-film .side.win {
+  border-color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--card-bd));
+  box-shadow: 0 0 36px color-mix(in srgb, rgba(232, 163, 61, .22) calc(var(--p, 1) * 100%), transparent);
+}
+.st-film .side.win .side-v { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-film .vs {
+  font-family: var(--f-num); font-size: calc(44px * var(--si)); color: var(--accent);
+  padding: calc(8px * var(--si)) calc(12px * var(--si)); border: 1.5px solid var(--acc-line);
+  border-radius: 4px; background: rgba(232, 163, 61, .08); letter-spacing: .06em;
+}
+.st-film .verdict {
+  font-family: var(--f-body); font-weight: 700; padding: calc(16px * var(--s)) calc(26px * var(--s));
+  border: 1px solid var(--acc-line); background: rgba(232, 163, 61, .09); border-radius: 4px; margin-top: calc(28px * var(--s));
+}
+
+/* ───── 12. 引用（银幕对话字幕）───── */
+.st-film .tpl-quote .content { --align: center; --align-x: center; }
+.st-film .qt {
+  position: relative; padding: calc(44px * var(--s)) calc(42px * var(--s));
+  border-top: 2px solid var(--acc-line); border-bottom: 2px solid var(--acc-line);
+  background: radial-gradient(ellipse at 50% 50%, rgba(232, 163, 61, .07), transparent 72%);
+}
+.st-film .fl-q-eyebrow { font-family: var(--f-mono); font-size: calc(18px * var(--s)); letter-spacing: .22em; color: var(--accent); margin-bottom: calc(24px * var(--s)); }
+.st-film .q-text { font-family: var(--f-quote); font-weight: 700; line-height: 1.52; }
+.st-film .q-src { font-family: var(--f-mono); letter-spacing: .12em; color: var(--fg2); margin-top: calc(30px * var(--s)); }
+.st-film .q-src::before { content: '— '; color: var(--accent); }
+
+/* ───── 13. 代码 & 公式 & 图片 ───── */
+.st-film .code-win { border: 1.5px solid rgba(232, 163, 61, .34); border-radius: 6px; box-shadow: 0 24px 60px rgba(0, 0, 0, .55); }
+.st-film .code-bar { border-bottom: 1px solid var(--line); color: var(--fg2); }
+.st-film .code-bar i { background: #3A3733; }
+.st-film .code-bar i:first-child { background: var(--rec); }
+.st-film .tok-c { color: #6E6A63; } .st-film .tok-s { color: #B8D4A4; } .st-film .tok-n { color: #E8A33D; }
+.st-film .tok-k { color: #E88B6A; } .st-film .tok-f { color: #E9E6DF; font-weight: 700; } .st-film .tok-o { color: #ACA79D; }
+
+.st-film .formula {
+  padding: calc(38px * var(--s)) calc(28px * var(--s));
+  background: rgba(20, 18, 16, .82); border: 1.5px solid var(--acc-line); border-radius: 6px;
+}
+
+.st-film .frame.f-plain {
+  padding: 0 10px 10px; background: #09090A; border: 1.5px solid rgba(232, 163, 61, .42); border-radius: 4px;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, .6); overflow: hidden;
+}
+.st-film .frame.f-plain .shot { border-radius: 2px; }
+.st-film .fl-frame-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 6px; margin: 0 -10px 10px; padding-left: 14px; padding-right: 14px;
+  background: rgba(232, 163, 61, .10); border-bottom: 1px solid rgba(232, 163, 61, .26);
+  font-family: var(--f-mono); font-size: 15px; line-height: 1; letter-spacing: .12em; color: var(--accent);
+}
+.st-film .fl-frame-bar em { font-style: normal; color: var(--fg2); }
+.st-film .body.split .list { margin-top: calc(20px * var(--s)); row-gap: calc(11px * var(--si)); --lk: .96; }
+.st-film .body.split .item { padding: calc(12px * var(--si)) calc(18px * var(--si)); font-size: calc(var(--fs-body) * var(--si) * .80); }
+.st-film.r169 .body.split .list { margin-top: 0; row-gap: calc(16px * var(--si)); }
+
+/* ───── 14. 结尾页（演职员表片尾）───── */
+.st-film .fl-ending { --align: center; --align-x: center; }
+.st-film .fl-credits { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+.st-film .fl-fin { display: flex; align-items: center; gap: 18px; margin-bottom: calc(28px * var(--s)); width: 82%; max-width: 680px; }
+.st-film .fl-fin-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--acc-line), transparent); }
+.st-film .fl-fin em { font-style: normal; font-family: var(--f-mono); font-size: calc(22px * var(--s)); letter-spacing: .24em; color: var(--accent); white-space: nowrap; }
+.st-film .fl-cred-tags { margin-top: calc(30px * var(--s)); }
+.st-film .fl-cred-cta {
+  margin-top: calc(34px * var(--s)); padding: calc(20px * var(--s)) calc(32px * var(--s));
+  border: 1.5px solid var(--acc-line); background: rgba(232, 163, 61, .09); border-radius: 4px;
+  font-size: calc(var(--fs-dek) * var(--s)); color: var(--fg); max-width: 92%;
+}
+.st-film .fl-cred-foot { margin-top: calc(36px * var(--s)); padding-top: calc(24px * var(--s)); border-top: 1px solid var(--line); width: 76%; max-width: 620px; }
+.st-film .fl-cred-row { display: flex; justify-content: center; align-items: baseline; gap: 16px; }
+.st-film .fl-cred-row small { font-family: var(--f-mono); font-size: calc(18px * var(--s)); letter-spacing: .18em; color: var(--fg3); }
+.st-film .fl-cred-row b { font-family: var(--f-body); font-weight: 700; font-size: calc(28px * var(--s)); color: var(--fg); }
+.st-film .fl-cred-spec { font-family: var(--f-mono); font-size: calc(15px * var(--s)); letter-spacing: .16em; color: var(--fg3); margin-top: calc(14px * var(--s)); }
+
+/* ───── 印章（片场审核章）───── */
+.st-film .stamp {
+  border: 3px solid var(--rec); color: var(--rec); background: rgba(229, 56, 59, .10);
+  border-radius: 4px; font-family: var(--f-num); font-weight: 400; letter-spacing: .1em;
+  padding: .22em .62em; transform: rotate(-7deg);
+}
+
+/* ───── 影院字幕（落于底部黑边遮幅内）───── */
+.st-film .subl {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .95);
+  letter-spacing: .04em;
+}

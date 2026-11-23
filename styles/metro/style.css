@@ -1,0 +1,983 @@
+/* 地铁导视 metro：线路图与现代轨交导视系统 */
+#stage.st-metro {
+  --bg: #F7F7F5;
+  --fg: #1D1D1F;
+  --fg2: #555860;
+  --fg3: #8C9099;
+  --m-red: #E4002B;
+  --m-green: #00A651;
+  --m-blue: #0072CE;
+  --m-yellow: #FFC72C;
+  --m-purple: #8E44AD;
+  --m-exit: #FFD100;
+  --accent: #0072CE;
+  --accent2: #00A651;
+  --on-accent: #FFFFFF;
+  --hl: #0072CE;
+  --line: rgba(29, 29, 31, .14);
+  --line-strong: rgba(29, 29, 31, .82);
+  --card-bg: #FFFFFF;
+  --card-bd: #1D1D1F;
+  --radius: 10px;
+  --code-bg: #181A1F;
+  --code-fg: #F0F2F5;
+  --code-bar: #23262E;
+  --code-hl: rgba(255, 209, 0, .18);
+  --sub-fg: #1D1D1F;
+  --sub-hl: #E4002B;
+  --dim: .46;
+
+  --f-title: "MV Grot", "MV Sans", sans-serif;
+  --f-body: "MV Grot", "MV Sans", sans-serif;
+  --f-num: "MV Bebas", "MV Cond", "MV Sans", sans-serif;
+  --f-cond: "MV Cond", "MV Sans", sans-serif;
+  --f-kicker: "MV Grot", "MV Sans", sans-serif;
+  --f-subl: "MV Grot", "MV Sans", sans-serif;
+  --f-quote: "MV Grot", "MV Sans", sans-serif;
+  --f-mono: "MV Mono", "MV Grot", monospace;
+
+  --w-title: 900;
+  --w-body: 400;
+  --w-num: 400;
+  --w-kicker: 700;
+  --w-subl: 700;
+  --w-strong: 900;
+  --lh-title: 1.16;
+  --lh-body: 1.46;
+  --track-title: -.01em;
+  --track-kicker: .06em;
+  --tt-kicker: uppercase;
+}
+
+#stage.st-metro.r34 {
+  --ct: 170px; --cb: 270px; --cl: 72px; --cr: 72px;
+  --fs-title: 78px; --fs-title-xl: 96px; --fs-dek: 36px; --fs-body: 42px; --fs-note: 30px;
+  --fs-stat: 120px; --fs-num: 270px; --fs-chap: 160px; --fs-chip: 28px; --fs-code: 36px;
+  --gap: 32px;
+}
+#stage.st-metro.r916 {
+  --ct: 250px; --cb: 560px; --cl: 70px; --cr: 70px;
+  --fs-title: 82px; --fs-title-xl: 100px; --fs-dek: 38px; --fs-body: 44px; --fs-note: 31px;
+  --fs-stat: 124px; --fs-num: 280px; --fs-chap: 170px; --fs-chip: 29px; --fs-code: 36px;
+  --gap: 36px;
+}
+#stage.st-metro.r169 {
+  --ct: 150px; --cb: 210px; --cl: 110px; --cr: 110px;
+  --fs-title: 80px; --fs-title-xl: 94px; --fs-dek: 36px; --fs-body: 40px; --fs-note: 30px;
+  --fs-stat: 120px; --fs-num: 280px; --fs-chap: 170px; --fs-chip: 28px; --fs-code: 27px;
+  --gap: 24px;
+}
+#stage.st-metro.nosub.r34 { --cb: 140px; }
+#stage.st-metro.nosub.r916 { --cb: 300px; }
+#stage.st-metro.nosub.r169 { --cb: 110px; }
+
+/* ═════════ 深色站台背景微瓷砖纹理 ═════════ */
+.st-metro .scene[data-tone="dark"] {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .035) 1px, transparent 1px) 0 0 / 100% 64px,
+    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px) 0 0 / 128px 100%,
+    radial-gradient(circle at 50% 42%, #26282D 0%, #17181B 100%);
+}
+
+/* ═════════ 全局车厢 LED 顶栏 & 微型线路进度条 ═════════ */
+.st-metro .mt-led {
+  position: absolute; left: 0; right: 0; top: 0;
+  background: #1D1D1F; color: #F7F7F5;
+  box-shadow: 0 4px 0 rgba(29, 29, 31, .12);
+}
+.st-metro.r916 .mt-led {
+  top: 72px; left: 44px; right: 44px; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .14);
+}
+.st-metro .mt-led-top {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  height: 68px; padding: 0 36px;
+  background:
+    radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1.2px) 0 0 / 6px 6px,
+    #1D1D1F;
+}
+.st-metro.r916 .mt-led-top { height: 66px; padding: 0 26px; }
+.st-metro.r169 .mt-led-top { height: 58px; padding: 0 48px; }
+
+.st-metro .mt-led-l { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.st-metro .mt-lbadge {
+  flex: none; display: inline-grid; place-items: center;
+  min-width: 54px; height: 40px; padding: 0 10px; border-radius: 7px;
+  background: var(--chrome-lc, #0072CE); color: var(--chrome-lf, #FFFFFF);
+  font: 400 30px/1 var(--f-num); letter-spacing: .04em;
+}
+.st-metro.r169 .mt-lbadge { height: 36px; font-size: 28px; min-width: 50px; }
+.st-metro .mt-led-lbl {
+  flex: none; font: 700 20px/1 var(--f-body); letter-spacing: .06em;
+  color: #FFD100; background: rgba(255, 209, 0, .16);
+  padding: 6px 10px; border-radius: 4px; white-space: nowrap;
+}
+.st-metro .mt-led-next {
+  font: 700 26px/1.1 var(--f-body); color: #FFFFFF;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.st-metro.r169 .mt-led-next { font-size: 24px; }
+
+.st-metro .mt-led-r { display: flex; align-items: center; gap: 14px; flex: none; }
+.st-metro .mt-led-dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #00E676; box-shadow: 0 0 8px rgba(0, 230, 118, .8);
+}
+.st-metro .mt-led-pg {
+  font: 400 30px/1 var(--f-num); letter-spacing: .06em; color: rgba(255, 255, 255, .88);
+}
+.st-metro .mt-led-pg small { color: rgba(255, 255, 255, .45); font-size: 24px; }
+
+/* 顶栏下方：微型地铁线路进度条 */
+.st-metro .mt-rail {
+  position: relative; height: 42px; padding: 0 48px;
+  background: #ECECE8; border-bottom: 3px solid #1D1D1F;
+  display: flex; align-items: center;
+}
+.st-metro.r916 .mt-rail { height: 40px; padding: 0 32px; border-bottom: 0; }
+.st-metro.r169 .mt-rail { height: 38px; padding: 0 60px; }
+.st-metro .mt-rail-track {
+  position: relative; width: 100%; height: 8px; border-radius: 99px;
+  background: rgba(29, 29, 31, .16);
+}
+.st-metro .mt-rail-done {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 99px;
+  background: var(--chrome-lc, #0072CE); transform-origin: 0 50%; scale: 0 1;
+}
+.st-metro .mt-rail-dots {
+  position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center;
+}
+.st-metro .mt-rail-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #F7F7F5; border: 3px solid rgba(29, 29, 31, .35);
+}
+.st-metro .mt-rail-dot.past {
+  background: var(--chrome-lc, #0072CE); border-color: var(--chrome-lc, #0072CE);
+}
+.st-metro .mt-rail-dot.cur {
+  width: 18px; height: 18px; background: #FFD100; border: 3.5px solid #1D1D1F;
+}
+.st-metro .mt-rail-train {
+  position: absolute; top: 50%; left: 0;
+  width: 34px; height: 20px; margin-left: -17px; margin-top: -10px;
+  border-radius: 6px 10px 6px 6px;
+  background: #1D1D1F; border: 2px solid #FFD100;
+  display: flex; align-items: center; justify-content: center; gap: 3px;
+}
+.st-metro .mt-rail-train i {
+  display: block; width: 5px; height: 6px; border-radius: 1px; background: #FFD100;
+}
+.st-metro .mt-rail-train i:last-child { width: 7px; border-radius: 1px 3px 1px 1px; background: #FFFFFF; }
+
+/* 封面页上的五彩线路顶条 */
+.st-metro #chrome[data-type="cover"] .mt-rail { display: none; }
+.st-metro #chrome[data-type="cover"] .mt-led-stripes { display: flex; }
+.st-metro .mt-led-stripes { display: none; height: 10px; width: 100%; }
+.st-metro .mt-led-stripes span { flex: 1; height: 100%; }
+
+/* 深色页时轨道条切换为深色（保持已过站点亮色） */
+.st-metro #chrome[data-tone="dark"] .mt-rail {
+  background: #282A2F; border-bottom-color: rgba(255, 255, 255, .14);
+}
+.st-metro #chrome[data-tone="dark"] .mt-rail-track { background: rgba(255, 255, 255, .2); }
+.st-metro #chrome[data-tone="dark"] .mt-rail-dot { background: #1D1D1F; border-color: rgba(255, 255, 255, .38); }
+.st-metro #chrome[data-tone="dark"] .mt-rail-dot.past {
+  background: var(--chrome-lc, #0072CE); border-color: var(--chrome-lc, #0072CE);
+}
+.st-metro #chrome[data-tone="dark"] .mt-rail-dot.cur { background: #FFD100; border-color: #FFFFFF; }
+.st-metro #chrome[data-tone="dark"] .mt-led { box-shadow: none; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+
+/* 页脚署名条 */
+.st-metro .mt-foot {
+  position: absolute; left: var(--cl); right: var(--cr); bottom: 26px;
+  display: flex; justify-content: space-between; align-items: center;
+  font: 700 20px/1 var(--f-mono); letter-spacing: .06em; color: var(--fg3);
+}
+.st-metro.r169 .mt-foot { bottom: 18px; font-size: 18px; }
+.st-metro.r916 .mt-foot { bottom: 32px; }
+.st-metro #chrome[data-tone="dark"] .mt-foot { color: rgba(247, 247, 245, .48); }
+
+/* ═════════ 通用标题 / Kicker / 高亮 / Note / Stamp ═════════ */
+.st-metro .kicker {
+  display: flex; align-items: center; gap: calc(12px * var(--s));
+  margin-bottom: calc(14px * var(--s)); color: var(--fg);
+}
+.st-metro .kicker .kt {
+  display: inline-flex; align-items: center; gap: .45em;
+  background: var(--accent); color: var(--on-accent);
+  padding: .22em .62em; border-radius: calc(6px * var(--s));
+  font-weight: 700; letter-spacing: .06em; line-height: 1.25;
+}
+.st-metro .kicker .kt::before {
+  content: ''; width: .42em; height: .42em; border-radius: 50%;
+  background: #FFFFFF; box-shadow: 0 0 0 2px rgba(29, 29, 31, .25);
+}
+.st-metro .title { color: var(--fg); letter-spacing: -.015em; }
+.st-metro .dek { color: var(--fg2); font-weight: 500; margin-top: calc(14px * var(--s)); }
+
+/* 【】强调：导视黄荧光底带 */
+.st-metro .hl {
+  color: #1D1D1F;
+  background: linear-gradient(#FFD100, #FFD100) 0 84% / calc(var(--p, 1) * 100%) .42em no-repeat;
+  padding: 0 .06em;
+}
+.st-metro [data-tone="dark"] .hl {
+  color: color-mix(in srgb, #FFD100 calc(var(--p, 1) * 100%), currentColor);
+  background: none;
+}
+.st-metro :is(.subl, .formula) .hl { background: none; padding: 0; }
+.st-metro .formula .hl { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), currentColor); }
+
+/* Note：黄色导视出口提示条（用绝对定位徽标，避免内部【】高亮被 flex 拆列） */
+.st-metro .note {
+  position: relative; display: inline-block; align-self: flex-start;
+  background: #FFD100; color: #1D1D1F;
+  padding: calc(11px * var(--s)) calc(22px * var(--s)) calc(11px * var(--s)) calc(108px * var(--s));
+  border-radius: calc(8px * var(--s));
+  border: 2.5px solid #1D1D1F;
+  font-weight: 700; line-height: 1.35; text-align: left;
+  margin-top: calc(18px * var(--s));
+}
+.st-metro .note::before {
+  content: 'EXIT ↗'; position: absolute; left: calc(14px * var(--s)); top: 50%; translate: 0 -50%;
+  font: 400 calc(25px * var(--s)) / 1 var(--f-num); letter-spacing: .05em;
+  background: #1D1D1F; color: #FFD100;
+  padding: calc(5px * var(--s)) calc(10px * var(--s));
+  border-radius: calc(4px * var(--s));
+}
+
+/* Chips：地铁换乘标 / 出口黄标 */
+.st-metro .chips { gap: calc(12px * var(--s)); margin-top: calc(22px * var(--s)); }
+.st-metro .chip {
+  border-radius: calc(7px * var(--s)); border: 2.5px solid #1D1D1F;
+  background: #FFFFFF; color: #1D1D1F; font-weight: 700;
+  padding: .3em .78em;
+}
+.st-metro .chip.hot {
+  background: #FFD100; border-color: #1D1D1F; color: #1D1D1F;
+}
+.st-metro [data-tone="dark"] .chip {
+  background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .45); color: #F7F7F5;
+}
+.st-metro [data-tone="dark"] .chip.hot {
+  background: #FFD100; border-color: #FFD100; color: #1D1D1F;
+}
+
+/* Stamp：出口黄导视章 */
+.st-metro .stamp {
+  border: 4px solid #1D1D1F; border-radius: 8px;
+  background: #FFD100; color: #1D1D1F;
+  font-weight: 900; padding: .24em .68em;
+  box-shadow: 6px 6px 0 #1D1D1F;
+  transform: rotate(-4deg);
+}
+
+/* ═════════ 1. 封面（完整地铁线路图海报） ═════════ */
+.st-metro .tpl-cover .content {
+  justify-content: flex-start;
+}
+.st-metro .mt-cov {
+  flex: 1 1 auto; min-height: 0; width: 100%;
+  display: flex; flex-direction: column; gap: calc(26px * var(--s));
+}
+.st-metro.r169 .mt-cov {
+  display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr);
+  gap: calc(40px * var(--s)); align-items: stretch;
+}
+.st-metro .mt-cov-legend {
+  flex: none; position: relative;
+  background: #FFFFFF; border: 3.5px solid #1D1D1F;
+  border-left: calc(16px * var(--s)) solid var(--accent);
+  border-radius: calc(12px * var(--s));
+  padding: calc(28px * var(--s)) calc(32px * var(--s));
+  box-shadow: 8px 8px 0 rgba(29, 29, 31, .1);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.st-metro.r169 .mt-cov-legend {
+  justify-content: space-between;
+  padding: calc(34px * var(--s)) calc(36px * var(--s));
+}
+.st-metro.r169 .tpl-cover .title.xl {
+  font-size: calc(80px * var(--s) * var(--ts));
+}
+.st-metro .mt-cov-map {
+  flex: 1 1 0; min-height: 0; position: relative;
+  background: #FFFFFF; border: 3.5px solid #1D1D1F;
+  border-radius: calc(14px * var(--s));
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 8px 8px 0 rgba(29, 29, 31, .08);
+}
+.st-metro .mt-cov-svg {
+  width: 100%; height: 100%; display: block;
+}
+.st-metro .mt-cov-svg text {
+  font-family: "MV Grot", "MV Sans", sans-serif;
+}
+.st-metro .mt-cov-svg .st-code {
+  font-family: "MV Bebas", "MV Cond", sans-serif;
+}
+.st-metro .mt-cov-emblem {
+  position: absolute; right: calc(18px * var(--s)); bottom: calc(16px * var(--s));
+  display: flex; align-items: center; gap: calc(12px * var(--s));
+  background: #1D1D1F; color: #FFFFFF;
+  padding: calc(10px * var(--s)) calc(18px * var(--s)) calc(10px * var(--s)) calc(12px * var(--s));
+  border-radius: calc(10px * var(--s));
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .2);
+}
+.st-metro .mt-cov-emblem-sq {
+  width: calc(60px * var(--s)); height: calc(60px * var(--s));
+  border-radius: calc(8px * var(--s));
+  background: var(--accent); color: var(--on-accent);
+  display: grid; place-items: center;
+  font: 400 calc(42px * var(--s)) / 1 var(--f-num); letter-spacing: .04em;
+}
+.st-metro .mt-cov-emblem-tx {
+  display: flex; flex-direction: column; gap: 3px;
+}
+.st-metro .mt-cov-emblem-tx b {
+  font: 900 calc(21px * var(--s)) / 1.1 var(--f-body); color: #FFD100; letter-spacing: .04em;
+}
+.st-metro .mt-cov-emblem-tx span {
+  font: 700 calc(15px * var(--s)) / 1.1 var(--f-mono); color: rgba(255, 255, 255, .74);
+}
+.st-metro .mt-cov-media {
+  position: absolute; inset: calc(16px * var(--s)); z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ═════════ 2. 章节页（站台站名牌） ═════════ */
+.st-metro .tpl-chapter .content {
+  justify-content: center; padding: 0;
+}
+.st-metro .mt-plat-band {
+  position: absolute; left: 0; right: 0; top: 50%; height: calc(40px * var(--s));
+  margin-top: calc(-20px * var(--s));
+  background: var(--accent); z-index: 0;
+}
+.st-metro .mt-plat-band::before,
+.st-metro .mt-plat-band::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 4px; background: rgba(255, 255, 255, .28);
+}
+.st-metro .mt-plat-band::before { top: -10px; }
+.st-metro .mt-plat-band::after { bottom: -10px; }
+
+.st-metro .mt-sign-wrap {
+  position: relative; z-index: 2; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: calc(28px * var(--s));
+}
+.st-metro .mt-sign-card {
+  width: 100%; max-width: 100%;
+  background: #F7F7F5; color: #1D1D1F;
+  border: 5px solid #FFFFFF;
+  border-radius: calc(18px * var(--s));
+  padding: calc(40px * var(--s)) calc(44px * var(--s));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .44);
+  display: flex; align-items: center; gap: calc(34px * var(--s));
+  text-align: left;
+}
+.st-metro .mt-sign-badge {
+  flex: none; width: calc(154px * var(--s)); height: calc(154px * var(--s));
+  border-radius: calc(20px * var(--s));
+  background: var(--accent); color: var(--on-accent);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 0 6px rgba(255, 255, 255, .25);
+}
+.st-metro .mt-sign-badge small {
+  font: 700 calc(20px * var(--s)) / 1 var(--f-mono); letter-spacing: .12em; opacity: .88;
+  margin-bottom: calc(4px * var(--s));
+}
+.st-metro .mt-sign-badge b {
+  font: 400 calc(92px * var(--s)) / .92 var(--f-num); letter-spacing: .02em;
+}
+.st-metro .mt-sign-main { flex: 1 1 auto; min-width: 0; }
+.st-metro .mt-sign-main .title {
+  color: #1D1D1F; font-size: calc(82px * var(--s) * var(--ts)); line-height: 1.15;
+}
+.st-metro.r169 .mt-sign-main .title {
+  font-size: calc(94px * var(--s) * var(--ts));
+}
+.st-metro .mt-sign-en {
+  margin-top: calc(14px * var(--s));
+  font: 700 calc(25px * var(--s)) / 1.25 var(--f-mono); letter-spacing: .08em;
+  color: var(--fg2); text-transform: uppercase;
+}
+.st-metro .mt-sign-note {
+  margin-top: calc(14px * var(--s));
+  font: 700 calc(31px * var(--s)) / 1.38 var(--f-body); color: #1D1D1F;
+  background: #FFD100; display: inline-block;
+  padding: calc(6px * var(--s)) calc(16px * var(--s)); border-radius: calc(6px * var(--s));
+}
+/* 上一站 / 下一站 导视箭头条 */
+.st-metro .mt-sign-nav {
+  width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: calc(20px * var(--s));
+}
+.st-metro .mt-nav-pill {
+  background: #282A2F; border: 2px solid rgba(255, 255, 255, .18);
+  border-radius: calc(12px * var(--s));
+  padding: calc(18px * var(--s)) calc(24px * var(--s));
+  display: flex; align-items: center; gap: calc(16px * var(--s));
+  color: #F7F7F5; min-width: 0;
+}
+.st-metro .mt-nav-pill.next {
+  justify-content: flex-end; text-align: right;
+  border-color: #FFD100; background: rgba(255, 209, 0, .12);
+}
+.st-metro .mt-nav-arr {
+  flex: none; width: calc(44px * var(--s)); height: calc(44px * var(--s));
+  border-radius: 50%; background: rgba(255, 255, 255, .12);
+  display: grid; place-items: center;
+  font: 900 calc(24px * var(--s)) / 1 var(--f-body); color: #FFFFFF;
+}
+.st-metro .mt-nav-pill.next .mt-nav-arr { background: #FFD100; color: #1D1D1F; }
+.st-metro .mt-nav-tx { min-width: 0; }
+.st-metro .mt-nav-tx small {
+  display: block; font: 700 calc(19px * var(--s)) / 1.1 var(--f-mono);
+  letter-spacing: .08em; color: rgba(255, 255, 255, .58); margin-bottom: calc(5px * var(--s));
+}
+.st-metro .mt-nav-pill.next .mt-nav-tx small { color: #FFD100; }
+.st-metro .mt-nav-tx b {
+  display: block; font: 700 calc(28px * var(--s)) / 1.2 var(--f-body);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ═════════ 3. 步骤（0°/45°/90° 地铁线路图） ═════════ */
+.st-metro .steps { gap: calc(28px * var(--si)); }
+.st-metro .steps.col { gap: calc(34px * var(--si)); }
+.st-metro .steps .links path {
+  stroke: var(--accent); stroke-width: calc(12px * var(--si)); stroke-linecap: round;
+}
+.st-metro .steps .mt-train-layer {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none;
+}
+.st-metro .steps .step {
+  gap: calc(26px * var(--si)); align-items: center;
+}
+.st-metro .step .badge {
+  width: calc(74px * var(--si)); height: calc(74px * var(--si));
+  background: #FFFFFF; color: #1D1D1F;
+  border: calc(8px * var(--si)) solid var(--accent);
+  font: 400 calc(38px * var(--si)) / 1 var(--f-num);
+  box-shadow: 0 0 0 calc(5px * var(--si)) var(--bg);
+}
+.st-metro .steps.col .step .badge {
+  width: calc(78px * var(--si)); height: calc(78px * var(--si));
+  font-size: calc(40px * var(--si));
+}
+.st-metro .step.on .badge,
+.st-metro .step.is-cur .badge {
+  background: #FFD100; border-color: #1D1D1F; color: #1D1D1F;
+  box-shadow: 0 0 0 calc(5px * var(--si)) var(--accent);
+}
+.st-metro .step .st-tx {
+  background: #FFFFFF; border: 3px solid #1D1D1F;
+  border-left: calc(10px * var(--si)) solid var(--accent);
+  border-radius: calc(10px * var(--si));
+  padding: calc(20px * var(--si)) calc(26px * var(--si));
+  box-shadow: 5px 5px 0 rgba(29, 29, 31, .08);
+}
+.st-metro .step.on .st-tx {
+  border-left-color: #FFD100; background: #FFFDF2;
+}
+.st-metro .st-t { font-weight: 900; font-size: calc(var(--fs-body) * var(--si) * .92); text-wrap: pretty; }
+.st-metro .st-n { color: var(--fg2); font-size: calc(var(--fs-note) * var(--si)); margin-top: calc(6px * var(--si)); text-wrap: pretty; }
+
+.st-metro .steps.row { gap: calc(24px * var(--si)); padding-top: calc(10px * var(--si)); }
+.st-metro .steps.row .step { gap: calc(22px * var(--si)); }
+.st-metro .steps.row .step .st-tx {
+  border-left: 3px solid #1D1D1F;
+  border-top: calc(10px * var(--si)) solid var(--accent);
+  text-align: left;
+  padding: calc(20px * var(--si)) calc(22px * var(--si));
+}
+.st-metro .steps.row .st-t { font-size: calc(var(--fs-body) * var(--si) * .82); }
+.st-metro .steps.row .step.on .st-tx { border-top-color: #FFD100; }
+
+/* ═════════ 4. 列表（地铁站点清单） ═════════ */
+.st-metro .list { row-gap: calc(22px * var(--si)); column-gap: calc(48px * var(--si)); }
+.st-metro .list .item {
+  position: relative; align-items: center; gap: calc(22px * var(--si));
+  background: #FFFFFF; border: 2.5px solid rgba(29, 29, 31, .2);
+  border-radius: calc(10px * var(--si));
+  padding: calc(18px * var(--si)) calc(24px * var(--si));
+  font-size: calc(var(--fs-body) * var(--si) * .9);
+}
+.st-metro .list .item.on {
+  border-color: #1D1D1F; border-width: 3px;
+  background: #FFFCEB;
+  box-shadow: 5px 5px 0 #FFD100;
+}
+.st-metro .list .item::before {
+  content: ''; position: absolute;
+  left: calc(47px * var(--si)); top: calc(-24px * var(--si)); bottom: calc(-24px * var(--si));
+  width: calc(8px * var(--si)); background: var(--accent); z-index: 0;
+}
+.st-metro .list .item:first-child::before { top: 50%; }
+.st-metro .list .item:last-child::before { bottom: 50%; }
+.st-metro .list[style*="--cols: 2"] .item::before { display: none; }
+.st-metro .list .item .mk {
+  position: relative; z-index: 1; flex: none; min-width: 0;
+  display: inline-grid; place-items: center;
+}
+.st-metro .mt-st-num {
+  display: inline-grid; place-items: center;
+  width: calc(52px * var(--si)); height: calc(52px * var(--si));
+  border-radius: 50%; background: #FFFFFF; color: #1D1D1F;
+  border: calc(6px * var(--si)) solid var(--accent);
+  box-shadow: 0 0 0 4px #FFFFFF;
+  font: 400 calc(30px * var(--si)) / 1 var(--f-num);
+}
+.st-metro .item.on .mt-st-num,
+.st-metro .item.is-cur .mt-st-num {
+  background: #FFD100; border-color: #1D1D1F;
+  box-shadow: 0 0 0 4px #FFFCEB;
+}
+.st-metro .mt-st-dot {
+  display: inline-block; width: calc(30px * var(--si)); height: calc(30px * var(--si));
+  border-radius: 50%; background: #FFFFFF; border: calc(7px * var(--si)) solid var(--accent);
+  box-shadow: 0 0 0 4px #FFFFFF;
+  margin: 0 calc(11px * var(--si));
+}
+.st-metro .item.on .mt-st-dot {
+  width: calc(36px * var(--si)); height: calc(36px * var(--si)); margin: 0 calc(8px * var(--si));
+  background: #FFFFFF; border: calc(8px * var(--si)) solid #1D1D1F;
+  box-shadow: 0 0 0 4px #FFD100;
+}
+.st-metro .item.ok .mk {
+  width: calc(48px * var(--si)); height: calc(48px * var(--si));
+  border-radius: 50%; background: #00A651; color: #FFFFFF;
+  box-shadow: 0 0 0 4px #FFFFFF;
+}
+.st-metro .item.no .mk {
+  width: calc(48px * var(--si)); height: calc(48px * var(--si));
+  border-radius: 50%; background: #E4002B; color: #FFFFFF;
+  box-shadow: 0 0 0 4px #FFFFFF;
+}
+.st-metro .item.ok .ic, .st-metro .item.no .ic { width: .62em; height: .62em; }
+.st-metro .item .tx { font-weight: 700; }
+.st-metro .item .nt { font-weight: 400; color: var(--fg2); }
+
+/* ═════════ 5. 时间线（地铁历史延伸线） ═════════ */
+.st-metro .tl { gap: calc(28px * var(--si)); }
+.st-metro .tl .links path {
+  stroke: var(--accent); stroke-width: calc(10px * var(--si)); stroke-linecap: round;
+}
+.st-metro .tl .mt-train-layer {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none;
+}
+.st-metro .tl-dot {
+  width: calc(34px * var(--si)); height: calc(34px * var(--si));
+  background: #FFFFFF; border: calc(7px * var(--si)) solid #1D1D1F;
+  box-shadow: 0 0 0 calc(5px * var(--si)) var(--accent);
+  margin-top: calc(10px * var(--si));
+}
+.st-metro .tl-item.on .tl-dot,
+.st-metro .tl-item.is-cur .tl-dot {
+  background: #FFD100; border-color: #1D1D1F;
+}
+.st-metro .tl-time {
+  display: inline-block; justify-self: start;
+  background: #1D1D1F; color: #FFFFFF;
+  font: 400 calc(36px * var(--si)) / 1 var(--f-num); letter-spacing: .04em;
+  padding: calc(6px * var(--si)) calc(14px * var(--si));
+  border-radius: calc(6px * var(--si));
+}
+.st-metro .tl-item.on .tl-time { background: #FFD100; color: #1D1D1F; }
+.st-metro .tl-text {
+  margin-top: calc(8px * var(--si)); font-weight: 700; color: var(--fg);
+}
+.st-metro .tl.row .tl-time { justify-self: center; }
+
+/* ═════════ 6. 对比（两条不同颜色线路对比） ═════════ */
+.st-metro .cmp { column-gap: calc(18px * var(--si)); }
+.st-metro.r169 .cmp { --lk: 1.0; }
+.st-metro.r169 .side-h { padding: calc(16px * var(--si)) calc(22px * var(--si)) calc(14px * var(--si)); }
+.st-metro.r169 .side-v { margin-top: calc(8px * var(--si)); font-size: calc(var(--fs-stat) * var(--si) * .78 * var(--fk)); }
+.st-metro.r169 .side-p { margin-top: calc(14px * var(--si)); gap: calc(10px * var(--si)); }
+.st-metro.r169 .side { padding-bottom: calc(18px * var(--si)); }
+.st-metro.r169 .verdict { margin-top: calc(18px * var(--s)); padding: calc(11px * var(--s)) calc(26px * var(--s)); }
+.st-metro .side {
+  background: #FFFFFF; border: 3px solid #1D1D1F; border-radius: calc(12px * var(--si));
+  padding: 0 0 calc(24px * var(--si)); overflow: hidden;
+  box-shadow: 6px 6px 0 rgba(29, 29, 31, .08);
+}
+.st-metro .side.left { --side-c: #E4002B; }
+.st-metro .side.right { --side-c: #00A651; }
+.st-metro .side-h {
+  position: relative;
+  background: var(--side-c); color: #FFFFFF;
+  padding: calc(22px * var(--si)) calc(24px * var(--si)) calc(20px * var(--si));
+}
+.st-metro .side.win .side-h::after {
+  content: '★ 推荐'; position: absolute; right: calc(18px * var(--si)); top: calc(18px * var(--si));
+  background: #FFD100; color: #1D1D1F;
+  font: 900 calc(20px * var(--si)) / 1 var(--f-body);
+  padding: calc(6px * var(--si)) calc(12px * var(--si));
+  border-radius: calc(5px * var(--si));
+  opacity: var(--p, 1);
+}
+.st-metro .side-k {
+  display: inline-block; background: rgba(0, 0, 0, .24); color: #FFFFFF;
+  padding: .18em .55em; border-radius: 4px; font-weight: 700;
+  font-size: calc(22px * var(--si)); margin-bottom: calc(10px * var(--si));
+}
+.st-metro .side-l { color: #FFFFFF; font-weight: 900; font-size: calc(var(--fs-body) * var(--si) * .96); }
+.st-metro .side-v {
+  color: #FFFFFF; margin-top: calc(12px * var(--si));
+  font-size: calc(var(--fs-stat) * var(--si) * .88 * var(--fk));
+}
+.st-metro .side-u { color: rgba(255, 255, 255, .88); font-weight: 700; }
+.st-metro .side-p {
+  margin: calc(20px * var(--si)) calc(22px * var(--si)) 0;
+  gap: calc(14px * var(--si));
+}
+.st-metro .side-p li {
+  font-weight: 600; align-items: flex-start;
+  font-size: calc(var(--fs-note) * var(--si) * 1.04);
+}
+.st-metro .side-p .mk { margin-top: .16em; }
+.st-metro .side-p .tx { text-wrap: pretty; }
+.st-metro .side-p .dotm {
+  width: .48em; height: .48em; background: #FFFFFF; border: 3.5px solid var(--side-c);
+}
+.st-metro .side-p li.ok .mk { color: #00A651; }
+.st-metro .side-p li.no .mk { color: #E4002B; }
+.st-metro .side.win {
+  border-color: #1D1D1F;
+  box-shadow: 8px 8px 0 color-mix(in srgb, #FFD100 calc(var(--p, 1) * 100%), rgba(29, 29, 31, .08));
+}
+.st-metro .vs {
+  width: calc(68px * var(--si)); height: calc(68px * var(--si));
+  border-radius: 50%; background: #FFFFFF; border: calc(6px * var(--si)) solid #1D1D1F;
+  display: grid; place-items: center; color: #1D1D1F;
+  font: 400 calc(34px * var(--si)) / 1 var(--f-num);
+  box-shadow: 0 0 0 4px #FFD100;
+}
+.st-metro .verdict {
+  align-self: center;
+  background: #FFD100; color: #1D1D1F; border: 3px solid #1D1D1F;
+  border-radius: calc(10px * var(--s));
+  padding: calc(14px * var(--s)) calc(30px * var(--s));
+  margin-top: calc(28px * var(--s));
+  font-weight: 900; box-shadow: 6px 6px 0 #1D1D1F;
+}
+.st-metro .verdict .hl {
+  background: none; color: #E4002B;
+}
+
+/* ═════════ 7. 条形图（各线路里程/耗时轨道图） ═════════ */
+.st-metro .bars { gap: calc(26px * var(--si)); }
+.st-metro .bar-row {
+  grid-template-columns: calc(62px * var(--si)) var(--bar-lw, 22%) minmax(0, 1fr);
+  column-gap: calc(18px * var(--si));
+  background: #FFFFFF; border: 2.5px solid rgba(29, 29, 31, .18);
+  border-radius: calc(12px * var(--si));
+  padding: calc(18px * var(--si)) calc(24px * var(--si));
+}
+.st-metro .bar-row.on {
+  border: 3px solid #1D1D1F; background: #FFFDF0;
+  box-shadow: 6px 6px 0 #FFD100;
+}
+.st-metro.r34 .bar-row,
+.st-metro.r916 .bar-row {
+  grid-template-columns: calc(56px * var(--si)) minmax(0, 1fr);
+  grid-template-areas: "badge label" "track track";
+  row-gap: calc(14px * var(--si));
+}
+.st-metro.r34 .bar-badge, .st-metro.r916 .bar-badge { grid-area: badge; }
+.st-metro.r34 .bar-l, .st-metro.r916 .bar-l { grid-area: label; text-align: left; align-self: center; }
+.st-metro.r34 .bar-track, .st-metro.r916 .bar-track { grid-area: track; }
+
+.st-metro .bar-badge {
+  width: calc(52px * var(--si)); height: calc(52px * var(--si));
+  border-radius: calc(10px * var(--si));
+  background: var(--row-c, #0072CE); color: #FFFFFF;
+  display: grid; place-items: center;
+  font: 400 calc(32px * var(--si)) / 1 var(--f-num);
+}
+.st-metro .bar-l { font-weight: 900; color: var(--fg); }
+.st-metro .bar-track {
+  position: relative; height: calc(44px * var(--si));
+  display: flex; align-items: center;
+}
+.st-metro .bar-track::before {
+  content: ''; position: absolute; left: 0; right: calc(120px * var(--si)); top: 50%;
+  height: calc(6px * var(--si)); margin-top: calc(-3px * var(--si));
+  background: repeating-linear-gradient(90deg, rgba(29, 29, 31, .16) 0 12px, transparent 12px 20px);
+  border-radius: 99px;
+}
+.st-metro .bar-fill,
+.st-metro .bar-row.on .bar-fill {
+  position: relative; z-index: 1;
+  height: calc(22px * var(--si)); border-radius: 99px;
+  width: calc(var(--w) * var(--bar-max, 70%)); min-width: calc(28px * var(--si));
+  background: var(--row-c, #0072CE);
+}
+.st-metro .bar-fill::before {
+  content: ''; position: absolute; left: -2px; top: 50%;
+  width: calc(18px * var(--si)); height: calc(18px * var(--si));
+  margin-top: calc(-9px * var(--si)); border-radius: 50%;
+  background: #FFFFFF; border: calc(4.5px * var(--si)) solid var(--row-c, #0072CE);
+}
+.st-metro .bar-fill::after {
+  content: ''; position: absolute; right: calc(-8px * var(--si)); top: 50%;
+  width: calc(28px * var(--si)); height: calc(28px * var(--si));
+  margin-top: calc(-14px * var(--si)); border-radius: 50%;
+  background: #FFFFFF; border: calc(6px * var(--si)) solid #1D1D1F;
+}
+.st-metro .bar-row.on .bar-fill::after {
+  background: #FFD100; border-color: #1D1D1F;
+  box-shadow: 0 0 0 4px rgba(255, 209, 0, .45);
+}
+.st-metro .bar-v {
+  position: relative; z-index: 2;
+  margin-left: calc(24px * var(--si));
+  font: 400 calc(46px * var(--si)) / 1 var(--f-num); color: #1D1D1F;
+}
+.st-metro .bar-u { font-family: var(--f-body); font-weight: 700; font-size: .5em; color: var(--fg2); }
+
+/* ═════════ 8. 数据卡（运行信息屏） ═════════ */
+.st-metro .stats { gap: calc(22px * var(--si)); }
+.st-metro .stat {
+  position: relative; background: #FFFFFF; border: 3px solid #1D1D1F;
+  border-top: calc(12px * var(--si)) solid var(--stat-c, var(--accent));
+  border-radius: calc(12px * var(--si));
+  padding: calc(26px * var(--si)) calc(28px * var(--si));
+  box-shadow: 6px 6px 0 rgba(29, 29, 31, .08);
+}
+.st-metro .stat.on {
+  background: #FFD100; border-color: #1D1D1F; border-top-color: #1D1D1F;
+  box-shadow: 7px 7px 0 #1D1D1F;
+}
+.st-metro .stat-v { color: var(--stat-c, var(--accent)); font-weight: 400; letter-spacing: .01em; }
+.st-metro .stat.on .stat-v { color: #1D1D1F; }
+.st-metro .stat-u { font-family: var(--f-body); font-weight: 900; color: #1D1D1F; font-size: .36em; }
+.st-metro .stat-l { font-weight: 900; color: #1D1D1F; }
+.st-metro .stat.on .stat-n { color: rgba(29, 29, 31, .78); }
+
+/* ═════════ 9. 卡片（出口 / 换乘导视牌） ═════════ */
+.st-metro .cards { gap: calc(22px * var(--si)); }
+.st-metro .card {
+  background: #FFFFFF; border: 3px solid #1D1D1F;
+  border-radius: calc(12px * var(--si));
+  padding: 0; overflow: hidden;
+  box-shadow: 6px 6px 0 rgba(29, 29, 31, .08);
+  display: flex; flex-direction: column;
+}
+.st-metro .cards.rows .card {
+  display: grid; grid-template-columns: calc(136px * var(--si)) minmax(0, 1fr);
+  column-gap: 0; align-items: stretch;
+}
+.st-metro .card-k {
+  margin: 0; padding: calc(14px * var(--si)) calc(22px * var(--si));
+  background: var(--card-c, #1D1D1F); color: #FFFFFF;
+  font: 700 calc(28px * var(--si)) / 1.1 var(--f-body);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.st-metro .card-k::after {
+  content: '↗'; font: 900 calc(28px * var(--si)) / 1 var(--f-body); opacity: .9;
+}
+.st-metro .cards.rows .card-k {
+  flex-direction: column; justify-content: center; gap: 6px; text-align: center;
+  font-size: calc(30px * var(--si));
+}
+.st-metro .card.on .card-k {
+  background: #FFD100; color: #1D1D1F;
+}
+.st-metro .card.on {
+  box-shadow: 7px 7px 0 #FFD100;
+}
+.st-metro .card-tx {
+  padding: calc(22px * var(--si)) calc(24px * var(--si));
+}
+.st-metro .card-t { font-weight: 900; color: #1D1D1F; }
+.st-metro .card-x { color: var(--fg2); font-weight: 500; }
+
+/* ═════════ 10. 大数字（站台巨型里程牌） ═════════ */
+.st-metro .mt-bn-card {
+  background: #FFFFFF; border: 4px solid #1D1D1F;
+  border-top: calc(18px * var(--s)) solid var(--accent);
+  border-radius: calc(16px * var(--s));
+  padding: calc(40px * var(--s)) calc(44px * var(--s));
+  box-shadow: 10px 10px 0 rgba(29, 29, 31, .1);
+}
+.st-metro .bn-row { color: #1D1D1F; letter-spacing: .01em; }
+.st-metro .bn-u {
+  background: var(--accent); color: #FFFFFF;
+  padding: .12em .32em; border-radius: 8px; font-size: .26em;
+  margin-left: .2em; align-self: center;
+}
+.st-metro .mt-bn-ruler {
+  height: calc(20px * var(--s)); margin-top: calc(22px * var(--s));
+  position: relative; display: flex; align-items: center;
+}
+.st-metro .mt-bn-ruler::before {
+  content: ''; width: 100%; height: calc(8px * var(--s)); border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent) 0 68%, rgba(29, 29, 31, .16) 68% 100%);
+}
+.st-metro .mt-bn-ruler::after {
+  content: ''; position: absolute; left: 68%; top: 50%;
+  width: calc(26px * var(--s)); height: calc(26px * var(--s));
+  margin: calc(-13px * var(--s)) 0 0 calc(-13px * var(--s));
+  border-radius: 50%; background: #FFD100; border: 5px solid #1D1D1F;
+}
+.st-metro .bn-l { font-weight: 900; color: #1D1D1F; }
+
+/* ═════════ 11. 一句话（车厢广播导视牌） ═════════ */
+.st-metro .tpl-statement .say {
+  background: #FFFFFF; border: 4px solid #1D1D1F;
+  border-radius: calc(16px * var(--s)); overflow: hidden;
+  box-shadow: 10px 10px 0 #1D1D1F;
+}
+.st-metro .mt-say-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #FFD100; color: #1D1D1F; border-bottom: 3.5px solid #1D1D1F;
+  padding: calc(14px * var(--s)) calc(30px * var(--s));
+  font: 900 calc(24px * var(--s)) / 1 var(--f-mono); letter-spacing: .08em;
+}
+.st-metro .mt-say-body {
+  padding: calc(44px * var(--s)) calc(42px * var(--s));
+}
+.st-metro .say .sl { font-weight: 900; line-height: 1.35; }
+
+/* ═════════ 12. 引用（站厅多线灯箱标语） ═════════ */
+.st-metro .tpl-quote .qt {
+  position: relative; background: #FFFFFF; border: 3.5px solid #1D1D1F;
+  border-radius: calc(14px * var(--s));
+  padding: calc(42px * var(--s)) calc(44px * var(--s)) calc(38px * var(--s)) calc(74px * var(--s));
+  box-shadow: 8px 8px 0 rgba(29, 29, 31, .1); overflow: hidden;
+}
+.st-metro .mt-qt-stripes {
+  position: absolute; left: 0; top: 0; bottom: 0; width: calc(36px * var(--s));
+  display: flex;
+}
+.st-metro .mt-qt-stripes i { flex: 1; height: 100%; }
+.st-metro .qmark { color: var(--accent); font-family: var(--f-title); font-weight: 900; }
+.st-metro .q-text { font-weight: 900; color: #1D1D1F; }
+.st-metro .q-src {
+  display: inline-block; align-self: flex-start;
+  background: #1D1D1F; color: #FFD100;
+  padding: calc(8px * var(--s)) calc(18px * var(--s));
+  border-radius: calc(6px * var(--s));
+  font: 700 calc(26px * var(--s)) / 1.2 var(--f-mono);
+}
+
+/* ═════════ 13. 代码（行车调度终端） ═════════ */
+.st-metro .tpl-code .body { min-height: auto; }
+.st-metro.r169 .tpl-code .body { margin-top: calc(16px * var(--s)); }
+.st-metro.r169 .tpl-code .note { margin-top: calc(14px * var(--s)); }
+.st-metro .code-win {
+  border: 3.5px solid #1D1D1F; border-radius: calc(14px * var(--s));
+  box-shadow: 10px 10px 0 rgba(29, 29, 31, .14);
+}
+.st-metro .code-bar {
+  height: calc(50px * var(--s)); padding: 0 calc(24px * var(--s));
+  border-bottom: 2px solid rgba(255, 255, 255, .1);
+  color: rgba(255, 255, 255, .86); font-weight: 700;
+}
+.st-metro.r169 .code-bar { height: calc(44px * var(--s)); }
+.st-metro .code-bar i { width: 14px; height: 14px; background: #E4002B; }
+.st-metro .code-bar i:nth-child(2) { background: #FFD100; }
+.st-metro .code-bar i:nth-child(3) { background: #00A651; }
+.st-metro .code-bar::after {
+  content: 'SYS · RUN'; margin-left: auto;
+  font: 700 calc(18px * var(--s)) / 1 var(--f-mono); letter-spacing: .1em;
+  color: #00E676; background: rgba(0, 230, 118, .12);
+  padding: 5px 10px; border-radius: 4px;
+}
+.st-metro pre.code {
+  padding: calc(22px * var(--s)) calc(30px * var(--s));
+  line-height: 1.5;
+}
+.st-metro.r169 pre.code {
+  padding: calc(14px * var(--s)) calc(26px * var(--s));
+  line-height: 1.38;
+}
+.st-metro .cl { min-height: 1.38em; }
+.st-metro .cl.hl-line::before {
+  left: calc(-30px * var(--s)); right: calc(-30px * var(--s));
+}
+.st-metro .cl.hl-line::after {
+  content: ''; position: absolute; left: calc(-30px * var(--s)); top: 0; bottom: 0;
+  width: 6px; background: #FFD100; opacity: var(--p, 0);
+}
+.st-metro .tok-c { color: #8C96A6; }
+.st-metro .tok-s { color: #7EE787; }
+.st-metro .tok-n { color: #FFD100; }
+.st-metro .tok-k { color: #FF7B72; font-weight: 700; }
+.st-metro .tok-f { color: #79C0FF; }
+.st-metro .tok-o { color: #C9D1D9; }
+
+/* ═════════ 14. 公式 / 图片 ═════════ */
+.st-metro .tpl-formula .formula {
+  background: #FFFFFF; border: 3.5px solid #1D1D1F;
+  border-top: calc(12px * var(--s)) solid var(--accent);
+  border-radius: calc(14px * var(--s));
+  padding: calc(40px * var(--s)) calc(32px * var(--s));
+  box-shadow: 8px 8px 0 rgba(29, 29, 31, .08);
+}
+.st-metro .f-plain {
+  background: #FFFFFF; border: 4px solid #1D1D1F;
+  border-top: 14px solid var(--accent);
+  border-radius: 10px; padding: 12px;
+  box-shadow: 10px 10px 0 rgba(29, 29, 31, .12);
+}
+.st-metro .f-plain .shot { border-radius: 4px; }
+
+/* ═════════ 15. 结尾（终点站 · 全部下车） ═════════ */
+.st-metro .tpl-ending .content {
+  justify-content: center;
+}
+.st-metro .mt-end-route {
+  width: 100%; margin-bottom: calc(30px * var(--s));
+}
+.st-metro .mt-end-route svg {
+  width: 100%; height: calc(64px * var(--s)); display: block;
+}
+.st-metro .tpl-ending .kicker .kt {
+  background: #FFD100; color: #1D1D1F;
+}
+.st-metro .tpl-ending .kicker .kt::before {
+  background: #1D1D1F; box-shadow: none;
+}
+.st-metro .tpl-ending .title { color: #FFFFFF; }
+.st-metro .tpl-ending .cta {
+  position: relative; display: inline-block; align-self: flex-start;
+  background: #FFD100; color: #1D1D1F;
+  padding: calc(18px * var(--s)) calc(30px * var(--s)) calc(18px * var(--s)) calc(134px * var(--s));
+  border-radius: calc(12px * var(--s));
+  font-weight: 900; margin-top: calc(34px * var(--s)); text-align: left;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+}
+.st-metro .tpl-ending .cta::before {
+  content: 'EXIT ↗'; position: absolute; left: calc(20px * var(--s)); top: 50%; translate: 0 -50%;
+  background: #1D1D1F; color: #FFD100;
+  font: 400 calc(29px * var(--s)) / 1 var(--f-num);
+  padding: calc(7px * var(--s)) calc(13px * var(--s)); border-radius: 6px;
+}
+.st-metro .tpl-ending .cta .hl { color: #E4002B; background: none; }
+.st-metro .tpl-ending .meta.byline {
+  margin-top: calc(32px * var(--s));
+  font: 700 calc(26px * var(--s)) / 1.2 var(--f-mono);
+  color: rgba(255, 255, 255, .74);
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.st-metro .tpl-ending .meta.byline::before {
+  content: 'TICKET · PASS'; font-size: .78em;
+  border: 2px solid rgba(255, 255, 255, .35); padding: 4px 10px; border-radius: 5px;
+  color: #FFD100;
+}
+
+/* ═════════ 字幕 ═════════ */
+.st-metro .subl {
+  background: rgba(29, 29, 31, .92); color: #F7F7F5;
+  padding: .22em .62em; border-radius: 10px;
+  border-left: 8px solid #FFD100;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .18);
+}
+.st-metro .subl .hl { color: #FFD100; }
+.st-metro #subs[data-tone="dark"] .subl {
+  background: rgba(255, 255, 255, .14); color: #FFFFFF;
+  border-left-color: #FFD100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+}

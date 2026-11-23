@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="920" height="540">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="1.2" fill="#5EE6D0" fill-opacity="0.14"/>
+    </pattern>
+    <marker id="arr-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1.5 L8.5 5 L1 8.5" fill="none" stroke="#5EE6D0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1.5 L8.5 5 L1 8.5" fill="none" stroke="#5BD68A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-y" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1.5 L8.5 5 L1 8.5" fill="none" stroke="#FFD166" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1.5 L8.5 5 L1 8.5" fill="none" stroke="#FF6B9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="540" fill="#0B1220"/>
+  <rect width="920" height="540" fill="url(#grid)"/>
+
+  <!-- Header label -->
+  <text x="32" y="38" fill="#6B7894" font-family="ui-monospace, monospace" font-size="18">// git-undo decision flow</text>
+  <rect x="730" y="16" width="158" height="32" rx="6" fill="#151E33" stroke="#5EE6D0" stroke-opacity="0.45"/>
+  <circle cx="750" cy="32" r="5" fill="#5BD68A"/>
+  <text x="765" y="38" fill="#5EE6D0" font-family="ui-monospace, monospace" font-size="16" font-weight="700">SAFE FLOW</text>
+
+  <!-- Root decision box -->
+  <rect x="210" y="58" width="500" height="84" rx="12" fill="#151E33" stroke="#5EE6D0" stroke-width="2.6"/>
+  <text x="460" y="90" text-anchor="middle" fill="#5EE6D0" font-family="ui-monospace, monospace" font-size="17" font-weight="700">$ git status · STEP 01</text>
+  <text x="460" y="126" text-anchor="middle" fill="#E6EDF7" font-family="sans-serif" font-size="28" font-weight="700">错误提交是否已经 push 到远端？</text>
+
+  <!-- Left branch: YES (pushed) -->
+  <path d="M320 142 V186 H196 V238" fill="none" stroke="#5BD68A" stroke-width="3" marker-end="url(#arr-g)"/>
+  <rect x="190" y="168" width="118" height="34" rx="17" fill="#0E241E" stroke="#5BD68A" stroke-width="1.8"/>
+  <text x="249" y="191" text-anchor="middle" fill="#5BD68A" font-family="sans-serif" font-size="18" font-weight="700">YES · 已推</text>
+
+  <!-- Right branch: NO (local only) -->
+  <path d="M600 142 V186 H660 V238" fill="none" stroke="#FFD166" stroke-width="3" marker-end="url(#arr-y)"/>
+  <rect x="580" y="168" width="118" height="34" rx="17" fill="#261F10" stroke="#FFD166" stroke-width="1.8"/>
+  <text x="639" y="191" text-anchor="middle" fill="#FFD166" font-family="sans-serif" font-size="18" font-weight="700">NO · 本地</text>
+
+  <!-- Left Result Card: git revert -->
+  <rect x="30" y="248" width="346" height="202" rx="14" fill="#112226" stroke="#5BD68A" stroke-width="2.6"/>
+  <rect x="30" y="248" width="346" height="40" rx="14" fill="#18332E"/>
+  <rect x="30" y="274" width="346" height="14" fill="#18332E"/>
+  <text x="50" y="275" fill="#5BD68A" font-family="ui-monospace, monospace" font-size="17" font-weight="700">RECOMMENDED · 团队安全</text>
+  <text x="50" y="330" fill="#5EE6D0" font-family="ui-monospace, monospace" font-size="28" font-weight="700">$ git revert &lt;id&gt;</text>
+  <text x="50" y="372" fill="#E6EDF7" font-family="sans-serif" font-size="23" font-weight="700">新建反向提交抵消改动</text>
+  <text x="50" y="406" fill="#9FB0C9" font-family="sans-serif" font-size="19">• 保留完整历史，不改写哈希</text>
+  <text x="50" y="434" fill="#9FB0C9" font-family="sans-serif" font-size="19">• 队友正常 pull 不会冲突</text>
+
+  <!-- Right Sub-decision -->
+  <rect x="424" y="248" width="464" height="66" rx="12" fill="#151E33" stroke="#FFD166" stroke-width="2.2"/>
+  <text x="656" y="290" text-anchor="middle" fill="#E6EDF7" font-family="sans-serif" font-size="24" font-weight="700">只改最近一次，还是撤回重来？</text>
+
+  <!-- Split to amend and reset -->
+  <path d="M550 314 V348 H522 V374" fill="none" stroke="#5EE6D0" stroke-width="2.6" marker-end="url(#arr-c)"/>
+  <path d="M760 314 V348 H778 V374" fill="none" stroke="#FF6B9A" stroke-width="2.6" marker-end="url(#arr-m)"/>
+
+  <!-- Amend Card -->
+  <rect x="404" y="384" width="234" height="134" rx="12" fill="#151E33" stroke="#5EE6D0" stroke-width="2.2"/>
+  <text x="422" y="416" fill="#FFD166" font-family="sans-serif" font-size="18" font-weight="700">改说明 / 补文件</text>
+  <text x="422" y="452" fill="#5EE6D0" font-family="ui-monospace, monospace" font-size="22" font-weight="700">commit --amend</text>
+  <text x="422" y="484" fill="#E6EDF7" font-family="sans-serif" font-size="18">替换最近一次提交</text>
+  <text x="422" y="508" fill="#9FB0C9" font-family="sans-serif" font-size="16">会生成新提交哈希</text>
+
+  <!-- Reset Soft Card -->
+  <rect x="654" y="384" width="238" height="134" rx="12" fill="#151E33" stroke="#FF6B9A" stroke-width="2.2"/>
+  <text x="672" y="416" fill="#FF6B9A" font-family="sans-serif" font-size="18" font-weight="700">撤回提交 · 留代码</text>
+  <text x="672" y="452" fill="#E6EDF7" font-family="ui-monospace, monospace" font-size="19" font-weight="700">reset --soft HEAD~1</text>
+  <text x="672" y="484" fill="#E6EDF7" font-family="sans-serif" font-size="18">改动保留在暂存区</text>
+  <text x="672" y="508" fill="#FF6B6B" font-family="sans-serif" font-size="16">⚠ 慎用 --hard 会丢改动</text>
+
+  <!-- Bottom warning note on left -->
+  <rect x="30" y="468" width="346" height="50" rx="10" fill="#23141D" stroke="#FF6B6B" stroke-opacity="0.65"/>
+  <text x="48" y="500" fill="#FF6B6B" font-family="ui-monospace, monospace" font-size="17" font-weight="700">! WARN: 公共分支避免 force push</text>
+</svg>

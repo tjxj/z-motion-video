@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none">
+  <!-- Tube Surface -->
+  <rect x="26" y="108" width="268" height="44" rx="10" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+  <!-- Wet Puddle of Glue (Wavy Splatter) -->
+  <ellipse cx="152" cy="116" rx="54" ry="12" fill="#EFECE4" stroke="#111111" stroke-width="2.5" stroke-dasharray="5 4"/>
+  <path d="M108 118 Q130 128 152 120 T196 122" stroke="#111111" stroke-width="2.5"/>
+  <!-- Dripping Drops -->
+  <path d="M124 130 C124 138 132 138 132 130 C132 126 128 122 128 122 C128 122 124 126 124 130 Z" fill="#111111"/>
+  <path d="M188 134 C188 142 196 142 196 134 C196 130 192 126 192 126 C192 126 188 130 188 134 Z" fill="#111111"/>
+  <!-- Patch Slipping Sideways / Peeling Up -->
+  <g transform="translate(116, 62) rotate(-14)">
+    <rect x="0" y="0" width="84" height="36" rx="6" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+    <rect x="14" y="8" width="56" height="20" rx="3" stroke="#111111" stroke-width="2.5" stroke-dasharray="4 3"/>
+  </g>
+  <!-- Slip Motion Squiggle Arrows -->
+  <path d="M214 66 L252 56 M242 50 L254 56 L246 66" stroke="#D92B2B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M212 88 L244 82" stroke="#D92B2B" stroke-width="3" stroke-dasharray="5 5" stroke-linecap="round"/>
+  <!-- Glue Tube Still Dripping Immediately -->
+  <g transform="translate(46, 18) rotate(32)">
+    <path d="M6 0 L30 0 L26 42 L10 42 Z" fill="#FBFBF8" stroke="#111111" stroke-width="3.5"/>
+    <path d="M14 42 L22 42 L19 54 L17 54 Z" fill="#111111"/>
+  </g>
+</svg>

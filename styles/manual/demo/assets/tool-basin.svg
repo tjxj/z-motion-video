@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130" fill="none">
+  <!-- Water Basin -->
+  <path d="M26 52 L174 52 L158 106 L42 106 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="20" y="44" width="160" height="10" rx="4" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+  <!-- Water Surface Waves -->
+  <path d="M36 68 Q56 60 76 68 T116 68 T162 68" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <path d="M46 84 Q70 78 94 84 T152 84" stroke="#111111" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <!-- Rising Air Bubbles (Safety Orange) -->
+  <circle cx="96" cy="56" r="5" fill="#FF5B1F" stroke="#111111" stroke-width="2.5"/>
+  <circle cx="106" cy="36" r="7" fill="#FF5B1F" stroke="#111111" stroke-width="2.5"/>
+  <circle cx="94" cy="20" r="4.5" fill="#FBFBF8" stroke="#FF5B1F" stroke-width="3"/>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 210" fill="none">
+  <!-- Ground Line -->
+  <line x1="28" y1="188" x2="412" y2="188" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Reassembled Wheel (Left) -->
+  <circle cx="122" cy="112" r="74" fill="#FBFBF8" stroke="#111111" stroke-width="5.5"/>
+  <circle cx="122" cy="112" r="56" stroke="#111111" stroke-width="3.5"/>
+  <circle cx="122" cy="112" r="10" fill="#111111"/>
+  <g stroke="#111111" stroke-width="2">
+    <line x1="122" y1="56" x2="122" y2="168"/>
+    <line x1="66" y1="112" x2="178" y2="112"/>
+    <line x1="82" y1="72" x2="162" y2="152"/>
+    <line x1="162" y1="72" x2="82" y2="152"/>
+  </g>
+  <!-- Valve -->
+  <rect x="166" y="138" width="16" height="8" rx="2" transform="rotate(28 166 138)" fill="#FF5B1F" stroke="#111111" stroke-width="2.5"/>
+
+  <!-- Hose Connecting Wheel to Floor Pump -->
+  <path d="M180 148 C216 172 246 174 268 168" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Floor Pump (Right) -->
+  <rect x="262" y="176" width="76" height="12" rx="3" fill="#111111"/>
+  <rect x="288" y="66" width="24" height="110" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+  <line x1="300" y1="36" x2="300" y2="66" stroke="#111111" stroke-width="4"/>
+  <rect x="264" y="26" width="72" height="12" rx="6" fill="#FF5B1F" stroke="#111111" stroke-width="3.5"/>
+
+  <!-- Up/Down Pumping Arrows -->
+  <line x1="244" y1="26" x2="244" y2="70" stroke="#FF5B1F" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M236 36 L244 24 L252 36 M236 60 L244 72 L252 60" stroke="#FF5B1F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Pressure Gauge Callout (Far Right) -->
+  <g transform="translate(378, 108)">
+    <circle cx="0" cy="0" r="38" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+    <!-- Target Safe Pressure Arc (Safety Orange) -->
+    <path d="M-2 -26 A 26 26 0 0 1 24 -8" stroke="#FF5B1F" stroke-width="8" stroke-linecap="round"/>
+    <!-- Needle pointing into target zone -->
+    <line x1="0" y1="0" x2="14" y2="-18" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="4.5" fill="#111111"/>
+    <text x="0" y="22" text-anchor="middle" font-family="monospace" font-weight="700" font-size="11" fill="#111111">BAR/PSI</text>
+  </g>
+</svg>

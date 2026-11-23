@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8EC7E8"/>
+      <stop offset="52%" stop-color="#F8D8B2"/>
+      <stop offset="100%" stop-color="#F6B8C6"/>
+    </linearGradient>
+    <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6BB0D4"/>
+      <stop offset="100%" stop-color="#4B8AB0"/>
+    </linearGradient>
+  </defs>
+  <!-- Sunset coastal sky -->
+  <rect width="800" height="600" fill="url(#sunset)"/>
+  <!-- Low afternoon sun -->
+  <circle cx="240" cy="290" r="68" fill="#FFE27A" opacity="0.92"/>
+  <circle cx="240" cy="290" r="96" fill="#FFE27A" opacity="0.22"/>
+  <!-- Soft sunset clouds -->
+  <g fill="#FFFDF8" opacity="0.72">
+    <rect x="64" y="138" width="160" height="22" rx="11"/>
+    <rect x="116" y="124" width="90" height="22" rx="11"/>
+    <rect x="462" y="110" width="184" height="22" rx="11"/>
+    <rect x="520" y="96" width="96" height="22" rx="11"/>
+  </g>
+  <!-- Sea -->
+  <rect x="0" y="330" width="800" height="170" fill="url(#ocean)"/>
+  <!-- Sun shimmer on water -->
+  <g fill="#FFE696" opacity="0.58">
+    <rect x="184" y="346" width="112" height="8" rx="4"/>
+    <rect x="198" y="366" width="84" height="7" rx="3.5"/>
+    <rect x="174" y="386" width="124" height="7" rx="3.5"/>
+    <rect x="210" y="408" width="60" height="6" rx="3"/>
+  </g>
+  <!-- Little harbor boats in distance (Shapowei silhouette) -->
+  <g fill="#FFFDF8" opacity="0.9">
+    <polygon points="354,326 376,282 380,326"/>
+    <path d="M346 330 L392 330 L384 340 L352 340 Z" fill="#415B72"/>
+    <polygon points="424,334 440,302 444,334"/>
+    <path d="M418 336 L454 336 L448 344 L424 344 Z" fill="#415B72"/>
+  </g>
+  <!-- Sandy beach & coastal headland -->
+  <path d="M0 448 Q260 426 520 456 Q680 472 800 442 L800 600 L0 600 Z" fill="#F2DEC0"/>
+  <!-- Foam wave -->
+  <path d="M0 444 Q180 420 380 442 Q590 462 800 434" stroke="#FFFDF8" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.88"/>
+  <!-- Huandao Road Cycling Path -->
+  <path d="M0 512 Q320 482 800 524 L800 600 L0 600 Z" fill="#DF9586"/>
+  <path d="M0 554 Q320 526 800 568" stroke="#FFFDF8" stroke-width="5" stroke-dasharray="20 18" fill="none" opacity="0.9"/>
+  <!-- Rocky headland for Lighthouse -->
+  <path d="M512 456 Q560 398 632 406 Q706 414 756 456 Z" fill="#8C8378"/>
+  <path d="M532 456 Q576 416 634 422 Q688 426 730 456 Z" fill="#A59B8E"/>
+  <!-- Iconic Red-and-White Lighthouse -->
+  <g transform="translate(580, 178)">
+    <!-- Tower body -->
+    <polygon points="28,74 72,74 86,232 14,232" fill="#FFFDF8" stroke="#3A3A3A" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Red stripes -->
+    <polygon points="24,106 76,106 79,140 21,140" fill="#E05263"/>
+    <polygon points="18,174 82,174 85,208 15,208" fill="#E05263"/>
+    <!-- Door & windows -->
+    <path d="M40 232 L40 206 A10 10 0 0 1 60 206 L60 232 Z" fill="#465D70"/>
+    <rect x="44" y="148" width="12" height="18" rx="6" fill="#465D70"/>
+    <!-- Gallery deck -->
+    <rect x="18" y="64" width="64" height="12" rx="4" fill="#3A4A58"/>
+    <!-- Lantern room -->
+    <rect x="30" y="34" width="40" height="30" fill="#FFE27A" stroke="#3A3A3A" stroke-width="3"/>
+    <line x1="43" y1="34" x2="43" y2="64" stroke="#3A3A3A" stroke-width="2.5"/>
+    <line x1="57" y1="34" x2="57" y2="64" stroke="#3A3A3A" stroke-width="2.5"/>
+    <!-- Dome cap -->
+    <path d="M24 34 Q50 4 76 34 Z" fill="#E05263" stroke="#3A3A3A" stroke-width="3"/>
+    <line x1="50" y1="4" x2="50" y2="18" stroke="#3A3A3A" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Warm light beam -->
+    <polygon points="30,44 -160,12 -160,86 30,58" fill="#FFE27A" opacity="0.22"/>
+  </g>
+  <!-- Swaying Palm Trees on Left -->
+  <g>
+    <path d="M88 530 Q106 392 146 270" stroke="#7A5A42" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <g fill="#4E9676">
+      <path d="M146 270 Q92 232 48 278 Q104 268 146 270 Z"/>
+      <path d="M146 270 Q106 206 144 176 Q142 226 146 270 Z"/>
+      <path d="M146 270 Q196 208 242 246 Q188 248 146 270 Z"/>
+      <path d="M146 270 Q206 254 236 306 Q186 286 146 270 Z"/>
+      <path d="M146 270 Q92 284 74 336 Q116 304 146 270 Z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 240" fill="none">
+  <!-- Left: Frame Fork & Quick Release Wheel Drop -->
+  <g transform="translate(24, 14)">
+    <!-- Fork Blades -->
+    <path d="M56 8 L88 94 L106 94 L138 8" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Wheel Dropping Down -->
+    <circle cx="97" cy="146" r="64" fill="#FBFBF8" stroke="#111111" stroke-width="4.5"/>
+    <circle cx="97" cy="146" r="48" stroke="#111111" stroke-width="3"/>
+    <circle cx="97" cy="146" r="10" fill="#111111"/>
+    <!-- Quick Release Lever Rotating -->
+    <path d="M97 94 L142 84" stroke="#FF5B1F" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="97" cy="94" r="8" fill="#FBFBF8" stroke="#111111" stroke-width="3.5"/>
+    <!-- Curved open arrow -->
+    <path d="M132 62 A 40 40 0 0 1 154 96" stroke="#FF5B1F" stroke-width="3.5" stroke-dasharray="6 5" stroke-linecap="round"/>
+    <path d="M146 90 L154 98 L160 88" stroke="#FF5B1F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Downward Drop Dashed Arrow -->
+    <line x1="97" y1="108" x2="97" y2="132" stroke="#FF5B1F" stroke-width="3.5" stroke-dasharray="4 4"/>
+    <path d="M90 124 L97 134 L104 124" stroke="#FF5B1F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Divider Arrow -->
+  <path d="M210 120 L246 120" stroke="#111111" stroke-width="3" stroke-dasharray="6 5"/>
+  <path d="M238 112 L248 120 L238 128" stroke="#111111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Right: Pressing Valve to Deflate Air -->
+  <g transform="translate(262, 18)">
+    <!-- Rim Segment -->
+    <path d="M16 176 Q82 146 148 176" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+    <path d="M16 196 Q82 166 148 196" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Valve Stem -->
+    <rect x="74" y="106" width="16" height="58" rx="3" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+    <rect x="78" y="94" width="8" height="12" fill="#FF5B1F" stroke="#111111" stroke-width="3"/>
+    <!-- Simplified Finger Pressing Down -->
+    <path d="M138 56 L92 66 C82 68 78 78 86 84 L138 80" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Down Press Arrow -->
+    <line x1="82" y1="36" x2="82" y2="62" stroke="#FF5B1F" stroke-width="4" stroke-linecap="round"/>
+    <path d="M74 54 L82 64 L90 54" stroke="#FF5B1F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Escaping Air Lines -->
+    <path d="M64 96 L42 84 M62 106 L38 106 M66 116 L46 128" stroke="#FF5B1F" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 5"/>
+  </g>
+</svg>

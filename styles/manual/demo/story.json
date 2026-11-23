@@ -1,0 +1,224 @@
+{
+  "title": "自行车补胎 6 步",
+  "name": "bike-tire-repair",
+  "series": "DIY 维修手册 · NO.06",
+  "byline": "@你的账号",
+  "ratio": "3:4",
+  "style": "manual",
+  "showcase": [2, 4, 9],
+  "scenes": [
+    {
+      "type": "cover",
+      "kicker": "维修手册 · DIY-06",
+      "title": "自行车补胎\n6 步搞定",
+      "sub": "不用找车店，自己动手十五到二十分钟就能修好",
+      "specs": [
+        { "icon": "person", "text": "1 人" },
+        { "icon": "clock", "text": "约 20 分钟" }
+      ],
+      "image": "assets/cover-wheel.svg",
+      "tools": [
+        { "icon": "assets/tool-lever.svg", "label": "撬胎棒", "qty": "×2" },
+        { "icon": "assets/tool-patch.svg", "label": "补胎片胶水", "qty": "×1" },
+        { "icon": "assets/tool-sandpaper.svg", "label": "细砂纸", "qty": "×1" },
+        { "icon": "assets/tool-pump.svg", "label": "打气筒", "qty": "×1" }
+      ],
+      "say": [
+        "骑车半路扎胎其实不用慌，自己动手【六步】就能补好。",
+        "拿上几样常见小工具，大约二十分钟就能重新上路。"
+      ]
+    },
+    {
+      "type": "cards",
+      "kicker": "PARTS LIST · 工具清单",
+      "title": "先备齐这 6 样工具",
+      "items": [
+        { "tag": "A1", "title": "撬胎棒", "text": "撬开外胎边缘，最好用尼龙款", "image": "assets/tool-lever.svg", "qty": "×2", "on": true },
+        { "tag": "A2", "title": "补胎片与胶水", "text": "传统涂胶片或自粘补胎片", "image": "assets/tool-patch.svg", "qty": "×1" },
+        { "tag": "A3", "title": "细砂纸", "text": "打磨漏点周围，让表面粗糙", "image": "assets/tool-sandpaper.svg", "qty": "×1" },
+        { "tag": "A4", "title": "打气筒", "text": "找漏点和装回后打气用", "image": "assets/tool-pump.svg", "qty": "×1" },
+        { "tag": "A5", "title": "一盆清水", "text": "浸水看冒泡，精准定位小孔", "image": "assets/tool-basin.svg", "qty": "×1" },
+        { "tag": "A6", "title": "记号笔", "text": "擦干后圈出漏点防丢失", "image": "assets/tool-marker.svg", "qty": "×1" }
+      ],
+      "say": [
+        "动手前先核对零件清单：最关键的是【两根撬胎棒】、补胎片和胶水、细砂纸、打气筒。",
+        "家里再接一盆清水，拿支记号笔，所有工具就齐了。"
+      ]
+    },
+    {
+      "type": "chapter",
+      "num": "01",
+      "title": "拆胎找漏点",
+      "note": "步骤 1 — 3 · 先放气，再取出内胎定位破口",
+      "say": [
+        "第一部分是拆胎和找漏点，一共三个动作。"
+      ]
+    },
+    {
+      "type": "steps",
+      "kicker": "STEP 01 — 02",
+      "title": "撬出外胎一侧，取出内胎",
+      "items": [
+        {
+          "step": "1",
+          "title": "卸下车轮并放尽余气",
+          "text": "松开快拆或螺母卸下车轮，也可直接在车上操作，按压气嘴排空气体。",
+          "image": "assets/step-1-wheel.svg"
+        },
+        {
+          "step": "2",
+          "title": "两根撬胎棒配合取出内胎",
+          "text": "第一根撬起外胎边钩在辐条上，第二根沿轮圈划开【一侧外胎】，抽出内胎。",
+          "image": "assets/step-2-lever.svg",
+          "on": true
+        }
+      ],
+      "say": [
+        "第一步，卸下车轮，或者直接把车倒放，按气嘴把余气放干净。",
+        "第二步，用两根撬胎棒把【一侧外胎】撬出轮圈，不用全拆，顺手就能抽出内胎。"
+      ]
+    },
+    {
+      "type": "image",
+      "kicker": "STEP 03 · 定位漏点",
+      "title": "打气后浸水，看冒泡处做记号",
+      "image": "assets/step-3-water.svg",
+      "cap": "局部放大：连续冒出细密气泡的位置就是漏气孔",
+      "points": [
+        "给内胎打少量气，微微鼓起即可",
+        "分段按进水盆，盯着【连续冒泡】的位置",
+        "擦干水珠，用记号笔在破口周围画十字标记"
+      ],
+      "say": [
+        "第三步找漏点：先给内胎打一点气，一段一段按进水盆里。",
+        "只要看到【连续冒泡】的地方，就是破口，擦干后立刻做个记号。"
+      ]
+    },
+    {
+      "type": "chapter",
+      "num": "02",
+      "title": "补片与装回",
+      "note": "步骤 4 — 6 · 打磨涂胶、排查异物、重新打气",
+      "say": [
+        "找到破口以后，进入第二部分：贴片、排刺，再把轮胎装回去。"
+      ]
+    },
+    {
+      "type": "steps",
+      "kicker": "STEP 04 — 06",
+      "title": "打磨贴片、查刺、装回打气",
+      "items": [
+        {
+          "step": "4",
+          "title": "打磨、涂胶晾干、压紧补片",
+          "text": "砂纸打毛破口周围，涂薄胶水等【表面稍干不粘手】，再贴片用力压实。",
+          "image": "assets/step-4-patch.svg",
+          "on": true
+        },
+        {
+          "step": "5",
+          "title": "摸一圈外胎内侧清异物",
+          "text": "手指轻滑外胎内壁，把残留的小刺或碎玻璃彻底挑出来。",
+          "image": "assets/step-5-inspect.svg"
+        },
+        {
+          "step": "6",
+          "title": "装回内胎外胎并按标注打气",
+          "text": "内胎微充气塞回，徒手压回外胎边，打气到【胎侧标注的气压范围】。",
+          "image": "assets/step-6-inflate.svg"
+        }
+      ],
+      "say": [
+        "第四步，用砂纸把破口周围打毛，涂胶等【表面稍干】再贴补片压紧。",
+        "第五步，顺手摸一圈外胎内侧，把残留的刺或碎玻璃清理干净。",
+        "第六步，把内胎和外胎装回轮圈，打气到【胎侧标注的气压范围】就行。"
+      ]
+    },
+    {
+      "type": "statement",
+      "kicker": "SAFETY WARNING · 关键提醒",
+      "text": "不检查外胎内侧\n刚补好的胎会【立刻再扎破】",
+      "note": "提示：摸外胎内壁时放慢动作，当心藏在橡胶里的细碎玻璃割手",
+      "say": [
+        "特别提醒：装回之前一定要检查外胎内侧。",
+        "要是刺还留在外胎里，刚补好的内胎打满气就会【立刻再扎破】。"
+      ]
+    },
+    {
+      "type": "compare",
+      "kicker": "DO & DON'T · 对错示范",
+      "title": "贴片最容易做错的一步",
+      "left": {
+        "tag": "错误做法",
+        "label": "涂完胶立刻贴片",
+        "ok": false,
+        "image": "assets/cmp-wrong.svg",
+        "points": [
+          { "text": "胶水还湿滑，补片容易移位", "ok": false },
+          { "text": "边缘翘起，打气后慢慢漏气", "ok": false }
+        ]
+      },
+      "right": {
+        "tag": "正确做法",
+        "label": "等胶水晾到稍干再贴",
+        "ok": true,
+        "win": true,
+        "image": "assets/cmp-right.svg",
+        "points": [
+          { "text": "表面呈哑光微粘，硫化更牢", "ok": true },
+          { "text": "从中心向四周用力按压排空气", "ok": true }
+        ]
+      },
+      "verdict": "胶水【晾至稍干】再贴片，补片才粘得严实",
+      "say": [
+        "对比一下最常见的失误：涂完胶水马上贴片，胶面还是湿的，补片一压就滑，打气后很容易漏。",
+        "正确做法是等胶水【晾到稍干】呈哑光状态，再贴上补片用力压实。"
+      ]
+    },
+    {
+      "type": "bars",
+      "kicker": "TIME GUIDE · 参考耗时",
+      "title": "20 分钟都花在哪一步？",
+      "items": [
+        { "label": "拆轮撬胎取内胎", "value": 4, "unit": "分钟" },
+        { "label": "打气浸水找漏点", "value": 4, "unit": "分钟" },
+        { "label": "打磨晾胶与压片", "value": 7, "unit": "分钟", "on": true },
+        { "label": "查刺装回与打气", "value": 5, "unit": "分钟" }
+      ],
+      "note": "注：以上为熟练前单人操作参考耗时（示例），贴片晾胶不要赶时间",
+      "say": [
+        "整个过程大约二十分钟，最需要耐心的是【打磨晾胶和压片】，大概占七分钟。",
+        "拆胎、找漏点和装回打气各花四五分钟，按顺序来非常顺手。"
+      ]
+    },
+    {
+      "type": "list",
+      "kicker": "FINAL CHECK · 装回自检",
+      "title": "打满气前，核对这 4 项",
+      "mode": "check",
+      "items": [
+        { "text": "外胎内侧已排查，确认【无残留尖刺】", "ok": true },
+        { "text": "沿着轮圈捏一圈，确认内胎没有被外胎夹住", "ok": true },
+        { "text": "气嘴笔直穿过轮圈孔，没有歪斜拉扯", "ok": true },
+        { "text": "对照【胎侧标注气压范围】打气，不凭手感瞎打", "ok": true, "on": true }
+      ],
+      "say": [
+        "打满气前最后过一遍检查单：确认外胎里没有残留尖刺，",
+        "捏一圈看看内胎有没有被夹住，气嘴要保持竖直，",
+        "最后对照【胎侧标注的气压范围】打气就稳了。"
+      ]
+    },
+    {
+      "type": "ending",
+      "kicker": "ASSEMBLY COMPLETE · 维修完成",
+      "title": "补胎完成\n装车继续出发",
+      "tags": ["#自行车补胎", "#动手技能", "#维修说明书"],
+      "cta": "先【收藏】这份说明书，下次扎胎照着步骤来",
+      "byline": "@你的账号",
+      "say": [
+        "六个步骤走完，补胎就全部搞定了。",
+        "建议先【收藏】这份说明书，下次出门骑车心里更有底。"
+      ]
+    }
+  ]
+}

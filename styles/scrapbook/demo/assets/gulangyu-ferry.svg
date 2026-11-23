@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8DAF4"/>
+      <stop offset="58%" stop-color="#D7EFFA"/>
+      <stop offset="100%" stop-color="#FBF3E0"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7CC2E2"/>
+      <stop offset="55%" stop-color="#5AAAD0"/>
+      <stop offset="100%" stop-color="#4893BC"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#87C4A8"/>
+      <stop offset="100%" stop-color="#5E9E84"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width="800" height="600" fill="url(#sky)"/>
+  <!-- Warm sun -->
+  <circle cx="640" cy="126" r="54" fill="#FFE27A" opacity="0.92"/>
+  <circle cx="640" cy="126" r="72" fill="#FFE27A" opacity="0.25"/>
+  <!-- Soft clouds -->
+  <g fill="#FFFDF8" opacity="0.92">
+    <path d="M96 134 C96 112 118 98 140 104 C152 84 188 82 204 102 C226 98 244 114 242 134 Z"/>
+    <path d="M402 104 C402 88 418 78 434 82 C444 66 472 66 484 82 C500 80 514 92 512 104 Z"/>
+    <path d="M558 206 C558 194 570 186 584 189 C592 178 614 178 624 190 C636 188 646 196 645 206 Z" opacity="0.72"/>
+  </g>
+  <!-- Distant Gulangyu Island & Sunlight Rock -->
+  <path d="M-10 356 Q110 250 230 278 Q310 218 395 264 Q490 284 575 342 L575 370 L-10 370 Z" fill="#9ACBB6" opacity="0.72"/>
+  <path d="M40 364 Q155 268 258 290 Q328 232 396 278 Q468 298 530 364 Z" fill="url(#hill)"/>
+  <!-- Sunlight Rock peak -->
+  <path d="M312 260 L338 228 L356 244 L368 262 Z" fill="#D2A784"/>
+  <path d="M338 228 L356 244 L344 260 L328 254 Z" fill="#B88B68"/>
+  <!-- Red-roofed island villas -->
+  <g>
+    <rect x="148" y="318" width="38" height="32" rx="2" fill="#FBF2DE"/>
+    <polygon points="142,320 167,300 192,320" fill="#DE6B5A"/>
+    <rect x="157" y="328" width="7" height="10" rx="1" fill="#5D7D74"/>
+    <rect x="171" y="328" width="7" height="10" rx="1" fill="#5D7D74"/>
+
+    <rect x="216" y="310" width="46" height="38" rx="2" fill="#FFF7E8"/>
+    <polygon points="210,312 239,290 268,312" fill="#D95D52"/>
+    <rect x="226" y="320" width="8" height="12" rx="1" fill="#4B6F68"/>
+    <rect x="242" y="320" width="8" height="12" rx="1" fill="#4B6F68"/>
+
+    <rect x="284" y="324" width="34" height="28" rx="2" fill="#F7E4C8"/>
+    <polygon points="280,326 301,310 322,326" fill="#E37D66"/>
+
+    <rect x="374" y="316" width="44" height="34" rx="2" fill="#FFF6E5"/>
+    <polygon points="368,318 396,298 424,318" fill="#D95D52"/>
+    <rect x="384" y="326" width="8" height="10" rx="1" fill="#4B6F68"/>
+    <rect x="400" y="326" width="8" height="10" rx="1" fill="#4B6F68"/>
+  </g>
+  <!-- Sea -->
+  <rect x="0" y="354" width="800" height="246" fill="url(#sea)"/>
+  <!-- Sun reflection -->
+  <g fill="#FFE89C" opacity="0.45">
+    <rect x="598" y="366" width="88" height="7" rx="3.5"/>
+    <rect x="614" y="384" width="62" height="6" rx="3"/>
+    <rect x="588" y="402" width="96" height="6" rx="3"/>
+    <rect x="626" y="422" width="48" height="5" rx="2.5"/>
+  </g>
+  <!-- Gentle sea ripples -->
+  <g stroke="#FFFDF8" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.42">
+    <path d="M54 410 Q86 402 118 410"/>
+    <path d="M138 432 Q178 424 218 432"/>
+    <path d="M510 470 Q554 460 598 470"/>
+    <path d="M624 522 Q674 512 724 522"/>
+    <path d="M88 538 Q138 528 188 538"/>
+    <path d="M342 560 Q398 550 454 560"/>
+  </g>
+  <!-- Ferry Wake -->
+  <path d="M196 474 C270 486 490 492 612 478 C542 508 320 518 142 496 Z" fill="#FFFDF8" opacity="0.58"/>
+  <path d="M170 492 Q250 510 340 502 Q435 516 540 500" stroke="#FFFDF8" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.82"/>
+  <!-- Double-Deck Xiamen Ferry -->
+  <g transform="translate(230, 326)">
+    <!-- Funnel & mast -->
+    <rect x="196" y="10" width="28" height="36" rx="4" fill="#E05263"/>
+    <rect x="196" y="18" width="28" height="8" fill="#FFFDF8"/>
+    <line x1="154" y1="6" x2="154" y2="44" stroke="#3A4A58" stroke-width="4" stroke-linecap="round"/>
+    <path d="M154 10 L178 16 L154 22 Z" fill="#FFE27A"/>
+    <!-- Upper deck -->
+    <path d="M98 44 L296 44 L310 82 L88 82 Z" fill="#FFFDF8" stroke="#3A4A58" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Upper windows -->
+    <g fill="#5FA9D0">
+      <rect x="114" y="54" width="28" height="18" rx="4"/>
+      <rect x="150" y="54" width="28" height="18" rx="4"/>
+      <rect x="186" y="54" width="28" height="18" rx="4"/>
+      <rect x="222" y="54" width="28" height="18" rx="4"/>
+      <rect x="258" y="54" width="28" height="18" rx="4"/>
+    </g>
+    <!-- Main deck cabin -->
+    <path d="M52 82 L346 82 L364 118 L42 118 Z" fill="#FFFDF8" stroke="#3A4A58" stroke-width="3.5" stroke-linejoin="round"/>
+    <rect x="52" y="82" width="298" height="9" fill="#9CCBEB"/>
+    <!-- Main windows -->
+    <g fill="#4282A8">
+      <rect x="74" y="96" width="24" height="15" rx="3"/>
+      <rect x="108" y="96" width="24" height="15" rx="3"/>
+      <rect x="142" y="96" width="24" height="15" rx="3"/>
+      <rect x="176" y="96" width="24" height="15" rx="3"/>
+      <rect x="210" y="96" width="24" height="15" rx="3"/>
+      <rect x="244" y="96" width="24" height="15" rx="3"/>
+      <rect x="278" y="96" width="24" height="15" rx="3"/>
+      <rect x="312" y="96" width="24" height="15" rx="3"/>
+    </g>
+    <!-- Hull -->
+    <path d="M18 118 L392 118 L368 156 L42 156 Z" fill="#3B6E96" stroke="#2D4A63" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M26 130 L384 130" stroke="#F6B8C6" stroke-width="6"/>
+    <!-- Life rings -->
+    <circle cx="90" cy="130" r="9" fill="none" stroke="#FFFDF8" stroke-width="4"/>
+    <circle cx="90" cy="130" r="9" fill="none" stroke="#E05263" stroke-width="4" stroke-dasharray="7 7"/>
+    <circle cx="318" cy="130" r="9" fill="none" stroke="#FFFDF8" stroke-width="4"/>
+    <circle cx="318" cy="130" r="9" fill="none" stroke="#E05263" stroke-width="4" stroke-dasharray="7 7"/>
+    <!-- Portholes -->
+    <circle cx="152" cy="142" r="5" fill="#FFE27A"/>
+    <circle cx="192" cy="142" r="5" fill="#FFE27A"/>
+    <circle cx="232" cy="142" r="5" fill="#FFE27A"/>
+    <circle cx="272" cy="142" r="5" fill="#FFE27A"/>
+  </g>
+  <!-- Seagulls -->
+  <g stroke="#FFFDF8" stroke-width="4.5" stroke-linecap="round" fill="none">
+    <path d="M148 196 Q162 180 176 196 Q190 180 204 196"/>
+    <path d="M236 226 Q246 214 256 226 Q266 214 276 226" stroke-width="3.5"/>
+    <path d="M514 166 Q528 150 542 166 Q556 150 570 166"/>
+  </g>
+</svg>

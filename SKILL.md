@@ -1,6 +1,6 @@
 ---
 name: z-motion-video
-description: 把口播稿、文章或几条要点做成动效讲解视频（MP4）。写一份 story.json，每页选一个模板、配几句口播，画面元素会跟着口播里的关键词依次出场，字幕、页码、进度条和转场都自动生成。内置 10 套视觉风格（方格手稿、宋式米纸、撞色海报、杂志瓷蓝、象牙陶土、夜航文档、报纸号外、装配说明书、手账拼贴、瑞士网格），支持 3:4、9:16、16:9 三种画幅。配音可以用 macOS say、edge-tts，也可以接自己的录音或字级时间戳。逐帧渲染，同一时刻永远是同一张画面，支持多进程并行导出和逐帧比对。适合知识科普、产品介绍、操作教程、数据解读、观点输出、读书分享、生活分享等短视频。触发词：动效视频、做个动效视频、动画讲解视频、文字转动效视频、口播配动效、口播动画、讲解动画、竖屏动效视频、横屏动效视频、motion video、explainer video。
+description: 把口播稿、文章或几条要点做成动效讲解视频（MP4）。写一份 story.json，每页选一个模板、配几句口播，画面元素会跟着口播里的关键词依次出场，字幕、页码、进度条和转场都自动生成。内置 15 套视觉风格（方格手稿、宋式米纸、撞色海报、杂志瓷蓝、象牙陶土、夜航文档、报纸号外、装配说明书、手账拼贴、瑞士网格、漫画分镜、孔版印刷、购物小票、电影胶片、地铁导视），每套有自己的版式和一份专属示范稿，支持 3:4、9:16、16:9 三种画幅。配音可以用 macOS say、edge-tts，也可以接自己的录音或字级时间戳。逐帧渲染，同一时刻永远是同一张画面，支持多进程并行导出和逐帧比对。适合知识科普、产品介绍、操作教程、数据解读、观点输出、读书分享、生活分享等短视频。触发词：动效视频、做个动效视频、动画讲解视频、文字转动效视频、口播配动效、口播动画、讲解动画、竖屏动效视频、横屏动效视频、motion video、explainer video。
 ---
 
 # z-motion-video 动效视频
@@ -27,8 +27,8 @@ python3 $SK/tools/mv.py check
 
 按顺序做，每一步都有产物可以检查。
 
-1. **问清三件事**：讲什么（稿子或要点）、发在哪（决定画幅）、喜欢什么风格。风格拿不准时，先用示例或用户的稿子跑 `compare` 出一张对比图让用户挑。
-2. **建项目**：`python3 $SK/tools/mv.py new ./my-video`，会复制示例 `story.json` 和素材。
+1. **问清三件事**：讲什么（稿子或要点）、发在哪（决定画幅）、喜欢什么风格。风格拿不准时，先跑 `showcase` 出一张各风格示范稿的总览图让用户挑；想看同一份稿子在各风格下的样子，用用户的稿子跑 `compare`。
+2. **建项目**：`python3 $SK/tools/mv.py new ./my-video --style <风格>`，会复制这个风格的示范稿当起点（示范稿用到了这套风格的各种版式，照着改最快）；不写 `--style` 时复制闰年示例。
 3. **写 story.json**：把稿子拆成场景，每个场景选一个模板（见下方速查），写屏幕上的字和 `say` 口播句子。写法规则见下一节。
 4. **出截图检查排版**：`python3 $SK/tools/mv.py snap ./my-video`。打开 `out/sheet-<风格>-<画幅>.png` 看整体，终端里的 ⚠ 提示（内容溢出、缩到 xx%、标题行太长）要逐条处理：删字、拆场景或换模板。
 5. **配音和时间轴**（三选一，没有配音也能先渲染静音版）：
@@ -101,28 +101,49 @@ python3 $SK/tools/mv.py check
 
 ## 风格
 
-| 风格 | 名称 | 看点 | 适合 |
-|---|---|---|---|
-| `grid-notebook` | 方格手稿 | 米白方格纸、墨黑宋体、红笔批注，像在笔记本上边讲边画 | 知识科普、原理讲解、学习笔记、读书分享 |
-| `rice-paper` | 宋式米纸 | 宣纸底、居中宋体、朱砂印章和着重号、远山淡墨 | 人文历史、传统文化、读书笔记、节气民俗 |
-| `color-block` | 撞色海报 | 每页换一块高饱和底色、粗黑体大字、黑底字幕条，节奏快 | 观点输出、清单盘点、产品发布、活动预告 |
-| `porcelain` | 杂志瓷蓝 | 冷白瓷底、藏青宋体、斜体数字和冰裂纹，安静的杂志感 | 品牌故事、人物专访、生活方式、艺术设计 |
-| `ivory-clay` | 象牙陶土 | 象牙白配陶土橙，封面、章节、金句切成深色页 | 科技解读、产品介绍、行业观察、知识讲解 |
-| `night-doc` | 夜航文档 | 深海军蓝、星点和点阵，每章换一种强调色，玻璃卡片 | 技术教程、AI 工具、产品发布、数据报告 |
-| `newsprint` | 报纸号外 | 旧报纸纸面、报头和分栏线、粗黑宋体、网点图片 | 新闻解读、热点事件、历史故事、观点评论 |
-| `manual` | 装配说明书 | 说明书白纸、圆形步骤号、安全橙重点、虚线箭头、刻度尺进度 | 操作教程、产品上手、流程拆解、工具测评 |
-| `scrapbook` | 手账拼贴 | 点阵本、便利贴卡片、和纸胶带、荧光笔、拍立得相框、手写字 | 生活分享、学习笔记、旅行攻略、好物推荐 |
-| `swiss-grid` | 瑞士网格 | 12 栏参考线、粗黑无衬线、Inter 大数字、一抹瑞士红 | 品牌介绍、数据解读、行业观察、设计分享 |
+| 风格 | 名称 | 看点 | 示范稿 | 适合 |
+|---|---|---|---|---|
+| `grid-notebook` | 方格手稿 | 方格笔记本、左侧红线页边批注、手写文楷、红笔圈画打勾 | 费曼学习法 | 知识科普、原理讲解、学习方法、读书笔记 |
+| `rice-paper` | 宋式米纸 | 宋画立轴、右侧竖排书法、淡墨远山、乌丝栏手卷、朱砂印 | 二十四节气 | 传统文化、人文历史、节气民俗、诗词读书 |
+| `color-block` | 撞色海报 | 运动海报：斜切高饱和色块、超大裁切字、贴纸徽章、四色斜条转场 | 第一次跑 5 公里 | 运动健身、观点输出、清单盘点、活动预告 |
+| `porcelain` | 杂志瓷蓝 | 青花瓷蓝生活方式杂志：全幅刊头、双线回纹框、跨页图版、目录点线 | 青花瓷怎么烧成 | 文化工艺、生活方式、品牌故事、人物专访 |
+| `ivory-clay` | 象牙陶土 | AI 产品发布会：深浅页交替、宋体大标题、对话界面卡片、设置面板 | 写好提示词 | AI 教程、产品介绍、科技解读、效率方法 |
+| `night-doc` | 夜航文档 | 深夜终端和 IDE：标签栏、行号、命令提示符、git log、红绿 diff、分屏 | Git 撤销提交 | 技术教程、开发工具、AI 编程、架构解析 |
+| `newsprint` | 报纸号外 | 旧报纸头版：报头双线、多栏竖线正文、网点传真照片、套红号外章 | 人类首次登月 | 历史故事、新闻解读、热点事件、人物传记 |
+| `manual` | 装配说明书 | 宜家式说明书：粗黑分格、大号步骤号、技术线稿、零件清单、对错示范 | 自行车补胎 | 操作教程、DIY 指南、产品上手、避坑对比 |
+| `scrapbook` | 手账拼贴 | 旅行手账：线圈点阵纸、拍立得和纸胶带、撕口票根、手绘路线、邮戳 | 厦门周末两日 | 旅行攻略、生活分享、美食探店、好物推荐 |
+| `swiss-grid` | 瑞士网格 | 12 栏网格和坐标标注、错位粗黑标题、几何数据装置、整页红黑章节 | 地球上的水 | 数据解读、信息设计、品牌介绍、行业观察 |
+| `comic` | 漫画分镜 | 彩色条漫：粗黑画格、对话气泡、爆炸拟声字、速度线、网点 | 快递包裹的旅程 | 故事科普、流程拆解、生活趣闻、知识图解 |
+| `riso` | 孔版印刷 | 双色孔版印刷：荧光粉加孔版蓝、错版套印、粗网点、再生纸海报 | 第一次去音乐节 | 音乐演出、生活方式、城市攻略、创意科普 |
+| `receipt` | 购物小票 | 热敏小票：锯齿撕边、等宽数字、点线明细、红笔圈合计、条形码 | 一杯咖啡一年多少钱 | 消费算账、数据解读、生活科普、清单对比 |
+| `film` | 电影胶片 | 35mm 齿孔、2.39:1 宽银幕遮幅、场记板、倒计时片头、24fps 时间码 | 为什么是每秒 24 帧 | 影视科普、文化历史、深度解说、人物故事 |
+| `metro` | 地铁导视 | 彩色线路图、换乘站、站台站名牌、车厢 LED 顶栏、出口黄牌 | Python 学习路线 | 学习路线、步骤教程、流程拆解、知识科普 |
 
-`python3 $SK/tools/mv.py styles` 可以随时列出。几个风格有专属字段：
+`python3 $SK/tools/mv.py styles` 可以随时列出。每套风格的色板、版式和取舍写在 `styles/<风格>/DESIGN.md`。
 
-- `rice-paper`：`story.seal` 写 2～4 个字，封面和结尾会盖一方朱砂印。
-- `newsprint`：`story.masthead` 是报头名，不写时用 `series`。
-- `color-block`：场景写 `"bg": "ink|paper|blue|lime|red"` 指定底色，不写时自动轮换。
-- `ivory-clay`：`"bg": "light|dark|clay"`；`manual`：`"bg": "light|dark|orange"`；`swiss-grid`：`"bg": "light|dark|red"`；`scrapbook`：`"bg": "light"` 取消章节页的便利贴底色。
-- `night-doc`：场景写 `"accent": "#7CF3C8"` 换强调色，不写时每章自动换色。
+**示范稿**：`styles/<风格>/demo/` 是这套风格的专属示范稿，题材按风格挑，尽量把它的专属版式都用上。`new --style` 复制的就是它，`showcase` 总览图里展示的也是它。示范稿里的价格、步数这类数字只为演示版式，做自己的视频时换成核实过的数据。
 
-想做新风格，复制一个现有风格目录改，接口见 [docs/styles.md](docs/styles.md)。
+**换底色和版式**：多数风格的场景可以写 `"bg"` 切换明暗或底色，`cover` 等模板可以写 `"layout"` 换版式变体，不写时按模板自动安排。下面这些字段都可以不写：
+
+| 风格 | 字段 |
+|---|---|
+| `grid-notebook` | 场景 `margin` 写页边红笔批注，`false` 关掉；`cover` 的 `layout: "split"` 左右分栏 |
+| `rice-paper` | `story.seal` 写 2～4 个字，封面和结尾盖朱砂印；`bg: "ink"` 墨色页；`cover` 的 `layout: "center"` 居中匾额；`list` 的 `layout: "scroll"`（竖排手卷）或 `"rows"`（横栏）；`cards` 的 `layout: "wheel"` 时令盘，圆心字写 `centerLabel` |
+| `color-block` | `bg: "ink" \| "blue" \| "lime" \| "red" \| "paper" \| "white-red"`，不写时自动轮换；`cover` 的 `hero: "runner"` 把星芒圆章换成冲刺人形，`vert` 竖排小字，`badge` 圆形贴纸，`bgText` 巨型裁切字，`layout: "split"` 双色硬切 |
+| `porcelain` | `story.masthead` 刊名，`story.column` 栏目名；`bg: "light" \| "dark" \| "cobalt"`；`cover` 的 `layout: "split"` |
+| `ivory-clay` | `bg: "light" \| "dark" \| "clay"`；`cover` 的 `layout: "minimal"` 极简版，`ui: {"prompt", "reply", "session", "placeholder", "sidebar"}` 自定义封面上的对话，不写时按标题自动生成 |
+| `night-doc` | 场景 `accent: "#7CF3C8"` 换强调色，不写时每章自动换色；`cover` 的 `layout: "compact"` 精简版 |
+| `newsprint` | `story.masthead` 报头名，不写时用 `series`；`bg: "light" \| "dark"`；`cover` 的 `columns` 写头版分栏正文（字符串数组），`layout: "extra"` 纯文字号外 |
+| `manual` | `bg: "light" \| "dark" \| "orange"`；`cover` 的 `specs` 右上角规格、`tools` 底栏工具清单 |
+| `scrapbook` | `bg: "light" \| "yellow" \| "pink" \| "mint" \| "blue"`，写 `"light"` 取消章节页的便利贴底色 |
+| `swiss-grid` | `bg: "light" \| "dark" \| "red"` |
+| `comic` | `story.mascot: "box"` 启用纸箱主角「小箱」，场景 `mood: "happy" \| "shock" \| "run" \| "think" \| "proud"` 换表情，不写时用通用的漫画小助手；`sfx` 拟声字，`false` 关掉；`bg: "light" \| "yellow" \| "blue"`；`cover` 的 `vol` 刊号、`layout: "split"` |
+| `riso` | 场景 `motif: "festival"` 叠加舞台、音箱和人群剪影；`bg: "light" \| "pink" \| "blue"`；`cover` 的 `layout: "split"` |
+| `receipt` | `story.masthead` 小票抬头，`story.date` 小票日期（例如 `"2026-03-08"`，不写时印 `2026-11-23`）；`bg: "wood" \| "dark"` 换桌面底色 |
+| `film` | `cover` 的 `leaderNum` 片头倒计时数字，`layout: "split"` 左右分栏 |
+| `metro` | `story.lineCode` 线路代号（最多 3 个字符）；`cover` 的 `stations` 站名数组（4～7 个，不写时从章节和场景标题里取）；`chapter` 的 `en` 英文站名；`bg: "light" \| "dark"` |
+
+想做新风格，复制一个现有风格目录改，接口见 [docs/styles.md](docs/styles.md)。风格可以整个重写某个模板的版式，也能注册自己的入场动画。
 
 ## 画幅
 
@@ -139,12 +160,13 @@ python3 $SK/tools/mv.py check
 ```text
 python3 $SK/tools/mv.py check                                   检查环境
 python3 $SK/tools/mv.py styles                                  列出风格
-python3 $SK/tools/mv.py new <项目> [--example leap-year]         新建项目
+python3 $SK/tools/mv.py new <项目> [--style S | --example leap-year]  新建项目
 python3 $SK/tools/mv.py fonts [--style S | --all]               预下载字体
 python3 $SK/tools/mv.py tts <项目> [--engine say|edge] [--voice V] [--rate R]
 python3 $SK/tools/mv.py timing <项目> [--estimate | --lines DIR | --audio FILE | --words JSON --voice FILE]
 python3 $SK/tools/mv.py snap <项目> [--style S] [--ratio R] [--at 3.5,8]
 python3 $SK/tools/mv.py compare <项目> [--ratio R] [--styles a,b] [--scene N]
+python3 $SK/tools/mv.py showcase [--ratio R] [--styles a,b] [--pages 3] [--out DIR]
 python3 $SK/tools/mv.py preview <项目> [--style S] [--ratio R] [--port 8765]
 python3 $SK/tools/mv.py render <项目> [--style S] [--ratio R|all] [--workers N] [--fps 30] [--bgm FILE] [--bgm-db -18]
 python3 $SK/tools/mv.py verify <项目> [--style S] [--ratio R]
@@ -156,6 +178,7 @@ python3 $SK/tools/mv.py verify <项目> [--style S] [--ratio R]
 |---|---|
 | `snap` | `out/sheet-<风格>-<画幅>.png`（总览），`out/snap/<风格>-<画幅>/sNN.png`（逐页） |
 | `compare` | `out/compare-<画幅>.png`，`out/compare/<画幅>/<风格>.png` |
+| `showcase` | `<DIR>/showcase-<画幅>.png`（每个风格一行：封面 + 内容页），`<DIR>/showcase-covers-<画幅>.png`，`<DIR>/showcase-<风格>-<画幅>.png` |
 | `tts` / `timing` | `audio/lines/NNN.wav`、`audio/voice.wav`、`timing.json` |
 | `render` | `out/<name>-<风格>-<画幅>.mp4` |
 | `verify` | `out/verify/` 里的比对帧 |

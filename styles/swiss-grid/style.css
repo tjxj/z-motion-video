@@ -1,128 +1,521 @@
-/* 瑞士网格 swiss-grid：暖白纸 + 12 栏 + 墨黑无衬线 + 瑞士红 */
+/* 瑞士网格 swiss-grid：国际主义平面设计 + 12 栏精密网格 + 纸白/纯黑/瑞士红/冷灰蓝 */
 #stage.st-swiss-grid {
-  --bg: #F3F2EE; --fg: #0F0F0F; --fg2: #4A4A47; --fg3: #8F8E89;
-  --accent: #E4002B; --accent-t: #E4002B; --accent2: #0F0F0F; --on-accent: #FFFFFF; --hl: #E4002B; --sq: #E4002B;
-  --line: rgba(15, 15, 15, .16); --line-strong: #0F0F0F;
-  --card-bg: transparent; --card-bd: #0F0F0F; --radius: 0px;
-  --code-bg: #0F0F0F; --code-fg: #EDECE8; --code-bar: #1E1E1E; --code-hl: rgba(243, 242, 238, .1);
-  --sub-fg: #0F0F0F; --sub-hl: #E4002B;
-  --f-title: "MV Grot", "MV Sans", sans-serif; --f-body: "MV Grot", "MV Sans", sans-serif; --f-num: "MV Grot", "MV Sans", sans-serif;
-  --f-kicker: "MV Grot", "MV Sans", sans-serif; --f-subl: "MV Grot", "MV Sans", sans-serif; --f-quote: "MV Grot", "MV Sans", sans-serif;
-  --w-title: 900; --w-num: 800; --w-body: 400; --w-kicker: 700; --w-subl: 700; --w-strong: 900;
-  --track-title: -.01em; --track-kicker: .06em; --lh-title: 1.16; --lh-body: 1.5;
-  --dim: .45; --gut: 24px;
+  --bg: #F2F0EB; --fg: #111111; --fg2: #4A4A46; --fg3: #7D7C76;
+  --accent: #E4002B; --accent-t: #E4002B; --accent2: #6E8CA0; --on-accent: #FFFFFF; --hl: #E4002B; --sq: #E4002B;
+  --blue: #6E8CA0; --blue-dark: #4B6A80;
+  --line: rgba(17, 17, 17, .16); --line-strong: #111111;
+  --card-bg: transparent; --card-bd: #111111; --radius: 0px;
+  --code-bg: #111111; --code-fg: #F2F0EB; --code-bar: #1D1D1B; --code-hl: rgba(228, 0, 43, .16);
+  --sub-fg: #111111; --sub-hl: #E4002B;
+  --f-title: "MV Grot", "MV Sans", sans-serif;
+  --f-body: "MV Grot", "MV Sans", sans-serif;
+  --f-num: "MV Grot", "MV Sans", sans-serif;
+  --f-kicker: "MV Grot", "MV Sans", sans-serif;
+  --f-subl: "MV Grot", "MV Sans", sans-serif;
+  --f-quote: "MV Grot", "MV Sans", sans-serif;
+  --f-mono: "MV Mono", "MV Sans", ui-monospace, monospace;
+  --w-title: 900; --w-num: 900; --w-body: 400; --w-kicker: 700; --w-subl: 700; --w-strong: 900;
+  --track-title: -.018em; --track-kicker: .08em; --lh-title: 1.14; --lh-body: 1.48;
+  --dim: .42; --gut: 16px;
 }
-#stage.st-swiss-grid.r169 { --gut: 32px; }
+#stage.st-swiss-grid.r169 { --gut: 24px; --gap: 26px; }
 
-/* 页眉：三段对齐 12 栏；黑色横线上叠红色进度；页脚署名 */
-.st-swiss-grid #chrome { --c1: #0F0F0F; --c2: rgba(15, 15, 15, .52); --c-rule: #0F0F0F; --c-bar: #E4002B; }
-.st-swiss-grid #chrome[data-tone="red"] { --c1: #FFFFFF; --c2: rgba(255, 255, 255, .76); --c-rule: #FFFFFF; --c-bar: #0F0F0F; }
-.st-swiss-grid #chrome[data-tone="dark"] { --c1: #F3F2EE; --c2: rgba(243, 242, 238, .56); --c-rule: rgba(243, 242, 238, .9); --c-bar: #E4002B; }
-.st-swiss-grid .sg-top { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 108px); display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end; color: var(--c1);
-  font: 700 22px/1.2 "MV Grot", "MV Sans", sans-serif; letter-spacing: .02em; white-space: nowrap; }
-.st-swiss-grid .sg-ser { grid-column: 1 / span 5; overflow: hidden; text-overflow: ellipsis; }
-.st-swiss-grid .sg-sec { grid-column: 7 / span 4; overflow: hidden; text-overflow: ellipsis; color: var(--c2); font-weight: 500; }
-.st-swiss-grid .sg-pg { grid-column: 11 / span 2; text-align: right; font-variant-numeric: tabular-nums; }
-.st-swiss-grid .sg-pg i { font-style: normal; font-weight: 500; color: var(--c2); }
-.st-swiss-grid .sg-rule { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 72px); height: 3px; background: var(--c-rule); }
+/* ───── 红/黑整页的 12 栏外露参考线 ───── */
+.st-swiss-grid .sg-tone-grid {
+  position: absolute; top: 0; bottom: 0; left: var(--cl); right: var(--cr); z-index: 0;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); pointer-events: none;
+}
+.st-swiss-grid .sg-tone-grid i {
+  display: block; height: 100%;
+  border-left: 1px solid rgba(255, 255, 255, .09);
+  border-right: 1px solid rgba(255, 255, 255, .09);
+  background: rgba(255, 255, 255, .016);
+}
+.st-swiss-grid .scene .content { z-index: 2; }
+
+/* ───── 页眉页脚与 12 栏标尺坐标（#chrome） ───── */
+.st-swiss-grid #chrome {
+  --c1: #111111; --c2: rgba(17, 17, 17, .56); --c-rule: #111111; --c-bar: #E4002B; --c-rail: rgba(17, 17, 17, .34);
+}
+.st-swiss-grid #chrome[data-tone="red"] {
+  --c1: #FFFFFF; --c2: rgba(255, 255, 255, .8); --c-rule: #FFFFFF; --c-bar: #111111; --c-rail: rgba(255, 255, 255, .48);
+}
+.st-swiss-grid #chrome[data-tone="dark"] {
+  --c1: #F2F0EB; --c2: rgba(242, 240, 235, .6); --c-rule: rgba(242, 240, 235, .9); --c-bar: #FF284B; --c-rail: rgba(242, 240, 235, .36);
+}
+
+/* 12 栏顶部数字坐标轨 */
+.st-swiss-grid .sg-rail {
+  position: absolute; left: var(--cl); right: var(--cr); top: 24px;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut);
+  font: 700 13px/1 var(--f-mono); letter-spacing: .04em; color: var(--c-rail);
+}
+.st-swiss-grid.r916 .sg-rail { top: 96px; }
+.st-swiss-grid.r169 .sg-rail { top: 20px; }
+.st-swiss-grid .sg-rc { display: block; text-align: left; }
+.st-swiss-grid .sg-rc.active { color: var(--c-bar); font-weight: 700; }
+
+/* 三段 12 栏对齐页眉 */
+.st-swiss-grid .sg-top {
+  position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 102px);
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end;
+  color: var(--c1); font: 700 21px/1.2 var(--f-body); letter-spacing: .02em; white-space: nowrap;
+}
+.st-swiss-grid .sg-ser { grid-column: 1 / span 5; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 10px; }
+.st-swiss-grid .sg-ser-sq { flex: none; width: 11px; height: 11px; background: var(--c-bar); display: inline-block; }
+.st-swiss-grid .sg-sec { grid-column: 6 / span 5; overflow: hidden; text-overflow: ellipsis; color: var(--c2); font: 400 19px/1.2 var(--f-mono); letter-spacing: .03em; }
+.st-swiss-grid .sg-pg { grid-column: 11 / span 2; text-align: right; font: 700 22px/1.2 var(--f-mono); font-variant-numeric: tabular-nums; }
+.st-swiss-grid .sg-pg i { font-style: normal; font-weight: 400; color: var(--c2); }
+
+/* 粗细横线 + 红色进度条 */
+.st-swiss-grid .sg-rule { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 66px); height: 3px; background: var(--c-rule); }
 .st-swiss-grid .sg-bar { position: absolute; left: 0; top: -3px; width: 100%; height: 9px; background: var(--c-bar); transform-origin: 0 50%; scale: 0 1; }
-.st-swiss-grid .sg-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 52px; display: flex; justify-content: space-between;
-  align-items: center; color: var(--c2); font: 500 20px/1 "MV Grot", "MV Sans", sans-serif; letter-spacing: .03em; }
-.st-swiss-grid.r169 .sg-foot { bottom: 32px; }
-.st-swiss-grid .sg-sq { width: 14px; height: 14px; background: var(--c-bar); }
 
-/* 标题区：红色小方块 + 标签；标题粗黑，重点变红 */
-.st-swiss-grid .kicker { color: var(--fg); }
-.st-swiss-grid .kicker .kt::before { content: ''; display: inline-block; width: .66em; height: .66em; margin-right: .55em; background: var(--sq);
-  vertical-align: -.04em; }
+/* 12 栏对齐页脚 */
+.st-swiss-grid .sg-foot {
+  position: absolute; left: var(--cl); right: var(--cr); bottom: 44px;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: center;
+  color: var(--c2); font: 400 18px/1 var(--f-mono); letter-spacing: .04em;
+}
+.st-swiss-grid.r169 .sg-foot { bottom: 28px; }
+.st-swiss-grid .sg-by { grid-column: 1 / span 5; font-family: var(--f-body); font-weight: 700; }
+.st-swiss-grid .sg-coord { grid-column: 6 / span 4; font-size: 16px; opacity: .75; }
+.st-swiss-grid .sg-fright { grid-column: 10 / span 3; display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+.st-swiss-grid .sg-fpg { font-weight: 700; color: var(--c1); font-size: 18px; }
+.st-swiss-grid .sg-sq { width: 14px; height: 14px; background: var(--c-bar); display: inline-block; }
+
+/* ───── 通用标题区与结构线 ───── */
+.st-swiss-grid .kicker { color: var(--fg); margin-bottom: calc(14px * var(--s)); }
+.st-swiss-grid .kicker .kt { display: inline-flex; align-items: center; gap: .55em; }
+.st-swiss-grid .kicker .kt::before { content: ''; width: .62em; height: .62em; background: var(--sq); flex: none; }
 .st-swiss-grid .title { color: var(--fg); }
-.st-swiss-grid .dek { color: var(--fg2); font-weight: 500; }
-.st-swiss-grid :is(.note, .cap) { color: var(--fg2); }
-.st-swiss-grid .cap::before { content: ''; display: inline-block; width: .5em; height: .5em; margin-right: .5em; background: var(--sq); vertical-align: .06em; }
-
-/* 章节：整页红，白色 Inter 大号数字 + 一道白色粗横线 */
-.st-swiss-grid .chap-num { font-family: "MV Grot", sans-serif; font-weight: 900; color: var(--fg); letter-spacing: -.045em; line-height: .86; }
-.st-swiss-grid .chap-num::after { content: ''; display: block; width: calc(150px * var(--s)); height: calc(12px * var(--s)); background: var(--fg);
-  margin-top: calc(34px * var(--s)); }
-
-/* 金句：整页黑，文字上方一块红色色条 */
-.st-swiss-grid .tpl-statement .say::before { content: ''; display: block; width: calc(132px * var(--s)); height: calc(16px * var(--s));
-  background: var(--sq); margin-bottom: calc(44px * var(--s)); }
-.st-swiss-grid .say .sl { letter-spacing: -.01em; }
-.st-swiss-grid .bn-row { color: var(--accent-t); letter-spacing: -.04em; }
-.st-swiss-grid .bn-u { color: var(--fg); letter-spacing: 0; }
+.st-swiss-grid .dek { color: var(--fg2); font-weight: 400; }
+.st-swiss-grid .sg-hd-rule { width: 100%; height: calc(3px * var(--s)); background: var(--line-strong); margin-top: calc(18px * var(--s)); transform-origin: 0 50%; }
+.st-swiss-grid .sg-hd-rule.heavy { height: calc(5px * var(--s)); }
+.st-swiss-grid .note { font-family: var(--f-mono); font-size: calc(var(--fs-note) * var(--s) * .88); color: var(--fg2); border-top: 1.5px solid var(--line); padding-top: calc(12px * var(--s)); margin-top: calc(18px * var(--s)); }
+.st-swiss-grid .cap { font-family: var(--f-mono); color: var(--fg2); text-align: left; }
+.st-swiss-grid.r169 .body.split .cap { font-size: calc(24px * var(--s)); }
+.st-swiss-grid .cap::before { content: 'FIG. '; font-weight: 700; color: var(--accent-t); }
 
 /* chips：直角黑框，重点红底 */
-.st-swiss-grid .chip { border-radius: 0; border: 2px solid var(--fg); color: var(--fg); background: transparent; font-family: var(--f-kicker); font-weight: 700; }
+.st-swiss-grid .chips { gap: calc(10px * var(--s)); margin-top: calc(22px * var(--s)); }
+.st-swiss-grid .chip { border-radius: 0; border: 2px solid var(--line-strong); color: var(--fg); background: transparent;
+  font-family: var(--f-mono); font-weight: 700; font-size: calc(var(--fs-chip) * var(--s) * .86); padding: .34em .76em; letter-spacing: .02em; }
 .st-swiss-grid .chip.hot { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
-/* 卡片 / 数据 / 对比：不要底色和边框，只留一道 6px 黑色顶线；重点换成红线 */
-#stage.st-swiss-grid :is(.card, .stat, .side) { background: none; border: 0; border-top: calc(6px * var(--si)) solid var(--card-bd); border-radius: 0;
-  padding: calc(24px * var(--si)) 0 0; }
-#stage.st-swiss-grid :is(.card, .stat).on { border-top-color: #E4002B; }
-#stage.st-swiss-grid .side.win { border-top-color: color-mix(in srgb, #E4002B calc(var(--p, 1) * 100%), var(--card-bd)); }
-.st-swiss-grid :is(.cards, .stats) { column-gap: calc(40px * var(--si)); row-gap: calc(46px * var(--si)); }
-.st-swiss-grid .cmp { column-gap: calc(34px * var(--si)); }
-.st-swiss-grid .card-k { color: var(--fg); font-weight: 800; letter-spacing: -.02em; }
-.st-swiss-grid .card.on .card-k { color: var(--accent-t); }
-.st-swiss-grid :is(.stat-v, .side-v) { color: var(--fg); letter-spacing: -.035em; }
-.st-swiss-grid .stat.on .stat-v { color: var(--accent-t); }
-.st-swiss-grid .side.win .side-v { color: color-mix(in srgb, var(--accent-t) calc(var(--p, 1) * 100%), var(--fg)); }
-.st-swiss-grid :is(.stat-u, .side-u) { letter-spacing: 0; color: var(--fg2); }
-.st-swiss-grid .side-k { font-weight: 700; color: var(--fg2); }
-.st-swiss-grid .vs { color: var(--accent-t); font-weight: 900; letter-spacing: -.02em; font-size: calc(var(--fs-body) * var(--si) * .8); }
+/* ───── 1. 封面（COVER）— 瑞士海报构图 ───── */
+.st-swiss-grid .sg-cover { justify-content: flex-start; gap: 0; }
+.st-swiss-grid .sg-cov-bar {
+  flex: none; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: center;
+  margin-bottom: calc(24px * var(--s));
+}
+.st-swiss-grid .sg-cov-bar .kicker { grid-column: 1 / span 8; margin: 0; }
+.st-swiss-grid .sg-cov-spec {
+  grid-column: 9 / span 4; text-align: right; font: 700 calc(19px * var(--s))/1.2 var(--f-mono);
+  color: var(--fg3); letter-spacing: .06em;
+}
+.st-swiss-grid .sg-stagger { font-size: calc(var(--fs-title-xl) * var(--s) * var(--ts) * 1.06); line-height: 1.08; letter-spacing: -.03em; }
+.st-swiss-grid .sg-stagger .ln.sg-indent { padding-left: calc(100% / 12 * 1.4); }
+.st-swiss-grid .sg-cov-rule {
+  flex: none; width: 100%; height: calc(7px * var(--s)); background: var(--fg);
+  margin: calc(32px * var(--s)) 0 calc(30px * var(--s)); transform-origin: 0 50%;
+}
+.st-swiss-grid .sg-cov-lower {
+  flex: 1 1 auto; min-height: 0;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: stretch;
+}
+.st-swiss-grid .sg-cov-info {
+  grid-column: 1 / span 6; display: flex; flex-direction: column; justify-content: space-between; min-height: 0;
+  padding-right: calc(8px * var(--s));
+}
+.st-swiss-grid .sg-cov-info .dek { margin-top: 0; font-size: calc(var(--fs-dek) * var(--s) * .96); line-height: 1.42; color: var(--fg); font-weight: 700; }
+.st-swiss-grid .sg-cov-info .chips { margin-top: calc(24px * var(--s)); }
+.st-swiss-grid .sg-cov-meter {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0;
+  margin-top: calc(24px * var(--s));
+}
+.st-swiss-grid .sg-cov-meter i.b { display: block; width: 88%; height: calc(12px * var(--s)); background: var(--blue); }
+.st-swiss-grid .sg-cov-meter i.r { display: block; width: 12%; height: calc(12px * var(--s)); background: #E4002B; }
+.st-swiss-grid .sg-cov-meter span {
+  display: block; width: 100%; margin-top: calc(8px * var(--s));
+  font: 700 calc(16px * var(--s))/1.2 var(--f-mono); color: var(--fg3); letter-spacing: .06em;
+}
+.st-swiss-grid .sg-cov-info .meta {
+  margin-top: calc(16px * var(--s)); padding-top: calc(14px * var(--s)); border-top: 2px solid var(--fg);
+  font: 700 calc(22px * var(--s))/1.3 var(--f-mono); color: var(--fg2);
+}
+.st-swiss-grid .sg-cov-art {
+  grid-column: 7 / span 6; display: flex; align-items: flex-end; justify-content: flex-end; min-height: 0; overflow: hidden;
+}
+.st-swiss-grid .sg-geo-svg { width: 100%; height: 100%; max-width: 100%; max-height: 100%; display: block; }
+.st-swiss-grid .sg-cov-img-zone { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 
-/* 列表：两位数红色编号，普通项用小方块 */
-.st-swiss-grid .sg-n { font: 800 .8em/1 "MV Grot", sans-serif; color: var(--accent-t); letter-spacing: -.01em; }
-.st-swiss-grid .sg-dot { display: inline-block; width: .36em; height: .36em; background: var(--fg); vertical-align: .2em; }
-.st-swiss-grid .item.is-cur .sg-dot { background: var(--accent); }
-.st-swiss-grid .ic-check path { stroke: #0F0F0F; }
+/* 封面 9:16 纵向增强 */
+.st-swiss-grid.r916 .sg-stagger { font-size: calc(128px * var(--s) * var(--ts)); }
+.st-swiss-grid.r916 .sg-cov-rule { margin: calc(38px * var(--s)) 0 calc(36px * var(--s)); }
+
+/* 封面 16:9 横屏左右分栏海报 */
+.st-swiss-grid.r169 .sg-cov-land {
+  flex: 1 1 auto; min-height: 0; height: 100%;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: stretch;
+}
+.st-swiss-grid.r169 .sg-cov-left {
+  grid-column: 1 / span 7; display: flex; flex-direction: column; justify-content: center; min-width: 0;
+}
+.st-swiss-grid.r169 .sg-cov-left .sg-stagger { font-size: calc(114px * var(--s) * var(--ts)); }
+.st-swiss-grid.r169 .sg-cov-left .sg-cov-rule { margin: calc(24px * var(--s)) 0 calc(22px * var(--s)); }
+.st-swiss-grid.r169 .sg-cov-lbot .dek { margin-top: 0; font-size: calc(36px * var(--s)); color: var(--fg); font-weight: 700; }
+.st-swiss-grid.r169 .sg-cov-lbot .chips { margin-top: calc(18px * var(--s)); }
+.st-swiss-grid.r169 .sg-cov-lbot .sg-cov-meter { max-width: 460px; margin-top: calc(18px * var(--s)); }
+.st-swiss-grid.r169 .sg-cov-lbot .meta { margin-top: calc(16px * var(--s)); font: 700 calc(20px * var(--s))/1.3 var(--f-mono); color: var(--fg2); }
+.st-swiss-grid.r169 .sg-cov-right {
+  grid-column: 8 / span 5; display: flex; align-items: center; justify-content: center;
+  border-left: 2px solid var(--fg); padding-left: calc(24px * var(--s)); min-height: 0; overflow: hidden;
+}
+.st-swiss-grid.r169 .sg-cov-right .sg-cov-art { width: 100%; height: 100%; align-items: center; justify-content: center; }
+
+/* ───── 2. 章节页（CHAPTER）— 整页瑞士红 ───── */
+.st-swiss-grid .sg-chap { justify-content: center; }
+.st-swiss-grid .sg-ch-top {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end;
+}
+.st-swiss-grid .sg-ch-tag {
+  grid-column: 1 / span 5; font: 700 calc(24px * var(--s))/1.2 var(--f-mono); color: #FFFFFF; letter-spacing: .12em;
+  padding-bottom: calc(16px * var(--s));
+}
+.st-swiss-grid .sg-ch-top .chap-num {
+  grid-column: 6 / span 7; text-align: right; margin: 0;
+  font: 900 calc(280px * var(--s))/.82 var(--f-num); color: #FFFFFF; letter-spacing: -.05em;
+}
+.st-swiss-grid .sg-ch-rule {
+  width: 100%; height: calc(10px * var(--s)); background: #FFFFFF;
+  margin: calc(36px * var(--s)) 0 calc(42px * var(--s)); transform-origin: 0 50%;
+}
+.st-swiss-grid .sg-ch-bot {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end;
+}
+.st-swiss-grid .sg-ch-main { grid-column: 1 / span 9; }
+.st-swiss-grid .sg-ch-main .note { border-top-color: rgba(255, 255, 255, .4); color: rgba(255, 255, 255, .92); }
+.st-swiss-grid .sg-ch-blk { grid-column: 10 / span 3; height: calc(96px * var(--s)); background: #111111; }
+
+.st-swiss-grid.r169 .sg-ch-land {
+  flex: 1 1 auto; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: center;
+}
+.st-swiss-grid.r169 .sg-ch-l { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: calc(24px * var(--s)); }
+.st-swiss-grid.r169 .sg-ch-l .sg-ch-tag { padding-bottom: 0; }
+.st-swiss-grid.r169 .sg-ch-l .chap-num { font-size: calc(260px * var(--s)); line-height: .84; color: #FFFFFF; margin: 0; letter-spacing: -.05em; }
+.st-swiss-grid.r169 .sg-ch-l .sg-ch-blk { width: calc(120px * var(--s)); height: calc(28px * var(--s)); }
+.st-swiss-grid.r169 .sg-ch-r {
+  grid-column: 5 / span 8; border-left: 6px solid #FFFFFF; padding-left: calc(44px * var(--s));
+}
+.st-swiss-grid.r169 .sg-ch-r .note { border-top-color: rgba(255, 255, 255, .4); color: rgba(255, 255, 255, .92); }
+
+/* ───── 3. 大数字（BIGNUM）— 巨大数字 + 下方不对称几何装置 ───── */
+.st-swiss-grid .sg-bignum { justify-content: center; }
+.st-swiss-grid .sg-bn-top { margin-bottom: calc(14px * var(--s)); }
+.st-swiss-grid .sg-bignum .bn-row {
+  color: var(--fg); font-size: calc(248px * var(--s) * var(--fk)); letter-spacing: -.045em; line-height: .94;
+}
+.st-swiss-grid.r169 .sg-bignum .bn-row { font-size: calc(260px * var(--s) * var(--fk)); }
+.st-swiss-grid .sg-bignum .bn-row .val { color: var(--accent-t); }
+.st-swiss-grid .sg-bignum .bn-row .pre { font-size: .42em; color: var(--fg2); margin-right: .08em; font-weight: 700; }
+.st-swiss-grid .sg-bignum .bn-row .suf { color: var(--accent-t); }
+.st-swiss-grid .sg-bignum .bn-u { color: var(--fg); letter-spacing: 0; font-size: .34em; font-weight: 900; }
+.st-swiss-grid .sg-bn-rule {
+  width: 100%; height: calc(6px * var(--s)); background: var(--fg);
+  margin: calc(34px * var(--s)) 0 calc(34px * var(--s)); transform-origin: 0 50%;
+}
+.st-swiss-grid .sg-bn-lower {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: center;
+}
+.st-swiss-grid .sg-bn-vis { grid-column: 1 / span 4; }
+.st-swiss-grid.r169 .sg-bn-vis { grid-column: 1 / span 3; }
+.st-swiss-grid .sg-bn-svg { width: 100%; max-width: calc(240px * var(--s)); height: auto; display: block; }
+.st-swiss-grid .sg-bn-txt { grid-column: 5 / span 8; }
+.st-swiss-grid.r169 .sg-bn-txt { grid-column: 4 / span 9; }
+.st-swiss-grid .sg-bn-txt .bn-l { margin-top: 0; font-size: calc(var(--fs-text) * var(--s) * .68); line-height: 1.32; }
+
+/* ───── 4. 金句（STATEMENT）— 整页墨黑 + 左侧粗红竖条 ───── */
+.st-swiss-grid .sg-stmt { justify-content: center; }
+.st-swiss-grid .sg-st-grid {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: stretch;
+}
+.st-swiss-grid .sg-st-rail {
+  grid-column: 1 / span 1; width: calc(14px * var(--s)); background: var(--sq); transform-origin: 50% 0;
+}
+.st-swiss-grid .sg-st-main { grid-column: 2 / span 11; display: flex; flex-direction: column; justify-content: center; }
+.st-swiss-grid .sg-st-tag {
+  font: 700 calc(20px * var(--s))/1.2 var(--f-mono); color: var(--fg3); letter-spacing: .12em; margin-bottom: calc(24px * var(--s));
+}
+.st-swiss-grid .sg-stmt .say { margin-top: 0; }
+.st-swiss-grid .sg-stmt .say .sl { font-size: calc(var(--fs-text) * var(--s) * 1.04); line-height: 1.3; letter-spacing: -.02em; }
+.st-swiss-grid .sg-stmt .note { margin-top: calc(36px * var(--s)); }
+
+/* ───── 5. 100 格点阵定制模块（CUSTOM .sg-m100）— 严格 12 栏左 7 右 5 对齐 ───── */
+.st-swiss-grid .tpl-custom .custom { display: flex; flex-direction: column; justify-content: center; margin-top: calc(24px * var(--s)); }
+.st-swiss-grid .sg-m100 {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: stretch; width: 100%;
+}
+.st-swiss-grid .sg-m100-grid {
+  grid-column: 1 / span 7; width: 100%; aspect-ratio: 1 / 1;
+  display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); grid-template-rows: repeat(10, minmax(0, 1fr));
+  gap: calc(6px * var(--s)); padding: calc(12px * var(--s));
+  border: 2.5px solid var(--fg); background: rgba(17, 17, 17, .025);
+}
+.st-swiss-grid .sg-cell { display: block; width: 100%; height: 100%; }
+.st-swiss-grid .sg-cell.blue { background: var(--blue); }
+.st-swiss-grid .sg-cell.red { background: #E4002B; }
+.st-swiss-grid .sg-cell.half { background: linear-gradient(90deg, var(--blue) 50%, #E4002B 50%); }
+
+.st-swiss-grid .sg-m100-side {
+  grid-column: 8 / span 5; display: flex; flex-direction: column; justify-content: space-between;
+  padding-left: calc(8px * var(--s));
+}
+.st-swiss-grid .sg-m100-item {
+  border-top: calc(7px * var(--s)) solid var(--fg); padding-top: calc(16px * var(--s));
+}
+.st-swiss-grid .sg-m100-item.blue { border-top-color: var(--blue); }
+.st-swiss-grid .sg-m100-item.red { border-top-color: #E4002B; }
+.st-swiss-grid .sg-m100-k { font: 700 calc(16px * var(--s))/1.2 var(--f-mono); color: var(--fg3); letter-spacing: .05em; }
+.st-swiss-grid .sg-m100-v { font: 900 calc(62px * var(--s))/1.02 var(--f-num); letter-spacing: -.035em; margin-top: calc(8px * var(--s)); color: var(--fg); white-space: nowrap; }
+.st-swiss-grid .sg-m100-item.red .sg-m100-v { color: #E4002B; }
+.st-swiss-grid .sg-m100-l { font: 700 calc(27px * var(--s))/1.36 var(--f-body); color: var(--fg2); margin-top: calc(8px * var(--s)); }
+.st-swiss-grid .sg-m100-bar {
+  display: flex; width: 100%; height: calc(18px * var(--s)); border: 1.5px solid var(--fg);
+}
+.st-swiss-grid .sg-m100-bar i.b { display: block; width: 97.5%; height: 100%; background: var(--blue); }
+.st-swiss-grid .sg-m100-bar i.r { display: block; width: 2.5%; min-width: 8px; height: 100%; background: #E4002B; }
+
+/* 16:9 横屏 100 格点阵：左 5 栏矩阵 + 右 7 栏纵向数据解说 */
+.st-swiss-grid.r169 .sg-m100-grid { grid-column: 1 / span 5; width: calc(430px * var(--s)); justify-self: start; }
+.st-swiss-grid.r169 .sg-m100-side {
+  grid-column: 6 / span 7; justify-content: center; gap: calc(24px * var(--s)); padding-left: 0;
+}
+.st-swiss-grid.r169 .sg-m100-v { font-size: calc(74px * var(--s)); }
+.st-swiss-grid.r169 .sg-m100-l { font-size: calc(30px * var(--s)); }
+
+/* ───── 6. 列表（LIST）— 严格 12 栏表格：左 2 栏编号，右栏文字 ───── */
+.st-swiss-grid .body:not(.solo):not(.split) { min-height: max-content; }
+.st-swiss-grid .list { row-gap: 0; }
+.st-swiss-grid .tpl-list .item {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: baseline;
+  padding: calc(22px * var(--si)) 0; border-bottom: 1.5px solid var(--line);
+}
+.st-swiss-grid.r169 .tpl-list .list { --lk: .96; }
+.st-swiss-grid.r169 .tpl-list .item { padding: calc(16px * var(--si)) 0; }
+.st-swiss-grid .tpl-list .item:last-child { border-bottom: 2px solid var(--line-strong); }
+.st-swiss-grid .tpl-list .item .mk { grid-column: 1 / span 2; }
+.st-swiss-grid .tpl-list .item .tx { grid-column: 3 / span 10; font-weight: 700; }
+.st-swiss-grid.r169 .tpl-list .list[style*="--cols: 1"] .item .tx { grid-column: 3 / span 10; }
+.st-swiss-grid.r169 .tpl-list .list[style*="--cols: 1"] .item .tx:has(> .nt) {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 5fr); column-gap: var(--gut); align-items: baseline;
+}
+.st-swiss-grid.r169 .tpl-list .list[style*="--cols: 1"] .item .tx:has(> .nt) .nt {
+  margin-top: 0; text-align: left;
+}
+.st-swiss-grid .tpl-list .list[style*="--cols: 2"] { column-gap: calc(44px * var(--si)); }
+.st-swiss-grid .tpl-list .list[style*="--cols: 2"] .item { grid-template-columns: calc(72px * var(--si)) minmax(0, 1fr); column-gap: calc(16px * var(--si)); }
+.st-swiss-grid .tpl-list .list[style*="--cols: 2"] .item .mk { grid-column: auto; }
+.st-swiss-grid .tpl-list .list[style*="--cols: 2"] .item .tx { grid-column: auto; }
+
+.st-swiss-grid .sg-n { font: 900 calc(var(--fs-body) * var(--si) * 1.12)/1 var(--f-num); color: var(--fg); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.st-swiss-grid .item.on .sg-n, .st-swiss-grid .item.is-cur .sg-n { color: var(--accent-t); }
+.st-swiss-grid .sg-dot { display: inline-block; width: .42em; height: .42em; background: var(--fg); vertical-align: .14em; }
+.st-swiss-grid .item.on .sg-dot, .st-swiss-grid .item.is-cur .sg-dot { background: var(--accent); }
+.st-swiss-grid .item .nt { font-weight: 400; color: var(--fg2); margin-top: calc(6px * var(--si)); }
+.st-swiss-grid .ic-check path { stroke: #111111; }
 .st-swiss-grid .ic-cross path { stroke: #E4002B; }
 
-/* 步骤：黑色方块编号 + 直线箭头，讲到哪步哪步变红 */
-.st-swiss-grid .step .badge { border-radius: 0; background: var(--fg); color: var(--bg); font-weight: 800; box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg); }
-.st-swiss-grid .step.is-cur .badge { background: #E4002B; color: #FFFFFF; }
-.st-swiss-grid .links path { stroke: var(--fg); stroke-width: 3; stroke-linecap: butt; stroke-linejoin: miter; }
-
-/* 时间线：红色方块节点，年份 Inter */
-.st-swiss-grid .tl-dot { border-radius: 0; background: #E4002B; box-shadow: 0 0 0 calc(7px * var(--si)) var(--bg); }
-.st-swiss-grid .tl-time { color: var(--fg); font-weight: 800; letter-spacing: -.01em; }
-.st-swiss-grid :is(.tl-item.on, .tl-item.is-cur) .tl-time { color: var(--accent-t); }
-
-/* 条形图：底部一根发丝线，黑条，重点红条 */
-.st-swiss-grid .bar-track { background: linear-gradient(var(--line), var(--line)) 0 100% / 100% 2px no-repeat; }
-.st-swiss-grid .bar-fill { background: var(--fg); border-radius: 0; }
+/* ───── 7. 条形图（BARS）— 标尺刻度 + 细长直角条 + 数值置条外 ───── */
+.st-swiss-grid .bars { gap: calc(28px * var(--si)); --bar-max: 72%; }
+.st-swiss-grid .sg-bars-axis {
+  display: grid; grid-template-columns: var(--bar-lw, 28%) minmax(0, 1fr); column-gap: calc(26px * var(--si)); align-items: center;
+  padding-bottom: calc(12px * var(--si)); border-bottom: 2px solid var(--fg);
+  font: 700 calc(17px * var(--si))/1 var(--f-mono); color: var(--fg3); letter-spacing: .04em;
+}
+.st-swiss-grid .sg-ba-ticks {
+  display: flex; justify-content: space-between; width: var(--bar-max, 72%);
+}
+.st-swiss-grid .sg-ba-ticks i { font-style: normal; }
+.st-swiss-grid.r34 .sg-bars-axis, .st-swiss-grid.r916 .sg-bars-axis {
+  grid-template-columns: 1fr; row-gap: calc(8px * var(--si));
+}
+.st-swiss-grid .bar-row { padding-bottom: calc(18px * var(--si)); border-bottom: 1px solid var(--line); }
+.st-swiss-grid .bar-l { display: flex; align-items: baseline; gap: calc(14px * var(--si)); font-weight: 700; text-align: left; }
+.st-swiss-grid.r169 .bar-l { justify-content: flex-start; }
+.st-swiss-grid .sg-bar-i { font: 700 calc(20px * var(--si))/1 var(--f-mono); color: var(--fg3); flex: none; }
+.st-swiss-grid .bar-row.on .sg-bar-i { color: #E4002B; }
+.st-swiss-grid .bar-track {
+  height: calc(30px * var(--si));
+  background:
+    linear-gradient(90deg, rgba(17,17,17,.055), rgba(17,17,17,.055)) 0 50% / var(--bar-max, 72%) calc(24px * var(--si)) no-repeat,
+    linear-gradient(var(--line), var(--line)) 0 50% / var(--bar-max, 72%) 2px no-repeat;
+}
+.st-swiss-grid .bar-fill {
+  height: calc(24px * var(--si)); background: var(--blue); border-radius: 0; min-width: 10px;
+}
 .st-swiss-grid .bar-row.on .bar-fill { background: #E4002B; }
-.st-swiss-grid .bar-v { font-weight: 800; letter-spacing: -.02em; }
+.st-swiss-grid .bar-v {
+  margin-left: calc(18px * var(--si)); font: 900 calc(var(--fs-body) * var(--si) * .96)/1 var(--f-num);
+  letter-spacing: -.025em; color: var(--fg);
+}
+.st-swiss-grid .bar-row.on .bar-v { color: #E4002B; }
+.st-swiss-grid .bar-u { font-size: .64em; font-weight: 700; color: var(--fg2); }
 
-/* 引用：超大红色引号，正文粗黑 */
-.st-swiss-grid .qmark { color: var(--accent-t); font-weight: 900; font-size: calc(200px * var(--s)); height: calc(104px * var(--s)); }
-.st-swiss-grid .q-text { font-weight: 900; letter-spacing: -.01em; }
-.st-swiss-grid .q-src { color: var(--fg2); font-weight: 600; letter-spacing: .03em; }
-.st-swiss-grid .q-src::before { content: '— '; }
+/* ───── 8. 数据卡 & 卡片 & 对比（STATS / CARDS / COMPARE） ───── */
+#stage.st-swiss-grid :is(.card, .stat, .side) {
+  background: none; border: 0; border-top: calc(7px * var(--si)) solid var(--card-bd); border-radius: 0;
+  padding: calc(18px * var(--si)) 0 calc(14px * var(--si)); border-bottom: 1.5px solid var(--line);
+}
+#stage.st-swiss-grid :is(.card, .stat).on { border-top-color: #E4002B; }
+#stage.st-swiss-grid .side.win { border-top-color: color-mix(in srgb, #E4002B calc(var(--p, 1) * 100%), var(--card-bd)); }
+.st-swiss-grid :is(.cards, .stats) { column-gap: calc(32px * var(--si)); row-gap: calc(30px * var(--si)); }
 
-/* 代码：直角黑窗，关键字红色 */
-.st-swiss-grid .code-win { border-radius: 0; }
-.st-swiss-grid .code-bar i { border-radius: 0; background: #444; }
-.st-swiss-grid .code-bar i:first-child { background: #E4002B; }
+.st-swiss-grid .sg-stat-idx {
+  font: 700 calc(17px * var(--si))/1 var(--f-mono); color: var(--fg3); letter-spacing: .06em; margin-bottom: calc(10px * var(--si));
+}
+.st-swiss-grid .stat.on .sg-stat-idx { color: #E4002B; }
+.st-swiss-grid .stats.rows .stat { grid-template-columns: minmax(0, 44%) minmax(0, 1fr); row-gap: calc(6px * var(--si)); }
+.st-swiss-grid .stats.rows .sg-stat-idx { grid-column: 1 / -1; margin-bottom: 0; }
+.st-swiss-grid :is(.stat-v, .side-v) { color: var(--fg); letter-spacing: -.038em; }
+.st-swiss-grid .stat-v .pre, .st-swiss-grid .side-v .pre { font-size: .46em; color: var(--fg2); font-weight: 700; margin-right: .08em; }
+.st-swiss-grid .stat.on .stat-v { color: var(--accent-t); }
+.st-swiss-grid .side.win .side-v { color: color-mix(in srgb, var(--accent-t) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-swiss-grid :is(.stat-u, .side-u) { letter-spacing: 0; color: var(--fg2); font-weight: 700; }
+
+/* 卡片角标 */
+.st-swiss-grid .card-k { font-family: var(--f-mono); color: var(--fg); font-weight: 700; letter-spacing: .02em; display: inline-flex; align-items: center; gap: .45em; }
+.st-swiss-grid .card-k::before { content: ''; width: .45em; height: .45em; background: var(--fg); flex: none; }
+.st-swiss-grid .card.on .card-k { color: var(--accent-t); }
+.st-swiss-grid .card.on .card-k::before { background: var(--accent-t); }
+
+/* 对比：中央轴线 + 直角 VS 方块 + 反白黑底结论条 */
+.st-swiss-grid .cmp { position: relative; column-gap: calc(28px * var(--si)); }
+.st-swiss-grid.r169 .cmp { --lk: .92; }
+.st-swiss-grid.r169 .side-v { margin-top: calc(10px * var(--si)); }
+.st-swiss-grid.r169 .side-p { margin-top: calc(14px * var(--si)); gap: calc(8px * var(--si)); }
+.st-swiss-grid .side-k { font-family: var(--f-mono); font-weight: 700; color: var(--fg3); letter-spacing: .08em; }
+.st-swiss-grid .side.win .side-k { color: #E4002B; }
+.st-swiss-grid .side-p li { padding-top: calc(8px * var(--si)); border-top: 1px solid var(--line); }
+.st-swiss-grid .vs {
+  background: var(--fg); color: var(--bg); font: 900 calc(26px * var(--si))/1 var(--f-mono);
+  padding: calc(14px * var(--si)) calc(12px * var(--si)); letter-spacing: .04em; align-self: start; margin-top: calc(44px * var(--si));
+}
+.st-swiss-grid .verdict {
+  background: var(--fg); color: var(--bg); text-align: left;
+  padding: calc(18px * var(--s)) calc(24px * var(--s)); border-left: calc(12px * var(--s)) solid #E4002B;
+  margin-top: calc(24px * var(--s)); --hl: #FF284B;
+}
+.st-swiss-grid.r169 .verdict { margin-top: calc(18px * var(--s)); padding: calc(14px * var(--s)) calc(22px * var(--s)); }
+
+/* ───── 9. 步骤 & 时间线（STEPS / TIMELINE） ───── */
+.st-swiss-grid .step .badge {
+  border-radius: 0; background: var(--fg); color: var(--bg); font-family: var(--f-mono); font-weight: 700;
+  box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg);
+}
+.st-swiss-grid .step.is-cur .badge, .st-swiss-grid .step.on .badge { background: #E4002B; color: #FFFFFF; }
+.st-swiss-grid .links path { stroke: var(--fg); stroke-width: 2.5; stroke-linecap: butt; stroke-linejoin: miter; }
+
+.st-swiss-grid .tl-dot { border-radius: 0; width: calc(20px * var(--si)); height: calc(20px * var(--si)); background: #E4002B; box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg); }
+.st-swiss-grid .tl-time { font-family: var(--f-num); color: var(--fg); font-weight: 900; letter-spacing: -.02em; }
+.st-swiss-grid :is(.tl-item.on, .tl-item.is-cur) .tl-time { color: var(--accent-t); }
+.st-swiss-grid .tl.col .tl-item { padding-bottom: calc(16px * var(--si)); border-bottom: 1px solid var(--line); }
+
+/* ───── 10. 引用（QUOTE）— 左侧粗红竖条 + 非对称大字 ───── */
+.st-swiss-grid .tpl-quote .qt {
+  border-left: calc(12px * var(--s)) solid #E4002B; padding-left: calc(36px * var(--s));
+}
+.st-swiss-grid .qmark { color: var(--accent-t); font-weight: 900; font-size: calc(180px * var(--s)); height: calc(88px * var(--s)); }
+.st-swiss-grid .q-text { font-weight: 900; letter-spacing: -.015em; line-height: 1.38; }
+.st-swiss-grid .q-src {
+  margin-top: calc(32px * var(--s)); padding-top: calc(16px * var(--s)); border-top: 2px solid var(--fg);
+  font-family: var(--f-mono); color: var(--fg2); font-weight: 700; letter-spacing: .04em;
+}
+.st-swiss-grid .q-src::before { content: 'SOURCE // '; color: var(--accent-t); }
+
+/* ───── 11. 代码（CODE）— 直角黑规格窗，无圆点 ───── */
+.st-swiss-grid .code-win { border-radius: 0; border: 2px solid #111111; }
+.st-swiss-grid .code-bar { justify-content: flex-start; gap: 14px; border-bottom: 1px solid rgba(242, 240, 235, .14); }
+.st-swiss-grid .sg-cb-sq { width: 12px; height: 12px; background: #E4002B; display: inline-block; flex: none; }
+.st-swiss-grid .sg-cb-fn { color: #F2F0EB; font-weight: 700; margin-left: 0; }
+.st-swiss-grid .sg-cb-lg { margin-left: auto; font-style: normal; color: rgba(242, 240, 235, .5); font-size: .88em; }
 .st-swiss-grid .cl.hl-line::before { box-shadow: inset calc(8px * var(--s)) 0 0 #E4002B; }
-.st-swiss-grid .tok-c { color: #7A7A76; font-style: normal; } .st-swiss-grid .tok-s { color: #D6D4CC; } .st-swiss-grid .tok-n { color: #FFFFFF; }
-.st-swiss-grid .tok-k { color: #FF4560; font-weight: 700; } .st-swiss-grid .tok-f { color: #FFFFFF; font-weight: 700; } .st-swiss-grid .tok-o { color: #9A9A96; }
+.st-swiss-grid .tok-c { color: #7D7C76; font-style: normal; }
+.st-swiss-grid .tok-s { color: #9BB7C9; }
+.st-swiss-grid .tok-n { color: #FFFFFF; font-weight: 700; }
+.st-swiss-grid .tok-k { color: #FF405C; font-weight: 700; }
+.st-swiss-grid .tok-f { color: #FFFFFF; font-weight: 700; }
+.st-swiss-grid .tok-o { color: #A6A59E; }
 
-/* 图片：直角，不加边框 */
-.st-swiss-grid .f-plain .shot { border-radius: 0; }
+/* ───── 12. 公式（FORMULA）— 上下粗细结构线图版 ───── */
+.st-swiss-grid .sg-eq-plate {
+  width: 100%; border-top: calc(5px * var(--s)) solid var(--fg); border-bottom: calc(2px * var(--s)) solid var(--fg);
+  padding: calc(34px * var(--s)) 0; margin-top: calc(18px * var(--s));
+}
+.st-swiss-grid .sg-eq-tag {
+  font: 700 calc(18px * var(--s))/1 var(--f-mono); color: var(--accent-t); letter-spacing: .08em; margin-bottom: calc(18px * var(--s));
+}
+.st-swiss-grid .list.f-list { width: 100%; margin-top: calc(26px * var(--s)); }
+.st-swiss-grid .list.f-list .item {
+  display: flex; padding: calc(14px * var(--s)) 0; border-bottom: 1px solid var(--line);
+}
 
-/* 印章：红色直角色块，不旋转 */
-.st-swiss-grid .stamp { transform: none; border: 0; border-radius: 0; background: #E4002B; color: #FFFFFF; font-family: var(--f-title); font-weight: 900;
-  padding: .32em .8em; letter-spacing: .06em; }
+/* ───── 13. 图片（IMAGE）— 直角黑框 + 四角十字对位标 ───── */
+.st-swiss-grid .f-plain .shot { border-radius: 0; border: 2px solid var(--fg); background: var(--bg); }
+.st-swiss-grid .sg-reg {
+  position: absolute; width: 14px; height: 14px; pointer-events: none; z-index: 4;
+}
+.st-swiss-grid .sg-reg.tl { top: -8px; left: -8px; border-top: 2px solid #E4002B; border-left: 2px solid #E4002B; }
+.st-swiss-grid .sg-reg.tr { top: -8px; right: -8px; border-top: 2px solid #E4002B; border-right: 2px solid #E4002B; }
+.st-swiss-grid .sg-reg.bl { bottom: -8px; left: -8px; border-bottom: 2px solid #E4002B; border-left: 2px solid #E4002B; }
+.st-swiss-grid .sg-reg.br { bottom: -8px; right: -8px; border-bottom: 2px solid #E4002B; border-right: 2px solid #E4002B; }
+.st-swiss-grid .body.split .list .item {
+  display: flex; padding: calc(12px * var(--si)) 0; border-bottom: 1px solid var(--line);
+  font-size: calc(var(--fs-body) * var(--si) * .88);
+}
 
-/* 结尾 */
-.st-swiss-grid .cta { color: var(--fg2); }
+/* ───── 14. 结尾（ENDING）— 整页墨黑封底海报 ───── */
+.st-swiss-grid .sg-end { justify-content: center; }
+.st-swiss-grid .sg-end-top {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: center;
+  margin-bottom: calc(28px * var(--s));
+}
+.st-swiss-grid .sg-end-bar { grid-column: 1 / span 4; height: calc(10px * var(--s)); background: var(--sq); transform-origin: 0 50%; }
+.st-swiss-grid .sg-end-tag {
+  grid-column: 7 / span 6; text-align: right; font: 700 calc(19px * var(--s))/1 var(--f-mono); color: var(--fg3); letter-spacing: .1em;
+}
+.st-swiss-grid .sg-end-rule {
+  width: 100%; height: 2px; background: rgba(242, 240, 235, .45);
+  margin: calc(34px * var(--s)) 0 calc(32px * var(--s)); transform-origin: 0 50%;
+}
+.st-swiss-grid .sg-end-lower {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end;
+}
+.st-swiss-grid .sg-end-info { grid-column: 1 / span 8; }
+.st-swiss-grid .sg-end-info .chips { margin-top: 0; }
+.st-swiss-grid .sg-end-info .cta {
+  margin-top: calc(26px * var(--s)); padding: calc(18px * var(--s)) calc(22px * var(--s));
+  border-left: calc(8px * var(--s)) solid var(--sq); background: rgba(242, 240, 235, .07);
+  color: var(--fg); font-weight: 700; font-size: calc(var(--fs-dek) * var(--s) * .92);
+}
+.st-swiss-grid .sg-end-info .meta.byline {
+  margin-top: calc(24px * var(--s)); font: 700 calc(24px * var(--s))/1.2 var(--f-mono); color: var(--fg2);
+}
+.st-swiss-grid .sg-end-art { grid-column: 9 / span 4; display: flex; justify-content: flex-end; }
+.st-swiss-grid .sg-end-svg { width: 100%; max-width: calc(220px * var(--s)); height: auto; display: block; }
+.st-swiss-grid.r169 .sg-end-top { margin-bottom: calc(18px * var(--s)); }
+.st-swiss-grid.r169 .sg-end-rule { margin: calc(22px * var(--s)) 0 calc(22px * var(--s)); }
+.st-swiss-grid.r169 .sg-end-svg { max-width: calc(180px * var(--s)); }
 
-/* 字幕：跟着当前页换色 */
-.st-swiss-grid .subl { text-shadow: 0 0 8px rgba(243, 242, 238, .95), 0 0 2px rgba(243, 242, 238, .95); }
-.st-swiss-grid #subs[data-tone="red"] { --sub-fg: #FFFFFF; --sub-hl: #0F0F0F; }
+/* ───── 印章：瑞士红直角色块，不旋转 ───── */
+.st-swiss-grid .stamp {
+  transform: none; border: 0; border-radius: 0; background: #E4002B; color: #FFFFFF;
+  font-family: var(--f-title); font-weight: 900; padding: .3em .78em; letter-spacing: .06em;
+}
+
+/* ───── 字幕：跟随当前页色调切换 ───── */
+.st-swiss-grid .subl { text-shadow: 0 0 8px rgba(242, 240, 235, .96), 0 0 2px rgba(242, 240, 235, .96); }
+.st-swiss-grid #subs[data-tone="red"] { --sub-fg: #FFFFFF; --sub-hl: #111111; }
 .st-swiss-grid #subs[data-tone="red"] .subl { text-shadow: none; }
-.st-swiss-grid #subs[data-tone="dark"] { --sub-fg: #F3F2EE; --sub-hl: #FF2D4F; }
-.st-swiss-grid #subs[data-tone="dark"] .subl { text-shadow: 0 0 8px rgba(15, 15, 15, .95); }
+.st-swiss-grid #subs[data-tone="dark"] { --sub-fg: #F2F0EB; --sub-hl: #FF284B; }
+.st-swiss-grid #subs[data-tone="dark"] .subl { text-shadow: 0 0 8px rgba(17, 17, 17, .96); }

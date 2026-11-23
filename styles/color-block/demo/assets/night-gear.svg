@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600">
+  <!-- 背景斜切撞色海报块 -->
+  <rect width="960" height="600" fill="#0D0D0F"/>
+  <polygon points="0,0 560,0 440,600 0,600" fill="#2340F5"/>
+  <polygon points="560,0 960,0 960,210 500,320" fill="#E8FF3A"/>
+  <polygon points="440,600 960,460 960,600" fill="#FF4A2E"/>
+
+  <!-- 速度斜线纹理 -->
+  <g stroke="#0D0D0F" stroke-width="6" opacity="0.22">
+    <line x1="590" y1="20" x2="650" y2="220"/>
+    <line x1="620" y1="20" x2="680" y2="220"/>
+    <line x1="650" y1="20" x2="710" y2="220"/>
+    <line x1="680" y1="20" x2="740" y2="220"/>
+  </g>
+
+  <!-- 左侧：粗线条运动跑鞋几何扁平图 -->
+  <g transform="translate(56, 130)">
+    <!-- 投影 -->
+    <path d="M24,258 L398,258 C416,258 424,240 412,222 L334,174 L268,94 L208,118 L154,74 L74,118 L40,212 C28,236 14,258 24,258 Z" fill="#0D0D0F" transform="translate(14,14)"/>
+    <!-- 鞋身主体 -->
+    <path d="M20,252 L394,252 C412,252 420,234 408,216 L330,168 L264,88 L204,112 L150,68 L70,112 L36,206 C24,230 10,252 20,252 Z" fill="#FFFFFF" stroke="#0D0D0F" stroke-width="10" stroke-linejoin="miter"/>
+    <!-- 红色鞋跟护块 -->
+    <path d="M36,206 L70,112 L134,132 L112,226 L26,226 Z" fill="#FF4A2E" stroke="#0D0D0F" stroke-width="8"/>
+    <!-- 荧光黄斜切中底 -->
+    <path d="M18,224 L408,224 L400,254 L20,254 Z" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="8"/>
+    <!-- 荧光黄速度闪电条 -->
+    <polygon points="154,196 276,142 292,164 172,216" fill="#2340F5" stroke="#0D0D0F" stroke-width="6"/>
+    <!-- 鞋带三道粗杠 -->
+    <line x1="218" y1="118" x2="256" y2="104" stroke="#0D0D0F" stroke-width="9" stroke-linecap="square"/>
+    <line x1="238" y1="140" x2="278" y2="124" stroke="#0D0D0F" stroke-width="9" stroke-linecap="square"/>
+    <line x1="260" y1="162" x2="300" y2="146" stroke="#0D0D0F" stroke-width="9" stroke-linecap="square"/>
+    <!-- 标注框：前掌留一指 -->
+    <line x1="398" y1="210" x2="398" y2="128" stroke="#E8FF3A" stroke-width="5" stroke-dasharray="10 8"/>
+    <circle cx="398" cy="212" r="10" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="5"/>
+  </g>
+
+  <!-- 左侧顶部标牌 -->
+  <g transform="translate(46, 46)">
+    <rect x="8" y="8" width="236" height="62" fill="#0D0D0F"/>
+    <rect width="236" height="62" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="6"/>
+    <text x="118" y="42" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="30" fill="#0D0D0F">FIT / 选鞋留空</text>
+  </g>
+
+  <!-- 右侧：夜跑反光背心 + 高亮反光条图标 -->
+  <g transform="translate(565, 165)">
+    <!-- 卡片硬投影 -->
+    <rect x="12" y="12" width="320" height="310" fill="#0D0D0F"/>
+    <rect width="320" height="310" fill="#181A20" stroke="#FFFFFF" stroke-width="7"/>
+    <!-- 极简夜跑背心轮廓 -->
+    <path d="M88,52 L126,52 L160,92 L194,52 L232,52 L262,110 L236,130 L236,264 L84,264 L84,130 L58,110 Z" fill="#2340F5" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="miter"/>
+    <!-- 两条高亮荧光反光带 -->
+    <rect x="84" y="158" width="152" height="22" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="5"/>
+    <rect x="84" y="202" width="152" height="22" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="5"/>
+    <!-- 竖向反光肩带 -->
+    <rect x="106" y="54" width="18" height="104" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="4"/>
+    <rect x="196" y="54" width="18" height="104" fill="#E8FF3A" stroke="#0D0D0F" stroke-width="4"/>
+    <!-- 反光光芒线 -->
+    <g stroke="#E8FF3A" stroke-width="6" stroke-linecap="square">
+      <line x1="28" y1="168" x2="54" y2="168"/>
+      <line x1="36" y1="138" x2="58" y2="148"/>
+      <line x1="36" y1="198" x2="58" y2="188"/>
+      <line x1="266" y1="168" x2="292" y2="168"/>
+      <line x1="262" y1="148" x2="284" y2="138"/>
+      <line x1="262" y1="188" x2="284" y2="198"/>
+    </g>
+  </g>
+
+  <!-- 右上圆形贴纸徽章 -->
+  <g transform="translate(835, 95) rotate(10)">
+    <circle cx="6" cy="6" r="68" fill="#0D0D0F"/>
+    <circle cx="0" cy="0" r="68" fill="#FF4A2E" stroke="#0D0D0F" stroke-width="7"/>
+    <text x="0" y="-4" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="30" fill="#FFFFFF">NIGHT</text>
+    <text x="0" y="30" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="26" fill="#E8FF3A">亮色反光</text>
+  </g>
+
+  <!-- 底部装饰文字条 -->
+  <g transform="translate(46, 514)">
+    <rect width="460" height="48" fill="#0D0D0F"/>
+    <text x="20" y="33" font-family="monospace" font-weight="900" font-size="24" fill="#E8FF3A">SOCKS: 速干运动袜  //  NO COTTON</text>
+  </g>
+</svg>

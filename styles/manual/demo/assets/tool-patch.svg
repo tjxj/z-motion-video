@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130" fill="none">
+  <!-- Rubber Patch Sheet -->
+  <rect x="24" y="24" width="76" height="82" rx="6" fill="#FBFBF8" stroke="#111111" stroke-width="4"/>
+  <rect x="34" y="34" width="56" height="62" rx="4" fill="#FF5B1F" stroke="#111111" stroke-width="3"/>
+  <rect x="44" y="46" width="36" height="38" rx="3" fill="#FBFBF8" stroke="#111111" stroke-width="2.5"/>
+  <line x1="62" y1="56" x2="62" y2="74" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <line x1="53" y1="65" x2="71" y2="65" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <!-- Glue Tube -->
+  <g transform="translate(120, 20) rotate(12)">
+    <path d="M14 22 L44 22 L40 86 L18 86 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="10" y="14" width="38" height="8" rx="2" fill="#111111"/>
+    <path d="M24 86 L34 86 L31 100 L27 100 Z" fill="#FF5B1F" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+    <line x1="21" y1="42" x2="37" y2="42" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+    <line x1="23" y1="54" x2="35" y2="54" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

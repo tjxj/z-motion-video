@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 760" width="600" height="760">
+  <defs>
+    <linearGradient id="bgPlate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EEF3FA"/>
+      <stop offset="100%" stop-color="#E1EAF6"/>
+    </linearGradient>
+    <linearGradient id="vaseGlaze" x1="0.15" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#F7F9FC"/>
+      <stop offset="82%" stop-color="#E2EBF7"/>
+      <stop offset="100%" stop-color="#C8D7EC"/>
+    </linearGradient>
+    <linearGradient id="cobaltDeep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#274DA8"/>
+      <stop offset="100%" stop-color="#173275"/>
+    </linearGradient>
+    <linearGradient id="glazeShine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <!-- 梅瓶轮廓裁切 -->
+    <clipPath id="vaseClip">
+      <path d="M 262 124
+               C 256 124, 254 134, 265 140
+               C 272 146, 272 162, 266 174
+               C 230 186, 174 226, 174 298
+               C 174 378, 204 486, 224 584
+               L 220 622
+               C 220 634, 380 634, 380 622
+               L 376 584
+               C 396 486, 426 378, 426 298
+               C 426 226, 370 186, 334 174
+               C 328 162, 328 146, 335 140
+               C 346 134, 344 124, 338 124 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- 瓷雾底板 -->
+  <rect x="0" y="0" width="600" height="760" fill="url(#bgPlate)"/>
+
+  <!-- 细双线拱门框 -->
+  <path d="M 32 728 L 32 230 A 268 202 0 0 1 568 230 L 568 728 Z" fill="#F8FAFD" stroke="#1F3F8F" stroke-width="1.8"/>
+  <path d="M 44 716 L 44 234 A 256 190 0 0 1 556 234 L 556 716 Z" fill="none" stroke="#B89B5E" stroke-width="1.1"/>
+
+  <!-- 背景淡青花圆盘光环与缠枝背景线 -->
+  <circle cx="300" cy="340" r="196" fill="none" stroke="#9DB2E0" stroke-width="1.2" stroke-dasharray="4 6"/>
+  <circle cx="300" cy="340" r="176" fill="#EDF3FB" fill-opacity="0.72" stroke="#1F3F8F" stroke-width="0.9" stroke-opacity="0.35"/>
+
+  <!-- 背景对称缠枝卷草（瓷瓶两侧优雅展开） -->
+  <g fill="none" stroke="#9DB2E0" stroke-width="1.8" stroke-linecap="round" opacity="0.82">
+    <path d="M 184 300 C 128 286, 98 242, 114 202 C 126 172, 162 168, 174 192 C 182 208, 166 226, 152 218"/>
+    <path d="M 152 260 C 110 278, 86 322, 102 362 C 116 394, 154 394, 162 368"/>
+    <path d="M 178 430 C 126 444, 96 488, 118 524 C 134 548, 170 540, 174 514"/>
+    <path d="M 416 300 C 472 286, 502 242, 486 202 C 474 172, 438 168, 426 192 C 418 208, 434 226, 448 218"/>
+    <path d="M 448 260 C 490 278, 514 322, 498 362 C 484 394, 446 394, 438 368"/>
+    <path d="M 422 430 C 474 444, 504 488, 482 524 C 466 548, 430 540, 426 514"/>
+  </g>
+  <!-- 背景小花瓣点缀 -->
+  <g fill="#9DB2E0" opacity="0.55">
+    <circle cx="114" cy="202" r="5"/>
+    <circle cx="486" cy="202" r="5"/>
+    <circle cx="102" cy="362" r="4"/>
+    <circle cx="498" cy="362" r="4"/>
+    <circle cx="118" cy="524" r="4"/>
+    <circle cx="482" cy="524" r="4"/>
+  </g>
+
+  <!-- 瓷瓶落影 -->
+  <ellipse cx="300" cy="638" rx="108" ry="18" fill="#1F3F8F" opacity="0.14"/>
+  <ellipse cx="300" cy="636" rx="82" ry="10" fill="#1F3F8F" opacity="0.16"/>
+
+  <!-- 梅瓶本体 -->
+  <g clip-path="url(#vaseClip)">
+    <!-- 釉面底色 -->
+    <rect x="160" y="110" width="280" height="540" fill="url(#vaseGlaze)"/>
+
+    <!-- 1. 颈部与肩部：青花双弦纹 + 覆莲蕉叶纹 -->
+    <line x1="250" y1="158" x2="350" y2="158" stroke="#1F3F8F" stroke-width="2.4"/>
+    <line x1="248" y1="165" x2="352" y2="165" stroke="#1F3F8F" stroke-width="1.2"/>
+
+    <!-- 肩部如意云头开光纹 -->
+    <g fill="#2348A0" fill-opacity="0.14" stroke="#1F3F8F" stroke-width="1.8">
+      <path d="M 180 218 Q 210 248 240 218 Q 270 250 300 218 Q 330 250 360 218 Q 390 248 420 218 L 420 176 L 180 176 Z"/>
+      <path d="M 192 214 Q 210 236 228 214 M 252 214 Q 270 238 288 214 M 312 214 Q 330 238 348 214 M 372 214 Q 390 236 408 214" fill="none" stroke-width="1.3"/>
+    </g>
+    <!-- 肩部弦纹 -->
+    <line x1="168" y1="252" x2="432" y2="252" stroke="#1F3F8F" stroke-width="2.6"/>
+    <line x1="168" y1="260" x2="432" y2="260" stroke="#1F3F8F" stroke-width="1.1"/>
+    <line x1="168" y1="268" x2="432" y2="268" stroke="#9DB2E0" stroke-width="1.2" stroke-dasharray="6 4"/>
+
+    <!-- 2. 腹部主题纹饰：青花缠枝莲纹 -->
+    <!-- 缠枝主藤蔓 -->
+    <g fill="none" stroke="#1F3F8F" stroke-linecap="round">
+      <path d="M 165 360 C 202 308, 248 310, 272 356 C 296 402, 344 402, 376 346 C 396 312, 418 314, 438 340" stroke-width="3.2"/>
+      <path d="M 168 456 C 212 496, 266 476, 300 426 C 334 376, 384 418, 424 460" stroke-width="2.6"/>
+      <path d="M 206 332 C 218 294, 254 282, 278 302 C 294 316, 288 336, 272 332" stroke-width="2"/>
+      <path d="M 388 326 C 378 288, 342 280, 320 302 C 306 316, 314 334, 330 330" stroke-width="2"/>
+      <path d="M 220 462 C 238 498, 278 504, 294 480 C 304 464, 290 450, 276 456" stroke-width="2"/>
+      <path d="M 378 454 C 362 492, 324 502, 308 478" stroke-width="2"/>
+    </g>
+
+    <!-- 腹部中央主莲花 -->
+    <g transform="translate(300 374)">
+      <!-- 外层花瓣 -->
+      <g fill="url(#cobaltDeep)" opacity="0.92">
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(45)"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(90)"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(135)"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(180)"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(225)"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(270)"/>
+        <path d="M 0 -58 C 16 -40, 18 -14, 0 0 C -18 -14, -16 -40, 0 -58 Z" transform="rotate(315)"/>
+      </g>
+      <!-- 留白细边内瓣 -->
+      <g fill="#F7F9FC" stroke="#1F3F8F" stroke-width="1.5">
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(22.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(67.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(112.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(157.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(202.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(247.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(292.5)"/>
+        <path d="M 0 -38 C 10 -24, 10 -8, 0 0 C -10 -8, -10 -24, 0 -38 Z" transform="rotate(337.5)"/>
+      </g>
+      <!-- 莲心 -->
+      <circle cx="0" cy="0" r="14" fill="#1F3F8F"/>
+      <circle cx="0" cy="0" r="8" fill="#F7F9FC"/>
+      <circle cx="0" cy="0" r="3.5" fill="#1F3F8F"/>
+    </g>
+
+    <!-- 左上与右下侧莲 -->
+    <g transform="translate(212 318) scale(0.55)">
+      <g fill="#1F3F8F" opacity="0.86">
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(60)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(120)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(180)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(240)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(300)"/>
+      </g>
+      <circle cx="0" cy="0" r="11" fill="#F7F9FC" stroke="#1F3F8F" stroke-width="2"/>
+    </g>
+
+    <g transform="translate(388 326) scale(0.52)">
+      <g fill="#1F3F8F" opacity="0.86">
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(60)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(120)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(180)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(240)"/>
+        <path d="M 0 -46 C 14 -30, 14 -10, 0 0 C -14 -10, -14 -30, 0 -46 Z" transform="rotate(300)"/>
+      </g>
+      <circle cx="0" cy="0" r="11" fill="#F7F9FC" stroke="#1F3F8F" stroke-width="2"/>
+    </g>
+
+    <!-- 缠枝青花叶片 -->
+    <g fill="#264EA8" opacity="0.85">
+      <path d="M 232 396 C 210 382, 192 398, 202 422 C 218 416, 228 408, 232 396 Z"/>
+      <path d="M 368 398 C 390 384, 408 400, 398 424 C 382 418, 372 410, 368 398 Z"/>
+      <path d="M 248 446 C 228 460, 234 484, 258 476 C 258 464, 254 454, 248 446 Z"/>
+      <path d="M 352 446 C 372 460, 366 484, 342 476 C 342 464, 346 454, 352 446 Z"/>
+      <path d="M 254 294 C 242 274, 260 264, 276 282 Z"/>
+      <path d="M 346 294 C 358 274, 340 264, 324 282 Z"/>
+    </g>
+
+    <!-- 3. 胫部回纹带 + 仰莲瓣纹 -->
+    <line x1="200" y1="510" x2="400" y2="510" stroke="#1F3F8F" stroke-width="2.4"/>
+    <line x1="200" y1="518" x2="400" y2="518" stroke="#1F3F8F" stroke-width="1.1"/>
+    <!-- 仰莲瓣 -->
+    <g fill="#2348A0" fill-opacity="0.16" stroke="#1F3F8F" stroke-width="2">
+      <path d="M 218 606 L 218 548 Q 238 524 258 548 L 258 606"/>
+      <path d="M 258 606 L 258 546 Q 279 522 300 546 L 300 606"/>
+      <path d="M 300 606 L 300 546 Q 321 522 342 546 L 342 606"/>
+      <path d="M 342 606 L 342 548 Q 362 524 382 548 L 382 606"/>
+    </g>
+    <g fill="#1F3F8F" opacity="0.72">
+      <path d="M 238 552 C 245 566, 244 584, 238 594 C 232 584, 231 566, 238 552 Z"/>
+      <path d="M 279 548 C 286 564, 285 584, 279 594 C 273 584, 272 564, 279 548 Z"/>
+      <path d="M 321 548 C 328 564, 327 584, 321 594 C 315 584, 314 564, 321 548 Z"/>
+      <path d="M 362 552 C 369 566, 368 584, 362 594 C 356 584, 355 566, 362 552 Z"/>
+    </g>
+    <!-- 足部双弦纹 -->
+    <line x1="216" y1="608" x2="384" y2="608" stroke="#1F3F8F" stroke-width="2.4"/>
+    <line x1="216" y1="615" x2="384" y2="615" stroke="#1F3F8F" stroke-width="1.2"/>
+
+    <!-- 釉面高光（模拟高温透明釉质感） -->
+    <path d="M 218 206 C 194 252, 198 360, 234 576 L 266 576 C 236 370, 232 260, 250 198 Z" fill="url(#glazeShine)"/>
+  </g>
+
+  <!-- 梅瓶外轮廓描线 -->
+  <path d="M 262 124
+           C 256 124, 254 134, 265 140
+           C 272 146, 272 162, 266 174
+           C 230 186, 174 226, 174 298
+           C 174 378, 204 486, 224 584
+           L 220 622
+           C 220 634, 380 634, 380 622
+           L 376 584
+           C 396 486, 426 378, 426 298
+           C 426 226, 370 186, 334 174
+           C 328 162, 328 146, 335 140
+           C 346 134, 344 124, 338 124 Z"
+        fill="none" stroke="#1F3F8F" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- 瓶口椭圆 -->
+  <ellipse cx="300" cy="124" rx="38" ry="8" fill="#EBF1F9" stroke="#1F3F8F" stroke-width="2.2"/>
+  <ellipse cx="300" cy="124" rx="22" ry="4" fill="#1F3F8F" opacity="0.22"/>
+
+  <!-- 底部刊物图版标注 -->
+  <line x1="110" y1="678" x2="490" y2="678" stroke="#B89B5E" stroke-width="1"/>
+  <text x="300" y="702" text-anchor="middle" fill="#1F3F8F" font-family="Georgia, serif" font-style="italic" font-size="16" letter-spacing="3">PLATE I · BLUE &amp; WHITE MEIPING</text>
+</svg>

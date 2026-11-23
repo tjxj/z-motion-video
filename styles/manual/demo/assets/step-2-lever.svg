@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 240" fill="none">
+  <!-- Wheel Rim Arc -->
+  <path d="M24 202 Q220 96 416 202" stroke="#111111" stroke-width="6" stroke-linecap="round"/>
+  <path d="M24 224 Q220 124 416 224" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Spoke lines -->
+  <line x1="114" y1="184" x2="104" y2="236" stroke="#111111" stroke-width="2.5"/>
+  <line x1="220" y1="162" x2="220" y2="236" stroke="#111111" stroke-width="2.5"/>
+  <line x1="326" y1="184" x2="336" y2="236" stroke="#111111" stroke-width="2.5"/>
+
+  <!-- Outer Tire Bead Lifted Up -->
+  <path d="M52 178 C126 112 204 82 280 104 C332 118 372 148 398 178" stroke="#111111" stroke-width="5" stroke-linecap="round"/>
+  <!-- Inner Tube peeking out (subtle dashed curve) -->
+  <path d="M168 128 C210 112 254 114 292 134" stroke="#FF5B1F" stroke-width="4" stroke-dasharray="7 5" stroke-linecap="round"/>
+
+  <!-- Tire Lever #1 (Hooked onto spoke) -->
+  <g transform="translate(114, 134) rotate(72)">
+    <path d="M-4 8 C2 0 12 -2 22 0 L94 0 C102 0 108 5 108 11 C108 17 102 22 94 22 L18 22 C8 22 0 16 -4 8 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="94" cy="11" r="4" fill="#111111"/>
+  </g>
+  <circle cx="114" cy="134" r="14" fill="#111111"/>
+  <text x="114" y="140" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="16" fill="#FBFBF8">1</text>
+
+  <!-- Tire Lever #2 (Sliding along bead, Safety Orange highlight) -->
+  <g transform="translate(226, 98) rotate(-42)">
+    <path d="M-6 10 C0 0 14 -2 26 0 L108 0 C118 0 124 6 124 13 C124 20 118 26 108 26 L22 26 C10 26 0 20 -6 10 Z" fill="#FBFBF8" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-6 10 C0 0 14 -2 26 0 L28 26 L22 26 C10 26 0 20 -6 10 Z" fill="#FF5B1F" stroke="#111111" stroke-width="3.5" stroke-linejoin="round"/>
+    <line x1="42" y1="13" x2="96" y2="13" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <circle cx="298" cy="48" r="14" fill="#FF5B1F" stroke="#111111" stroke-width="2.5"/>
+  <text x="298" y="54" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="16" fill="#111111">2</text>
+
+  <!-- Sliding Motion Arrow Along Rim -->
+  <path d="M244 66 Q326 62 376 112" stroke="#FF5B1F" stroke-width="4.5" stroke-dasharray="10 7" stroke-linecap="round"/>
+  <path d="M362 112 L380 116 L376 98" stroke="#FF5B1F" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

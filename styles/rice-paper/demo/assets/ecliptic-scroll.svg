@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="960" height="620">
+  <defs>
+    <radialGradient id="paperWash" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FAF4E8"/>
+      <stop offset="100%" stop-color="#EFE6D5"/>
+    </radialGradient>
+    <radialGradient id="sunHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B5302A" stop-opacity="0.22"/>
+      <stop offset="65%" stop-color="#B5302A" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#B5302A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mtn1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3E5D6B" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#3E5D6B" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="mtn2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2E2925" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#2E2925" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 宣纸底 -->
+  <rect width="960" height="620" fill="url(#paperWash)"/>
+
+  <!-- 远山淡墨衬底 -->
+  <path d="M0 540 Q120 455 250 495 T520 470 T790 505 T960 460 L960 620 L0 620 Z" fill="url(#mtn1)"/>
+  <path d="M0 570 Q180 515 360 545 T720 520 T960 555 L960 620 L0 620 Z" fill="url(#mtn2)"/>
+
+  <!-- 古籍双线框 -->
+  <rect x="22" y="22" width="916" height="576" fill="none" stroke="#2E2925" stroke-opacity="0.32" stroke-width="1.5"/>
+  <rect x="30" y="30" width="900" height="560" fill="none" stroke="#2E2925" stroke-opacity="0.14" stroke-width="1"/>
+
+  <!-- 中心黄道星象圆盘 cx=480 cy=310 -->
+  <g transform="translate(480,310)">
+    <!-- 中心日晕 -->
+    <circle r="118" fill="url(#sunHalo)"/>
+    <!-- 外围石青虚线轨 -->
+    <circle r="228" fill="none" stroke="#3E5D6B" stroke-opacity="0.32" stroke-width="1.5" stroke-dasharray="4 7"/>
+    <!-- 主黄道双环 -->
+    <circle r="204" fill="none" stroke="#2E2925" stroke-opacity="0.58" stroke-width="2"/>
+    <circle r="186" fill="none" stroke="#2E2925" stroke-opacity="0.28" stroke-width="1.2"/>
+    <!-- 内环 -->
+    <circle r="118" fill="none" stroke="#3E5D6B" stroke-opacity="0.38" stroke-width="1.2"/>
+    <circle r="44" fill="#B5302A" fill-opacity="0.1" stroke="#B5302A" stroke-opacity="0.72" stroke-width="1.8"/>
+    <circle r="22" fill="#B5302A" fill-opacity="0.88"/>
+
+    <!-- 十字轴线（二分二至） -->
+    <line x1="-226" y1="0" x2="226" y2="0" stroke="#2E2925" stroke-opacity="0.22" stroke-width="1.2"/>
+    <line x1="0" y1="-226" x2="0" y2="226" stroke="#2E2925" stroke-opacity="0.22" stroke-width="1.2"/>
+    <!-- 四立斜线 -->
+    <line x1="-152" y1="-152" x2="152" y2="152" stroke="#3E5D6B" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="5 6"/>
+    <line x1="152" y1="-152" x2="-152" y2="152" stroke="#3E5D6B" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="5 6"/>
+
+    <!-- 24 节气刻度（每 15° 一刻度） -->
+    <g stroke="#2E2925" stroke-opacity="0.55" stroke-width="1.6">
+      <line x1="0" y1="-204" x2="0" y2="-186" stroke="#B5302A" stroke-width="3"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(15)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(30)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(45)" stroke="#3E5D6B" stroke-width="2.2"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(60)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(75)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(90)" stroke="#B5302A" stroke-width="3"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(105)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(120)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(135)" stroke="#3E5D6B" stroke-width="2.2"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(150)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(165)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(180)" stroke="#B5302A" stroke-width="3"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(195)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(210)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(225)" stroke="#3E5D6B" stroke-width="2.2"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(240)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(255)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(270)" stroke="#B5302A" stroke-width="3"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(285)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(300)"/>
+      <line x1="0" y1="-204" x2="0" y2="-186" transform="rotate(315)" stroke="#3E5D6B" stroke-width="2.2"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(330)"/>
+      <line x1="0" y1="-204" x2="0" y2="-190" transform="rotate(345)"/>
+    </g>
+
+    <!-- 15度夹角示意扇形（夏至到小暑） -->
+    <path d="M 0 0 L 0 -186 A 186 186 0 0 1 48.1 -179.7 Z" fill="#B5302A" fill-opacity="0.14"/>
+    <text x="34" y="-134" fill="#B5302A" font-family="MV Serif, serif" font-size="20" font-weight="700" text-anchor="middle">15°</text>
+
+    <!-- 四正节点朱点 -->
+    <circle cx="0" cy="-204" r="7.5" fill="#B5302A"/>
+    <circle cx="204" cy="0" r="7.5" fill="#B5302A"/>
+    <circle cx="0" cy="204" r="7.5" fill="#B5302A"/>
+    <circle cx="-204" cy="0" r="7.5" fill="#B5302A"/>
+
+    <!-- 四立节点石青点 -->
+    <circle cx="144" cy="-144" r="5" fill="#3E5D6B"/>
+    <circle cx="144" cy="144" r="5" fill="#3E5D6B"/>
+    <circle cx="-144" cy="144" r="5" fill="#3E5D6B"/>
+    <circle cx="-144" cy="-144" r="5" fill="#3E5D6B"/>
+
+    <!-- 太阳标签 -->
+    <text x="0" y="7" fill="#FAF4E8" font-family="MV Serif, serif" font-size="20" font-weight="700" text-anchor="middle">日</text>
+
+    <!-- 四象内字 -->
+    <text x="68" y="-58" fill="#5F554A" font-family="MV Serif, serif" font-size="22" text-anchor="middle">夏</text>
+    <text x="68" y="74" fill="#5F554A" font-family="MV Serif, serif" font-size="22" text-anchor="middle">秋</text>
+    <text x="-68" y="74" fill="#5F554A" font-family="MV Serif, serif" font-size="22" text-anchor="middle">冬</text>
+    <text x="-68" y="-58" fill="#5F554A" font-family="MV Serif, serif" font-size="22" text-anchor="middle">春</text>
+  </g>
+
+  <!-- 四正文字标注 -->
+  <!-- 上：夏至 90° -->
+  <g transform="translate(480,66)" text-anchor="middle">
+    <text y="0" fill="#B5302A" font-family="MV Serif, serif" font-size="28" font-weight="700" letter-spacing="4">夏至</text>
+    <text y="24" fill="#5F554A" font-family="MV Serif, serif" font-size="16">黄经 90° · 昼最长</text>
+  </g>
+  <!-- 下：冬至 270° -->
+  <g transform="translate(480,552)" text-anchor="middle">
+    <text y="0" fill="#B5302A" font-family="MV Serif, serif" font-size="28" font-weight="700" letter-spacing="4">冬至</text>
+    <text y="24" fill="#5F554A" font-family="MV Serif, serif" font-size="16">黄经 270° · 昼最短</text>
+  </g>
+  <!-- 左：春分 0° -->
+  <g transform="translate(178,302)" text-anchor="end">
+    <text y="0" fill="#1F1B18" font-family="MV Serif, serif" font-size="28" font-weight="700" letter-spacing="4">春分</text>
+    <text y="28" fill="#5F554A" font-family="MV Serif, serif" font-size="16">黄经 0° · 昼夜均</text>
+  </g>
+  <!-- 右：秋分 180° -->
+  <g transform="translate(782,302)" text-anchor="start">
+    <text y="0" fill="#1F1B18" font-family="MV Serif, serif" font-size="28" font-weight="700" letter-spacing="4">秋分</text>
+    <text y="28" fill="#5F554A" font-family="MV Serif, serif" font-size="16">黄经 180° · 昼夜均</text>
+  </g>
+
+  <!-- 四立小字 -->
+  <text x="310" y="148" fill="#3E5D6B" font-family="MV Serif, serif" font-size="20" text-anchor="end">立春</text>
+  <text x="650" y="148" fill="#3E5D6B" font-family="MV Serif, serif" font-size="20" text-anchor="start">立夏</text>
+  <text x="650" y="484" fill="#3E5D6B" font-family="MV Serif, serif" font-size="20" text-anchor="start">立秋</text>
+  <text x="310" y="484" fill="#3E5D6B" font-family="MV Serif, serif" font-size="20" text-anchor="end">立冬</text>
+
+  <!-- 右上题签 -->
+  <g transform="translate(888,74)">
+    <rect x="-18" y="-12" width="36" height="176" fill="none" stroke="#2E2925" stroke-opacity="0.32" stroke-width="1"/>
+    <text x="0" y="16" fill="#2E2925" font-family="MV Serif, serif" font-size="22" font-weight="700" text-anchor="middle">黄</text>
+    <text x="0" y="46" fill="#2E2925" font-family="MV Serif, serif" font-size="22" font-weight="700" text-anchor="middle">道</text>
+    <text x="0" y="76" fill="#2E2925" font-family="MV Serif, serif" font-size="22" font-weight="700" text-anchor="middle">四</text>
+    <text x="0" y="106" fill="#2E2925" font-family="MV Serif, serif" font-size="22" font-weight="700" text-anchor="middle">时</text>
+    <text x="0" y="136" fill="#2E2925" font-family="MV Serif, serif" font-size="22" font-weight="700" text-anchor="middle">图</text>
+  </g>
+  <!-- 左下朱砂小印 -->
+  <g transform="translate(68,512)">
+    <rect width="42" height="42" rx="4" fill="#B5302A" fill-opacity="0.9"/>
+    <rect x="4" y="4" width="34" height="34" rx="2" fill="none" stroke="#FAF4E8" stroke-width="1.5"/>
+    <text x="21" y="29" fill="#FAF4E8" font-family="MV Serif, serif" font-size="22" font-weight="900" text-anchor="middle">历</text>
+  </g>
+</svg>

@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540">
+  <defs>
+    <linearGradient id="filmBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E1C19"/>
+      <stop offset="50%" stop-color="#161412"/>
+      <stop offset="100%" stop-color="#1C1A17"/>
+    </linearGradient>
+    <linearGradient id="frameGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2D271E"/>
+      <stop offset="100%" stop-color="#181512"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C98324"/>
+      <stop offset="50%" stop-color="#E8A33D"/>
+      <stop offset="100%" stop-color="#F5BE68"/>
+    </linearGradient>
+    <pattern id="gridPat" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#E9E6DF" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Dark cinema studio backdrop -->
+  <rect width="960" height="540" fill="#0E0D0C"/>
+  <rect width="960" height="540" fill="url(#gridPat)"/>
+
+  <!-- Top & bottom technical rulers -->
+  <line x1="40" y1="36" x2="920" y2="36" stroke="#E8A33D" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="40" y="26" fill="#E8A33D" font-family="monospace" font-size="13" letter-spacing="2">35MM ACADEMY SOUND PRINT · 4-PERF · 24 FPS</text>
+  <text x="920" y="26" fill="#9E998E" font-family="monospace" font-size="13" text-anchor="end">SCALE 2.5 : 1</text>
+
+  <!-- Horizontal 35mm film strip body (showing 2 consecutive frames horizontally for clear readability) -->
+  <rect x="40" y="96" width="880" height="316" rx="8" fill="url(#filmBase)" stroke="#3A352D" stroke-width="2"/>
+
+  <!-- Top sprocket holes -->
+  <g fill="#0A0A0B" stroke="#4D463B" stroke-width="1.5">
+    <rect x="66" y="112" width="38" height="24" rx="5"/>
+    <rect x="148" y="112" width="38" height="24" rx="5"/>
+    <rect x="230" y="112" width="38" height="24" rx="5"/>
+    <rect x="312" y="112" width="38" height="24" rx="5"/>
+    <rect x="394" y="112" width="38" height="24" rx="5"/>
+    <rect x="476" y="112" width="38" height="24" rx="5"/>
+    <rect x="558" y="112" width="38" height="24" rx="5"/>
+    <rect x="640" y="112" width="38" height="24" rx="5"/>
+    <rect x="722" y="112" width="38" height="24" rx="5"/>
+    <rect x="804" y="112" width="38" height="24" rx="5"/>
+    <rect x="866" y="112" width="38" height="24" rx="5"/>
+  </g>
+
+  <!-- Bottom sprocket holes -->
+  <g fill="#0A0A0B" stroke="#4D463B" stroke-width="1.5">
+    <rect x="66" y="372" width="38" height="24" rx="5"/>
+    <rect x="148" y="372" width="38" height="24" rx="5"/>
+    <rect x="230" y="372" width="38" height="24" rx="5"/>
+    <rect x="312" y="372" width="38" height="24" rx="5"/>
+    <rect x="394" y="372" width="38" height="24" rx="5"/>
+    <rect x="476" y="372" width="38" height="24" rx="5"/>
+    <rect x="558" y="372" width="38" height="24" rx="5"/>
+    <rect x="640" y="372" width="38" height="24" rx="5"/>
+    <rect x="722" y="372" width="38" height="24" rx="5"/>
+    <rect x="804" y="372" width="38" height="24" rx="5"/>
+    <rect x="866" y="372" width="38" height="24" rx="5"/>
+  </g>
+
+  <!-- Optical Soundtrack Strip (highlighted in amber along top inside sprockets) -->
+  <rect x="56" y="150" width="848" height="44" rx="4" fill="#100F0D" stroke="#E8A33D" stroke-width="2"/>
+  <rect x="56" y="150" width="848" height="44" rx="4" fill="#E8A33D" fill-opacity="0.10"/>
+  <!-- Variable-area dual optical waveform -->
+  <path d="M 68 172 L 84 172 L 92 162 L 100 182 L 112 158 L 122 186 L 136 164 L 146 180 L 160 172 L 178 172 L 188 156 L 200 188 L 214 154 L 228 190 L 242 160 L 254 184 L 266 168 L 284 172 L 304 172 L 316 158 L 328 186 L 344 154 L 358 190 L 372 164 L 386 180 L 402 166 L 418 172 L 438 172 L 452 156 L 466 188 L 480 155 L 494 189 L 510 162 L 524 182 L 542 172 L 564 172 L 578 160 L 592 184 L 606 155 L 620 189 L 636 162 L 650 182 L 668 172 L 690 172 L 704 158 L 718 186 L 732 154 L 748 190 L 764 162 L 778 182 L 796 168 L 818 172 L 836 160 L 850 184 L 866 164 L 882 178 L 892 172"
+        fill="none" stroke="url(#amberGrad)" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Center axis -->
+  <line x1="64" y1="172" x2="896" y2="172" stroke="#E8A33D" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- Film Frames (3 frames visible across the strip) -->
+  <!-- Frame 01 -->
+  <g transform="translate(64, 206)">
+    <rect width="260" height="152" rx="4" fill="url(#frameGlow)" stroke="#554E43" stroke-width="1.5"/>
+    <!-- Minimal cinema silhouette: projector beam & mountain/moon -->
+    <circle cx="195" cy="46" r="18" fill="#E8A33D" fill-opacity="0.32" stroke="#E8A33D" stroke-width="1.5"/>
+    <path d="M 16 136 L 82 76 L 132 114 L 178 86 L 244 136 Z" fill="#2A2621" stroke="#7A7368" stroke-width="1.2"/>
+    <text x="12" y="22" fill="#ACA79D" font-family="monospace" font-size="12">FR 01</text>
+  </g>
+
+  <!-- Frame 02 (active center frame) -->
+  <g transform="translate(350, 206)">
+    <rect width="260" height="152" rx="4" fill="url(#frameGlow)" stroke="#E9E6DF" stroke-width="2"/>
+    <!-- Slightly shifted motion -->
+    <circle cx="204" cy="44" r="18" fill="#E8A33D" fill-opacity="0.55" stroke="#E8A33D" stroke-width="1.8"/>
+    <path d="M 16 136 L 90 74 L 140 112 L 186 84 L 244 136 Z" fill="#322C24" stroke="#E9E6DF" stroke-opacity="0.65" stroke-width="1.5"/>
+    <!-- Aperture corner ticks -->
+    <path d="M 10 24 V 10 H 24 M 236 10 H 250 V 24 M 10 128 V 142 H 24 M 236 142 H 250 V 128" fill="none" stroke="#E8A33D" stroke-width="1.6"/>
+    <text x="20" y="26" fill="#E8A33D" font-family="monospace" font-size="12">FR 02 · GATE</text>
+  </g>
+
+  <!-- Frame 03 -->
+  <g transform="translate(636, 206)">
+    <rect width="260" height="152" rx="4" fill="url(#frameGlow)" stroke="#554E43" stroke-width="1.5"/>
+    <circle cx="213" cy="42" r="18" fill="#E8A33D" fill-opacity="0.32" stroke="#E8A33D" stroke-width="1.5"/>
+    <path d="M 16 136 L 98 72 L 148 110 L 194 82 L 244 136 Z" fill="#2A2621" stroke="#7A7368" stroke-width="1.2"/>
+    <text x="12" y="22" fill="#ACA79D" font-family="monospace" font-size="12">FR 03</text>
+  </g>
+
+  <!-- Callout Annotations -->
+  <!-- Top callout: Sprockets -->
+  <line x1="167" y1="112" x2="167" y2="72" stroke="#E9E6DF" stroke-width="2"/>
+  <circle cx="167" cy="112" r="4.5" fill="#E9E6DF"/>
+  <text x="178" y="78" fill="#E9E6DF" font-family="sans-serif" font-size="22" font-weight="700">齿孔（马达恒速牵引）</text>
+
+  <!-- Top-right callout: Optical Sound Track -->
+  <line x1="590" y1="150" x2="590" y2="72" stroke="#E8A33D" stroke-width="2.4"/>
+  <circle cx="590" cy="150" r="5" fill="#E8A33D"/>
+  <rect x="602" y="50" width="298" height="38" rx="5" fill="#E8A33D" fill-opacity="0.18" stroke="#E8A33D" stroke-width="1.6"/>
+  <text x="618" y="76" fill="#E8A33D" font-family="sans-serif" font-size="22" font-weight="700">光学声轨（声音印在胶片上）</text>
+
+  <!-- Bottom callout: Picture Frame -->
+  <line x1="480" y1="358" x2="480" y2="452" stroke="#E9E6DF" stroke-opacity="0.8" stroke-width="2"/>
+  <circle cx="480" cy="358" r="4.5" fill="#E9E6DF"/>
+  <text x="494" y="454" fill="#E9E6DF" font-family="sans-serif" font-size="22" font-weight="700">图像画格（每秒走过 24 格）</text>
+
+  <!-- Transport direction arrow -->
+  <g transform="translate(40, 490)">
+    <line x1="0" y1="0" x2="860" y2="0" stroke="#E8A33D" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="10 6"/>
+    <path d="M 852 -8 L 872 0 L 852 8" fill="none" stroke="#E8A33D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="0" y="-12" fill="#E8A33D" font-family="monospace" font-size="14" letter-spacing="1.5">CONSTANT SPEED TRANSPORT · 456 MM / SEC (24 FPS)</text>
+  </g>
+</svg>

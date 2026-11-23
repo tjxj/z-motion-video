@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" width="920" height="560">
+  <defs>
+    <linearGradient id="glazeTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCE9FA" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#B9D0F2" stop-opacity="0.45"/>
+    </linearGradient>
+    <linearGradient id="bodyClay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7F8FA"/>
+      <stop offset="100%" stop-color="#E5E9F0"/>
+    </linearGradient>
+    <pattern id="clayDots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.1" fill="#1F3F8F" opacity="0.16"/>
+      <circle cx="12" cy="11" r="0.9" fill="#1F3F8F" opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <!-- 图版背景 -->
+  <rect x="0" y="0" width="920" height="560" fill="#F8FAFD"/>
+  <rect x="18" y="18" width="884" height="524" fill="none" stroke="#1F3F8F" stroke-width="1.6"/>
+  <rect x="26" y="26" width="868" height="508" fill="none" stroke="#B89B5E" stroke-width="1"/>
+
+  <!-- 顶部标题带 -->
+  <text x="58" y="68" fill="#1F3F8F" font-family="Georgia, serif" font-style="italic" font-size="22" letter-spacing="2">FIG. 01 · UNDERGLAZE CROSS-SECTION</text>
+  <line x1="58" y1="84" x2="862" y2="84" stroke="#9DB2E0" stroke-width="1"/>
+
+  <!-- 剖面块（左半区） -->
+  <!-- 3. 底层：瓷胎（素坯） -->
+  <path d="M 78 308 L 538 308 L 538 456 L 78 456 Z" fill="url(#bodyClay)" stroke="#1F3F8F" stroke-width="2.2"/>
+  <rect x="78" y="308" width="460" height="148" fill="url(#clayDots)"/>
+
+  <!-- 2. 中层：含钴青花彩绘层（紧密渗入素坯表层） -->
+  <path d="M 78 272 C 138 264, 196 278, 260 270 C 330 262, 412 278, 538 270 L 538 308 L 78 308 Z" fill="#1F3F8F"/>
+  <!-- 彩绘层细节纹样示意 -->
+  <g stroke="#9DB2E0" stroke-width="2" fill="none" opacity="0.72">
+    <path d="M 102 290 Q 134 278 166 290 T 230 290 T 294 290 T 358 290 T 422 290 T 486 290"/>
+  </g>
+
+  <!-- 1. 顶层：透明青白釉层（如玻璃般光滑覆盖） -->
+  <path d="M 78 158 C 190 144, 420 144, 538 158 L 538 270 C 412 278, 330 262, 260 270 C 196 278, 138 264, 78 272 Z" fill="url(#glazeTop)" stroke="#1F3F8F" stroke-width="2.2"/>
+  <!-- 釉面反光高光弧线 -->
+  <path d="M 118 176 C 218 164, 396 164, 496 176" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M 142 194 C 232 184, 344 184, 434 192" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+
+  <!-- 左侧剖面标尺 -->
+  <g stroke="#B89B5E" stroke-width="1.4">
+    <line x1="60" y1="158" x2="60" y2="456"/>
+    <line x1="54" y1="158" x2="66" y2="158"/>
+    <line x1="54" y1="272" x2="66" y2="272"/>
+    <line x1="54" y1="308" x2="66" y2="308"/>
+    <line x1="54" y1="456" x2="66" y2="456"/>
+  </g>
+
+  <!-- 右侧标注引导线与文字 -->
+  <!-- 透明釉层 -->
+  <g>
+    <circle cx="538" cy="210" r="5" fill="#1F3F8F"/>
+    <line x1="544" y1="210" x2="608" y2="210" stroke="#B89B5E" stroke-width="1.6" stroke-dasharray="4 4"/>
+    <text x="622" y="196" fill="#1F3F8F" font-family="Georgia, serif" font-style="italic" font-size="22">01 · GLAZE</text>
+    <text x="622" y="226" fill="#16233E" font-family="'Noto Serif SC', serif" font-weight="700" font-size="28">透明釉层</text>
+    <text x="622" y="252" fill="#4E5E7A" font-family="'Noto Serif SC', serif" font-size="18">高温熔融，形成玻璃质感</text>
+  </g>
+
+  <!-- 含钴青料 -->
+  <g>
+    <circle cx="538" cy="290" r="5" fill="#1F3F8F"/>
+    <line x1="544" y1="290" x2="608" y2="290" stroke="#1F3F8F" stroke-width="1.8"/>
+    <text x="622" y="286" fill="#1F3F8F" font-family="Georgia, serif" font-style="italic" font-size="22">02 · COBALT PIGMENT</text>
+    <text x="622" y="316" fill="#1F3F8F" font-family="'Noto Serif SC', serif" font-weight="700" font-size="28">青花彩绘层</text>
+    <text x="622" y="342" fill="#4E5E7A" font-family="'Noto Serif SC', serif" font-size="18">封于釉下，耐磨不褪色</text>
+  </g>
+
+  <!-- 瓷胎素坯 -->
+  <g>
+    <circle cx="538" cy="398" r="5" fill="#1F3F8F"/>
+    <line x1="544" y1="398" x2="608" y2="398" stroke="#B89B5E" stroke-width="1.6" stroke-dasharray="4 4"/>
+    <text x="622" y="386" fill="#1F3F8F" font-family="Georgia, serif" font-style="italic" font-size="22">03 · PORCELAIN BODY</text>
+    <text x="622" y="416" fill="#16233E" font-family="'Noto Serif SC', serif" font-weight="700" font-size="28">细腻瓷胎</text>
+    <text x="622" y="442" fill="#4E5E7A" font-family="'Noto Serif SC', serif" font-size="18">高岭土练泥拉坯成型</text>
+  </g>
+
+  <!-- 底部说明栏 -->
+  <line x1="58" y1="494" x2="862" y2="494" stroke="#9DB2E0" stroke-width="1"/>
+  <text x="58" y="518" fill="#4E5E7A" font-family="'Noto Serif SC', serif" font-size="17">注：青花先在素坯绘画，再施透明釉，入窑约 1300℃ 一次烧成</text>
+  <text x="862" y="518" text-anchor="end" fill="#B89B5E" font-family="Georgia, serif" font-style="italic" font-size="17">1300℃ SINGLE FIRING</text>
+</svg>
