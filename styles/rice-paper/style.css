@@ -1,0 +1,115 @@
+/* 宋式米纸 rice-paper：米色宣纸 + 墨色宋体 + 朱砂 + 着重号 */
+#stage.st-rice-paper {
+  --bg: #F3ECE0; --fg: #2A2522; --fg2: #6B5F52; --fg3: #A89A88;
+  --accent: #B8352A; --accent2: #A07A3B; --on-accent: #FBF3E6; --hl: #B8352A;
+  --line: rgba(42, 37, 34, .16); --line-strong: rgba(42, 37, 34, .5);
+  --card-bg: rgba(251, 247, 239, .7); --card-bd: rgba(42, 37, 34, .5); --radius: 2px;
+  --code-bg: #FBF7EF; --code-fg: #2A2522; --code-bar: #EDE3D1; --code-hl: rgba(184, 53, 42, .1);
+  --sub-fg: #2A2522; --sub-hl: #B8352A;
+  --f-title: "MV Serif", serif; --f-body: "MV Serif", serif; --f-num: "MV Serif", serif; --f-quote: "MV Serif", serif;
+  --f-subl: "MV Serif", serif; --f-kicker: "MV Serif", serif;
+  --w-title: 700; --w-num: 600; --w-kicker: 500; --w-subl: 500; --w-strong: 700;
+  --track-title: .06em; --track-kicker: .34em; --lh-title: 1.32;
+  --dim: .45;
+}
+
+/* 版框、页眉、页码 */
+.st-rice-paper .rp-frame { position: absolute; inset: 38px; border: 1.5px solid rgba(42, 37, 34, .44); }
+.st-rice-paper .rp-frame::before { content: ''; position: absolute; inset: 6px; border: 1px solid rgba(42, 37, 34, .2); }
+.st-rice-paper .rp-head { position: absolute; left: 0; right: 0; top: calc(var(--ct) - 88px); display: flex; justify-content: center; align-items: center; gap: 20px;
+  font: 500 24px/1 "MV Serif", serif; letter-spacing: .42em; color: var(--fg2); }
+.st-rice-paper .rp-head span { margin-right: -.42em; }
+.st-rice-paper .rp-head i { width: 8px; height: 8px; background: var(--accent); rotate: 45deg; opacity: .85; }
+.st-rice-paper .rp-prog { position: absolute; left: 50%; width: 220px; margin-left: -110px; top: calc(var(--ct) - 52px); height: 2px; background: rgba(42, 37, 34, .1); }
+.st-rice-paper .rp-prog i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; scale: 0 1; }
+.st-rice-paper .rp-page { position: absolute; left: 0; right: 0; bottom: 64px; text-align: center; font: 500 22px/1 "MV Serif", serif; letter-spacing: .3em; color: var(--fg3); }
+.st-rice-paper.r169 .rp-page { bottom: 50px; }
+
+/* 居中排版：标题区一律居中，列表类内容整体居中 */
+.st-rice-paper .content { --chips-justify: center; }
+.st-rice-paper .head { text-align: center; }
+.st-rice-paper :is(.tpl-cover, .tpl-chapter, .tpl-statement, .tpl-bignum, .tpl-quote, .tpl-ending, .tpl-formula) .content { --align: center; --align-x: center; }
+.st-rice-paper :is(.tpl-list, .tpl-formula) .list, .st-rice-paper .steps.col, .st-rice-paper .tl.col { width: auto; align-self: center; max-width: 100%; }
+.st-rice-paper .kicker .kt { display: inline-flex; align-items: center; gap: .9em; margin-right: -.34em; }
+.st-rice-paper .kicker .kt::before, .st-rice-paper .kicker .kt::after { content: ''; width: 1.8em; height: 1px; background: currentColor; opacity: .7; }
+.st-rice-paper .dek { color: var(--fg2); letter-spacing: .08em; }
+.st-rice-paper .note, .st-rice-paper .cap { color: var(--fg2); letter-spacing: .06em; text-align: center; }
+
+/* 着重号：说到时点亮 */
+.st-rice-paper .hl { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), currentColor);
+  text-emphasis: dot color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), transparent); text-emphasis-position: under right; }
+.st-rice-paper .formula .hl { text-emphasis: none; }
+.st-rice-paper .subl .hl { text-emphasis: dot var(--accent); text-emphasis-position: under right; }
+
+/* 封面 / 章节 / 金句 / 大数字 */
+.st-rice-paper .tpl-cover .title, .st-rice-paper .tpl-ending .title { letter-spacing: .1em; }
+.st-rice-paper .chap-num { color: var(--accent); font-weight: 700; font-size: calc(var(--fs-chap) * var(--s) * .5); letter-spacing: .06em; line-height: 1.1; }
+.st-rice-paper .chap-num small { font-size: .5em; color: var(--fg2); font-weight: 500; vertical-align: .18em; margin: 0 .2em; letter-spacing: 0; }
+.st-rice-paper .say .sl { letter-spacing: .08em; font-weight: 700; }
+.st-rice-paper .bn-row { color: var(--accent); font-weight: 600; }
+.st-rice-paper .bn-u { color: var(--fg); font-weight: 500; }
+.st-rice-paper .bn-l { letter-spacing: .06em; }
+
+/* chips */
+.st-rice-paper .chip { border: 1px solid var(--line-strong); border-radius: 2px; color: var(--fg2); letter-spacing: .12em; background: rgba(251, 247, 239, .5); }
+.st-rice-paper .chip.hot { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+/* 卡片：双线框 */
+.st-rice-paper .card, .st-rice-paper .stat, .st-rice-paper .side { background: var(--card-bg); border: 1.5px solid var(--card-bd); border-radius: 2px;
+  outline: 1px solid rgba(42, 37, 34, .22); outline-offset: -8px; }
+.st-rice-paper .card.on, .st-rice-paper .stat.on { border-color: var(--accent); outline-color: rgba(184, 53, 42, .35); }
+.st-rice-paper .card-k { color: var(--accent); font-weight: 600; letter-spacing: .06em; }
+.st-rice-paper .card-t, .st-rice-paper .st-t, .st-rice-paper .stat-l, .st-rice-paper .side-l { letter-spacing: .04em; }
+.st-rice-paper .stat-v { color: var(--fg); }
+.st-rice-paper .stat.on .stat-v, .st-rice-paper .side-v { color: var(--accent); }
+.st-rice-paper .side.win { border-color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--card-bd)); }
+.st-rice-paper .vs { color: var(--accent); font-weight: 500; letter-spacing: .1em; }
+.st-rice-paper .verdict { letter-spacing: .06em; }
+
+/* 列表 */
+.st-rice-paper .m-number .mk { color: var(--accent); font-weight: 700; min-width: 1.4em; }
+.st-rice-paper .dotm { width: .3em; height: .3em; border-radius: 0; rotate: 45deg; background: var(--accent); vertical-align: .24em; }
+.st-rice-paper .item .tx { letter-spacing: .03em; }
+
+/* 步骤 */
+.st-rice-paper .step .badge { background: rgba(251, 247, 239, .9); color: var(--accent); border: 1.5px solid var(--accent); font-weight: 700;
+  box-shadow: 0 0 0 4px rgba(243, 236, 224, .9), 0 0 0 5px rgba(184, 53, 42, .3); }
+.st-rice-paper .links path { stroke: var(--fg2); stroke-width: 2; opacity: .8; }
+
+/* 时间线 */
+.st-rice-paper .tl-dot { background: #F3ECE0; border: calc(3px * var(--si)) solid var(--accent); box-shadow: 0 0 0 calc(6px * var(--si)) #F3ECE0; }
+.st-rice-paper .tl-item.on .tl-dot { background: var(--accent); }
+.st-rice-paper .tl-time { color: var(--accent); letter-spacing: .04em; }
+
+/* 条形图：淡墨 */
+.st-rice-paper .bar-fill { background: linear-gradient(90deg, rgba(42, 37, 34, .9), rgba(42, 37, 34, .62)); border-radius: 1px; }
+.st-rice-paper .bar-row.on .bar-fill { background: linear-gradient(90deg, #B8352A, #C95A48); }
+
+/* 引用：直角引号 */
+.st-rice-paper .q-text { font-weight: 700; letter-spacing: .14em; line-height: 1.62; }
+.st-rice-paper .ql:first-child::before { content: '「'; color: var(--accent); margin-left: -1em; }
+.st-rice-paper .ql:last-child::after { content: '」'; color: var(--accent); }
+.st-rice-paper .q-src { color: var(--fg2); letter-spacing: .2em; }
+.st-rice-paper .q-src::before { content: '—— '; letter-spacing: 0; }
+
+/* 代码：纸面 */
+.st-rice-paper .code-win { border: 1.5px solid var(--card-bd); border-radius: 2px; }
+.st-rice-paper .code-bar { color: var(--fg2); border-bottom: 1px solid rgba(42, 37, 34, .2); }
+.st-rice-paper .code-bar i { background: transparent; border: 1.5px solid var(--fg3); }
+.st-rice-paper .tok-c { color: #A89A88; } .st-rice-paper .tok-s { color: #5E7B4A; } .st-rice-paper .tok-n { color: #A07A3B; }
+.st-rice-paper .tok-k { color: #B8352A; font-weight: 700; } .st-rice-paper .tok-f { color: #3D5A80; } .st-rice-paper .tok-o { color: #6B5F52; }
+
+/* 图片：装裱 */
+.st-rice-paper .f-paper { padding: 20px; background: #E9DFCB; box-shadow: 0 0 0 1px rgba(42, 37, 34, .22), 0 12px 30px rgba(60, 45, 25, .14); }
+.st-rice-paper .f-paper .shot { box-shadow: 0 0 0 1px rgba(42, 37, 34, .25); }
+
+/* 印章 */
+.st-rice-paper .rp-seal { position: absolute; right: calc(var(--cr) + 10px); bottom: calc(var(--cb) + 18px); z-index: 5; padding: 12px 10px;
+  background: var(--accent); color: #FBF1E4; border-radius: 6px; font: 900 calc(44px * var(--s))/1.06 "MV Serif", serif; writing-mode: vertical-rl;
+  box-shadow: inset 0 0 0 3px #FBF1E4, inset 0 0 0 5px var(--accent); transform: rotate(-4deg); mix-blend-mode: multiply; opacity: .94; }
+.st-rice-paper .rp-seal.q4 span { display: block; height: 2.1em; }
+.st-rice-paper .stamp { padding: 12px 10px; border: none; border-radius: 6px; background: var(--accent); color: #FBF1E4; writing-mode: vertical-rl;
+  box-shadow: inset 0 0 0 3px #FBF1E4, inset 0 0 0 5px var(--accent); transform: rotate(-4deg); mix-blend-mode: multiply; font-weight: 900; line-height: 1.06; }
+
+/* 字幕 */
+.st-rice-paper .subl { letter-spacing: .05em; text-shadow: 0 0 8px #F3ECE0, 0 0 3px #F3ECE0; }

@@ -1,0 +1,157 @@
+/* 手账拼贴 scrapbook：奶油点阵本 + 便利贴 + 和纸胶带 + 荧光笔 */
+#stage.st-scrapbook {
+  --bg: #FBF6EA; --fg: #2E2823; --fg2: #6B5D50; --fg3: #A89886;
+  --accent: #E8505B; --accent2: #4C7DC9; --on-accent: #FFFFFF; --hl: #E8505B; --mark: rgba(255, 210, 60, .72);
+  --n1: #FFE680; --n2: #FFC2CC; --n3: #BDE8D0; --n4: #C5DBFF;
+  --line: rgba(46, 40, 35, .16); --line-strong: rgba(46, 40, 35, .55);
+  --card-bg: #FFE680; --card-bd: transparent; --radius: 3px;
+  --code-bg: #FFFDF7; --code-fg: #2E2823; --code-bar: #F3EAD8; --code-hl: rgba(255, 214, 64, .38);
+  --sub-fg: #2E2823; --sub-hl: #E8505B;
+  --f-title: "MV Hand", serif; --f-body: "MV Hand", serif; --f-num: "MV Hand", serif;
+  --f-kicker: "MV Hand", serif; --f-subl: "MV Hand", serif; --f-quote: "MV Hand", serif;
+  --w-title: 700; --w-num: 700; --w-body: 400; --w-kicker: 700; --w-subl: 700; --w-strong: 700;
+  --track-title: .02em; --track-kicker: .06em; --lh-title: 1.28; --lh-body: 1.55;
+  --tape-clip: polygon(0 0, 100% 0, calc(100% - 6px) 25%, 100% 50%, calc(100% - 6px) 75%, 100% 100%, 0 100%, 6px 75%, 0 50%, 6px 25%);
+  --paper-shadow: 0 2px 2px rgba(80, 60, 40, .07), 0 16px 26px -12px rgba(80, 60, 40, .42);
+}
+
+/* 页眉：胶带标签 + 圆形页码贴纸；页脚：署名 / 小节 + 虚线进度 */
+.st-scrapbook .sb-ser { position: absolute; left: var(--cl); top: calc(var(--ct) - 108px); max-width: 70%; padding: 8px 22px 9px 20px; rotate: -2deg;
+  font: 700 23px/1.2 "MV Hand", serif; color: #5A4A3C; letter-spacing: .04em; background: rgba(255, 214, 90, .66); clip-path: var(--tape-clip);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-scrapbook .sb-pg { position: absolute; right: calc(var(--cr) - 6px); top: calc(var(--ct) - 130px); width: 84px; height: 84px; border-radius: 50%;
+  background: #FFFFFF; box-shadow: 0 4px 10px rgba(80, 60, 40, .18); display: grid; place-content: center; text-align: center; rotate: 8deg;
+  font: 700 30px/1 "MV Hand", serif; color: #E8505B; }
+.st-scrapbook .sb-pg::before { content: ''; position: absolute; inset: 6px; border-radius: 50%; border: 2px dashed rgba(232, 80, 91, .5); }
+.st-scrapbook .sb-pg small { display: block; font-size: 16px; color: #A89886; margin-top: 3px; }
+.st-scrapbook .sb-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 78px; display: flex; justify-content: space-between;
+  font: 400 22px/1 "MV Hand", serif; color: var(--fg3); letter-spacing: .04em; }
+.st-scrapbook.r169 .sb-foot { bottom: 46px; }
+.st-scrapbook .sb-prog { position: absolute; left: var(--cl); right: var(--cr); bottom: 52px; height: 0; border-top: 2.5px dashed rgba(107, 93, 80, .35); }
+.st-scrapbook.r169 .sb-prog { bottom: 24px; }
+.st-scrapbook .sb-prog i { position: absolute; left: 0; right: 0; top: -2.5px; height: 2.5px; border-radius: 2px; background: #E8505B; transform-origin: 0 50%; scale: 0 1; }
+.st-scrapbook .sb-prog b { position: absolute; top: -10px; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: #E8505B;
+  border: 3px solid #FFFFFF; box-shadow: 0 2px 5px rgba(80, 60, 40, .25); }
+
+/* 标题区：胶带标签 + 荧光笔 */
+.st-scrapbook .kicker { color: #5A4A3C; }
+.st-scrapbook .kicker .kt { display: inline-block; padding: .2em .85em .24em; background: rgba(255, 194, 204, .9); rotate: -1.5deg; clip-path: var(--tape-clip); }
+.st-scrapbook .title { color: var(--fg); }
+.st-scrapbook .dek { color: var(--fg2); }
+.st-scrapbook .hl { color: inherit; background: linear-gradient(var(--mark), var(--mark)) 0 84% / calc(var(--p, 1) * 100%) .5em no-repeat; border-radius: 4px; }
+.st-scrapbook :is(.subl, .formula) .hl { background: none; }
+.st-scrapbook .subl .hl { color: var(--sub-hl); }
+.st-scrapbook .formula .hl { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), currentColor); }
+.st-scrapbook :is(.note, .cap) { color: var(--fg2); }
+
+/* 章节 */
+.st-scrapbook .chap-num { color: var(--accent); font-weight: 700; line-height: 1; }
+.st-scrapbook .chap-num::before { content: 'No.'; font-size: .3em; margin-right: .1em; color: var(--fg2); }
+.st-scrapbook .bn-row { color: var(--accent); }
+.st-scrapbook .bn-u { color: var(--fg); }
+
+/* 歪着贴的纸片会略微探出边界：容器留一点边，免得整页被当成溢出而缩小 */
+.st-scrapbook :is(.cards, .stats, .cmp) { padding: 10px; }
+.st-scrapbook :is(.tpl-statement .say, .tpl-quote .qt) { margin-left: 14px; margin-right: 14px; }
+.st-scrapbook .code-win { max-width: calc(100% - 20px); align-self: center; }
+
+/* 金句：一张黄色便利贴 */
+.st-scrapbook .tpl-statement .say { --mark: rgba(255, 140, 160, .55); position: relative; background: var(--n1); transform: rotate(-1.2deg); box-shadow: var(--paper-shadow);
+  padding: calc(64px * var(--s)) calc(52px * var(--s)) calc(52px * var(--s)); }
+
+/* 胶带：便利贴、卡片、引用、代码、拍立得都贴一条 */
+.st-scrapbook :is(.card, .stat, .side, .tpl-statement .say, .tpl-quote .qt, .code-win, .f-polaroid)::before { content: ''; position: absolute; z-index: 2;
+  left: 50%; top: -15px; width: 42%; max-width: 160px; height: 30px; translate: -50% 0; rotate: -3deg;
+  background: rgba(255, 255, 255, .58); box-shadow: 0 1px 2px rgba(80, 60, 40, .08); clip-path: var(--tape-clip); }
+.st-scrapbook .tpl-statement .say::before { background: rgba(197, 219, 255, .9); width: 180px; max-width: 40%; top: -18px; height: 36px; }
+.st-scrapbook .tpl-quote .qt::before { background: rgba(255, 194, 204, .88); width: 180px; max-width: 40%; top: -18px; height: 36px; }
+.st-scrapbook .code-win::before { background: rgba(189, 232, 208, .9); }
+.st-scrapbook .f-polaroid::before { background: rgba(255, 214, 90, .7); width: 150px; top: -16px; height: 34px; rotate: 4deg; }
+
+/* chips：圆角贴纸 */
+.st-scrapbook .chip { border: none; border-radius: 999px; background: var(--n1); color: #4A3F35; font-weight: 700; box-shadow: 0 3px 6px rgba(80, 60, 40, .14); transform: rotate(-2deg); }
+.st-scrapbook .chip:nth-child(3n+2) { background: var(--n3); transform: rotate(1.5deg); }
+.st-scrapbook .chip:nth-child(3n) { background: var(--n2); transform: rotate(-1deg); }
+.st-scrapbook .chip.hot { background: var(--accent); color: #FFFFFF; }
+
+/* 卡片：轮换颜色的便利贴，略微歪一点 */
+.st-scrapbook :is(.card, .stat, .side) { position: relative; background: var(--note, var(--n1)); border: none; border-radius: 3px; box-shadow: var(--paper-shadow);
+  transform: rotate(var(--tilt, -1.2deg)); }
+.st-scrapbook :is(.card, .stat):nth-child(4n+2) { --note: var(--n2); --tilt: 1.1deg; }
+.st-scrapbook :is(.card, .stat):nth-child(4n+3) { --note: var(--n3); --tilt: .8deg; }
+.st-scrapbook :is(.card, .stat):nth-child(4n) { --note: var(--n4); --tilt: -1.4deg; }
+.st-scrapbook :is(.card, .stat).on { outline: 3px dashed var(--accent); outline-offset: 9px; }
+.st-scrapbook .card-k { color: var(--accent); }
+.st-scrapbook :is(.card-x, .stat-n) { color: #5A4D41; }
+.st-scrapbook .stat-v, .st-scrapbook .side-v { color: var(--fg); }
+.st-scrapbook .stat.on .stat-v { color: var(--accent); }
+.st-scrapbook :is(.stat-u, .side-u) { color: var(--fg2); }
+.st-scrapbook .side { --note: var(--n4); --tilt: -1deg; }
+.st-scrapbook .side.win { --note: var(--n2); --tilt: 1deg; outline: 3px dashed color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), transparent); outline-offset: 9px; }
+.st-scrapbook .side.win .side-v { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-scrapbook .vs { font-weight: 700; color: var(--accent); font-size: calc(var(--fs-body) * var(--si) * 1.1); }
+.st-scrapbook .verdict { font-weight: 700; }
+
+/* 列表 */
+.st-scrapbook .m-number .mk { min-width: 0; }
+.st-scrapbook .sb-n { display: inline-grid; place-items: center; width: 1.45em; height: 1.45em; border-radius: 50%; background: var(--n1); color: #4A3F35;
+  font-size: .7em; font-weight: 700; vertical-align: .1em; }
+.st-scrapbook .item:nth-child(4n+2) .sb-n { background: var(--n2); }
+.st-scrapbook .item:nth-child(4n+3) .sb-n { background: var(--n3); }
+.st-scrapbook .item:nth-child(4n) .sb-n { background: var(--n4); }
+.st-scrapbook .sb-star { display: inline-block; width: .62em; height: .62em; background: #F2A33A; vertical-align: .02em;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.st-scrapbook .item .nt { color: var(--fg2); }
+.st-scrapbook .ic-check path { stroke: #3FA672; }
+.st-scrapbook .ic-cross path { stroke: var(--accent); }
+
+/* 步骤：彩色圆贴纸 + 手画弧线箭头 */
+.st-scrapbook .step .badge { background: var(--n1); color: #4A3F35; font-weight: 700; border: 4px solid #FFFFFF; box-shadow: 0 4px 10px rgba(80, 60, 40, .2); transform: rotate(-6deg); }
+.st-scrapbook .step:nth-of-type(4n+2) .badge { background: var(--n2); }
+.st-scrapbook .step:nth-of-type(4n+3) .badge { background: var(--n3); }
+.st-scrapbook .step:nth-of-type(4n) .badge { background: var(--n4); }
+.st-scrapbook .links path { stroke: #8C7B6B; stroke-width: 3; stroke-linecap: round; }
+
+/* 时间线 */
+.st-scrapbook .tl-dot { background: var(--n2); border: 3px solid #FFFFFF; box-shadow: 0 2px 6px rgba(80, 60, 40, .22); }
+.st-scrapbook .tl-item.on .tl-dot { background: var(--accent); }
+.st-scrapbook .tl-time { color: var(--accent); }
+
+/* 条形图：蜡笔条纹 */
+.st-scrapbook .bar-fill { border-radius: 999px; background-color: var(--n4);
+  background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .4) 0 7px, transparent 7px 14px); }
+.st-scrapbook .bar-row:nth-child(3n+2) .bar-fill { background-color: var(--n3); }
+.st-scrapbook .bar-row:nth-child(3n) .bar-fill { background-color: var(--n1); }
+.st-scrapbook .bar-row.on .bar-fill { background-color: var(--accent);
+  background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .22) 0 7px, transparent 7px 14px); }
+.st-scrapbook .bar-v { font-weight: 700; }
+
+/* 引用：贴在本子上的白纸条 */
+.st-scrapbook .tpl-quote .qt { position: relative; background: #FFFDF7; transform: rotate(-1deg); box-shadow: var(--paper-shadow);
+  padding: calc(56px * var(--s)) calc(56px * var(--s)) calc(48px * var(--s)); }
+.st-scrapbook .qmark { color: var(--accent); font-weight: 700; }
+.st-scrapbook .q-text { font-weight: 700; }
+.st-scrapbook .q-src { color: var(--fg2); }
+.st-scrapbook .q-src::before { content: '—— '; }
+
+/* 代码：浅色纸条 */
+.st-scrapbook .code-win { position: relative; overflow: visible; border-radius: 4px; box-shadow: var(--paper-shadow); transform: rotate(-.6deg); }
+.st-scrapbook .code-bar { color: #8C7B6B; border-radius: 4px 4px 0 0; }
+.st-scrapbook .code-bar i { background: var(--n2); }
+.st-scrapbook .code-bar i:nth-child(2) { background: var(--n1); }
+.st-scrapbook .code-bar i:nth-child(3) { background: var(--n3); }
+.st-scrapbook .tok-c { color: #A89886; font-style: normal; } .st-scrapbook .tok-s { color: #3F9A6A; } .st-scrapbook .tok-n { color: #D9822B; }
+.st-scrapbook .tok-k { color: #E8505B; font-weight: 700; } .st-scrapbook .tok-f { color: #4C7DC9; } .st-scrapbook .tok-o { color: #6B5D50; }
+
+/* 图片：拍立得 */
+.st-scrapbook .f-polaroid { box-shadow: 0 2px 3px rgba(80, 60, 40, .08), 0 18px 32px -12px rgba(80, 60, 40, .45); }
+
+/* 印章：圆角贴纸 */
+.st-scrapbook .stamp { border: 4px solid #FFFFFF; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-weight: 700; padding: .35em .95em;
+  box-shadow: 0 6px 14px rgba(80, 60, 40, .28); transform: rotate(-8deg); letter-spacing: .1em; }
+
+/* 结尾 */
+.st-scrapbook .cta { color: var(--fg2); }
+
+/* 字幕 */
+.st-scrapbook .subl { text-shadow: 0 0 8px rgba(251, 246, 234, .95), 0 0 2px rgba(251, 246, 234, .95), 0 0 1px #FBF6EA; }

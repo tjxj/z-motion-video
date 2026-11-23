@@ -1,0 +1,128 @@
+/* 瑞士网格 swiss-grid：暖白纸 + 12 栏 + 墨黑无衬线 + 瑞士红 */
+#stage.st-swiss-grid {
+  --bg: #F3F2EE; --fg: #0F0F0F; --fg2: #4A4A47; --fg3: #8F8E89;
+  --accent: #E4002B; --accent-t: #E4002B; --accent2: #0F0F0F; --on-accent: #FFFFFF; --hl: #E4002B; --sq: #E4002B;
+  --line: rgba(15, 15, 15, .16); --line-strong: #0F0F0F;
+  --card-bg: transparent; --card-bd: #0F0F0F; --radius: 0px;
+  --code-bg: #0F0F0F; --code-fg: #EDECE8; --code-bar: #1E1E1E; --code-hl: rgba(243, 242, 238, .1);
+  --sub-fg: #0F0F0F; --sub-hl: #E4002B;
+  --f-title: "MV Grot", "MV Sans", sans-serif; --f-body: "MV Grot", "MV Sans", sans-serif; --f-num: "MV Grot", "MV Sans", sans-serif;
+  --f-kicker: "MV Grot", "MV Sans", sans-serif; --f-subl: "MV Grot", "MV Sans", sans-serif; --f-quote: "MV Grot", "MV Sans", sans-serif;
+  --w-title: 900; --w-num: 800; --w-body: 400; --w-kicker: 700; --w-subl: 700; --w-strong: 900;
+  --track-title: -.01em; --track-kicker: .06em; --lh-title: 1.16; --lh-body: 1.5;
+  --dim: .45; --gut: 24px;
+}
+#stage.st-swiss-grid.r169 { --gut: 32px; }
+
+/* 页眉：三段对齐 12 栏；黑色横线上叠红色进度；页脚署名 */
+.st-swiss-grid #chrome { --c1: #0F0F0F; --c2: rgba(15, 15, 15, .52); --c-rule: #0F0F0F; --c-bar: #E4002B; }
+.st-swiss-grid #chrome[data-tone="red"] { --c1: #FFFFFF; --c2: rgba(255, 255, 255, .76); --c-rule: #FFFFFF; --c-bar: #0F0F0F; }
+.st-swiss-grid #chrome[data-tone="dark"] { --c1: #F3F2EE; --c2: rgba(243, 242, 238, .56); --c-rule: rgba(243, 242, 238, .9); --c-bar: #E4002B; }
+.st-swiss-grid .sg-top { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 108px); display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end; color: var(--c1);
+  font: 700 22px/1.2 "MV Grot", "MV Sans", sans-serif; letter-spacing: .02em; white-space: nowrap; }
+.st-swiss-grid .sg-ser { grid-column: 1 / span 5; overflow: hidden; text-overflow: ellipsis; }
+.st-swiss-grid .sg-sec { grid-column: 7 / span 4; overflow: hidden; text-overflow: ellipsis; color: var(--c2); font-weight: 500; }
+.st-swiss-grid .sg-pg { grid-column: 11 / span 2; text-align: right; font-variant-numeric: tabular-nums; }
+.st-swiss-grid .sg-pg i { font-style: normal; font-weight: 500; color: var(--c2); }
+.st-swiss-grid .sg-rule { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 72px); height: 3px; background: var(--c-rule); }
+.st-swiss-grid .sg-bar { position: absolute; left: 0; top: -3px; width: 100%; height: 9px; background: var(--c-bar); transform-origin: 0 50%; scale: 0 1; }
+.st-swiss-grid .sg-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 52px; display: flex; justify-content: space-between;
+  align-items: center; color: var(--c2); font: 500 20px/1 "MV Grot", "MV Sans", sans-serif; letter-spacing: .03em; }
+.st-swiss-grid.r169 .sg-foot { bottom: 32px; }
+.st-swiss-grid .sg-sq { width: 14px; height: 14px; background: var(--c-bar); }
+
+/* 标题区：红色小方块 + 标签；标题粗黑，重点变红 */
+.st-swiss-grid .kicker { color: var(--fg); }
+.st-swiss-grid .kicker .kt::before { content: ''; display: inline-block; width: .66em; height: .66em; margin-right: .55em; background: var(--sq);
+  vertical-align: -.04em; }
+.st-swiss-grid .title { color: var(--fg); }
+.st-swiss-grid .dek { color: var(--fg2); font-weight: 500; }
+.st-swiss-grid :is(.note, .cap) { color: var(--fg2); }
+.st-swiss-grid .cap::before { content: ''; display: inline-block; width: .5em; height: .5em; margin-right: .5em; background: var(--sq); vertical-align: .06em; }
+
+/* 章节：整页红，白色 Inter 大号数字 + 一道白色粗横线 */
+.st-swiss-grid .chap-num { font-family: "MV Grot", sans-serif; font-weight: 900; color: var(--fg); letter-spacing: -.045em; line-height: .86; }
+.st-swiss-grid .chap-num::after { content: ''; display: block; width: calc(150px * var(--s)); height: calc(12px * var(--s)); background: var(--fg);
+  margin-top: calc(34px * var(--s)); }
+
+/* 金句：整页黑，文字上方一块红色色条 */
+.st-swiss-grid .tpl-statement .say::before { content: ''; display: block; width: calc(132px * var(--s)); height: calc(16px * var(--s));
+  background: var(--sq); margin-bottom: calc(44px * var(--s)); }
+.st-swiss-grid .say .sl { letter-spacing: -.01em; }
+.st-swiss-grid .bn-row { color: var(--accent-t); letter-spacing: -.04em; }
+.st-swiss-grid .bn-u { color: var(--fg); letter-spacing: 0; }
+
+/* chips：直角黑框，重点红底 */
+.st-swiss-grid .chip { border-radius: 0; border: 2px solid var(--fg); color: var(--fg); background: transparent; font-family: var(--f-kicker); font-weight: 700; }
+.st-swiss-grid .chip.hot { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+/* 卡片 / 数据 / 对比：不要底色和边框，只留一道 6px 黑色顶线；重点换成红线 */
+#stage.st-swiss-grid :is(.card, .stat, .side) { background: none; border: 0; border-top: calc(6px * var(--si)) solid var(--card-bd); border-radius: 0;
+  padding: calc(24px * var(--si)) 0 0; }
+#stage.st-swiss-grid :is(.card, .stat).on { border-top-color: #E4002B; }
+#stage.st-swiss-grid .side.win { border-top-color: color-mix(in srgb, #E4002B calc(var(--p, 1) * 100%), var(--card-bd)); }
+.st-swiss-grid :is(.cards, .stats) { column-gap: calc(40px * var(--si)); row-gap: calc(46px * var(--si)); }
+.st-swiss-grid .cmp { column-gap: calc(34px * var(--si)); }
+.st-swiss-grid .card-k { color: var(--fg); font-weight: 800; letter-spacing: -.02em; }
+.st-swiss-grid .card.on .card-k { color: var(--accent-t); }
+.st-swiss-grid :is(.stat-v, .side-v) { color: var(--fg); letter-spacing: -.035em; }
+.st-swiss-grid .stat.on .stat-v { color: var(--accent-t); }
+.st-swiss-grid .side.win .side-v { color: color-mix(in srgb, var(--accent-t) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-swiss-grid :is(.stat-u, .side-u) { letter-spacing: 0; color: var(--fg2); }
+.st-swiss-grid .side-k { font-weight: 700; color: var(--fg2); }
+.st-swiss-grid .vs { color: var(--accent-t); font-weight: 900; letter-spacing: -.02em; font-size: calc(var(--fs-body) * var(--si) * .8); }
+
+/* 列表：两位数红色编号，普通项用小方块 */
+.st-swiss-grid .sg-n { font: 800 .8em/1 "MV Grot", sans-serif; color: var(--accent-t); letter-spacing: -.01em; }
+.st-swiss-grid .sg-dot { display: inline-block; width: .36em; height: .36em; background: var(--fg); vertical-align: .2em; }
+.st-swiss-grid .item.is-cur .sg-dot { background: var(--accent); }
+.st-swiss-grid .ic-check path { stroke: #0F0F0F; }
+.st-swiss-grid .ic-cross path { stroke: #E4002B; }
+
+/* 步骤：黑色方块编号 + 直线箭头，讲到哪步哪步变红 */
+.st-swiss-grid .step .badge { border-radius: 0; background: var(--fg); color: var(--bg); font-weight: 800; box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg); }
+.st-swiss-grid .step.is-cur .badge { background: #E4002B; color: #FFFFFF; }
+.st-swiss-grid .links path { stroke: var(--fg); stroke-width: 3; stroke-linecap: butt; stroke-linejoin: miter; }
+
+/* 时间线：红色方块节点，年份 Inter */
+.st-swiss-grid .tl-dot { border-radius: 0; background: #E4002B; box-shadow: 0 0 0 calc(7px * var(--si)) var(--bg); }
+.st-swiss-grid .tl-time { color: var(--fg); font-weight: 800; letter-spacing: -.01em; }
+.st-swiss-grid :is(.tl-item.on, .tl-item.is-cur) .tl-time { color: var(--accent-t); }
+
+/* 条形图：底部一根发丝线，黑条，重点红条 */
+.st-swiss-grid .bar-track { background: linear-gradient(var(--line), var(--line)) 0 100% / 100% 2px no-repeat; }
+.st-swiss-grid .bar-fill { background: var(--fg); border-radius: 0; }
+.st-swiss-grid .bar-row.on .bar-fill { background: #E4002B; }
+.st-swiss-grid .bar-v { font-weight: 800; letter-spacing: -.02em; }
+
+/* 引用：超大红色引号，正文粗黑 */
+.st-swiss-grid .qmark { color: var(--accent-t); font-weight: 900; font-size: calc(200px * var(--s)); height: calc(104px * var(--s)); }
+.st-swiss-grid .q-text { font-weight: 900; letter-spacing: -.01em; }
+.st-swiss-grid .q-src { color: var(--fg2); font-weight: 600; letter-spacing: .03em; }
+.st-swiss-grid .q-src::before { content: '— '; }
+
+/* 代码：直角黑窗，关键字红色 */
+.st-swiss-grid .code-win { border-radius: 0; }
+.st-swiss-grid .code-bar i { border-radius: 0; background: #444; }
+.st-swiss-grid .code-bar i:first-child { background: #E4002B; }
+.st-swiss-grid .cl.hl-line::before { box-shadow: inset calc(8px * var(--s)) 0 0 #E4002B; }
+.st-swiss-grid .tok-c { color: #7A7A76; font-style: normal; } .st-swiss-grid .tok-s { color: #D6D4CC; } .st-swiss-grid .tok-n { color: #FFFFFF; }
+.st-swiss-grid .tok-k { color: #FF4560; font-weight: 700; } .st-swiss-grid .tok-f { color: #FFFFFF; font-weight: 700; } .st-swiss-grid .tok-o { color: #9A9A96; }
+
+/* 图片：直角，不加边框 */
+.st-swiss-grid .f-plain .shot { border-radius: 0; }
+
+/* 印章：红色直角色块，不旋转 */
+.st-swiss-grid .stamp { transform: none; border: 0; border-radius: 0; background: #E4002B; color: #FFFFFF; font-family: var(--f-title); font-weight: 900;
+  padding: .32em .8em; letter-spacing: .06em; }
+
+/* 结尾 */
+.st-swiss-grid .cta { color: var(--fg2); }
+
+/* 字幕：跟着当前页换色 */
+.st-swiss-grid .subl { text-shadow: 0 0 8px rgba(243, 242, 238, .95), 0 0 2px rgba(243, 242, 238, .95); }
+.st-swiss-grid #subs[data-tone="red"] { --sub-fg: #FFFFFF; --sub-hl: #0F0F0F; }
+.st-swiss-grid #subs[data-tone="red"] .subl { text-shadow: none; }
+.st-swiss-grid #subs[data-tone="dark"] { --sub-fg: #F3F2EE; --sub-hl: #FF2D4F; }
+.st-swiss-grid #subs[data-tone="dark"] .subl { text-shadow: 0 0 8px rgba(15, 15, 15, .95); }

@@ -1,0 +1,115 @@
+/* 报纸号外 newsprint：新闻纸 + 报头 + 粗黑宋体 + 红色标签 */
+#stage.st-newsprint {
+  --bg: #ECE6D6; --fg: #161412; --fg2: #4A443B; --fg3: #8A8172;
+  --accent: #C41E1A; --accent2: #161412; --on-accent: #F6F1E4; --hl: #C41E1A;
+  --line: rgba(22, 20, 18, .28); --line-strong: #161412;
+  --card-bg: transparent; --card-bd: #161412; --radius: 0px;
+  --code-bg: #F4EFE2; --code-fg: #161412; --code-bar: #E2DBC8; --code-hl: rgba(196, 30, 26, .12);
+  --sub-fg: #161412; --sub-hl: #C41E1A;
+  --f-title: "MV Serif", serif; --f-body: "MV Serif", serif; --f-num: "MV Cond", "MV Sans", sans-serif;
+  --f-kicker: "MV Cond", "MV Sans", sans-serif; --f-subl: "MV Serif", serif; --f-quote: "MV Serif", serif;
+  --f-cond: "MV Cond", "MV Sans", sans-serif;
+  --w-title: 900; --w-num: 600; --w-body: 500; --w-kicker: 700; --w-subl: 700; --w-strong: 900;
+  --track-kicker: .14em; --lh-title: 1.16; --track-title: .01em;
+}
+/* 报头占了顶部，内容区往下让 */
+#stage.st-newsprint.r34 { --ct: 262px; }
+#stage.st-newsprint.r916 { --ct: 350px; }
+#stage.st-newsprint.r169 { --ct: 214px; }
+
+/* 报头 */
+.st-newsprint .np-mast { position: absolute; left: var(--cl); right: var(--cr); top: 50px; color: #161412; }
+.st-newsprint.r916 .np-mast { top: 128px; }
+.st-newsprint.r169 .np-mast { top: 30px; }
+.st-newsprint .np-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.st-newsprint .np-name { font: 900 66px/1 "MV Serif", serif; letter-spacing: .14em; margin-right: -.14em; white-space: nowrap; }
+.st-newsprint.r169 .np-name { font-size: 58px; }
+.st-newsprint .np-side { flex: 1; font: 500 22px/1.2 "MV Serif", serif; letter-spacing: .1em; color: #4A443B; }
+.st-newsprint .np-side b { font: 600 26px/1 "MV Cond", sans-serif; color: #C41E1A; letter-spacing: .02em; }
+.st-newsprint .np-side.r { text-align: right; }
+.st-newsprint .np-rule { height: 10px; margin-top: 18px; border-top: 4px solid #161412; border-bottom: 1.5px solid #161412; }
+.st-newsprint.r169 .np-rule { margin-top: 14px; }
+.st-newsprint .np-date { display: flex; justify-content: space-between; padding: 10px 2px 11px; border-bottom: 1.5px solid #161412;
+  font: 500 21px/1 "MV Serif", serif; letter-spacing: .12em; color: #4A443B; }
+.st-newsprint .np-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 54px; display: flex; justify-content: space-between; padding-top: 10px;
+  border-top: 1.5px solid #161412; font: 500 20px/1 "MV Serif", serif; letter-spacing: .1em; color: #6B6355; }
+.st-newsprint.r169 .np-foot { bottom: 28px; }
+.st-newsprint .np-cont { color: #C41E1A; }
+
+/* 标题区：红底标签 + 粗黑宋体 */
+.st-newsprint .kicker { color: var(--on-accent); }
+.st-newsprint .kicker .kt { background: var(--accent); padding: .14em .55em .16em .6em; }
+.st-newsprint .title { color: var(--fg); }
+.st-newsprint .dek { color: var(--fg2); font-weight: 600; border-left: .2em solid var(--accent); padding-left: .6em; }
+.st-newsprint :is(.tpl-cover, .tpl-ending) .dek { border-left: none; padding-left: 0; border-top: 1.5px solid var(--fg); padding-top: .5em; }
+.st-newsprint .note, .st-newsprint .cap { color: var(--fg2); }
+.st-newsprint .hl { color: color-mix(in srgb, var(--hl) calc(var(--p, 1) * 100%), currentColor);
+  background: linear-gradient(var(--hl), var(--hl)) 0 100% / calc(var(--p, 1) * 100%) .08em no-repeat; }
+.st-newsprint :is(.formula, .subl) .hl { background: none; }
+.st-newsprint .say .sl { font-weight: 900; }
+
+/* 章节：粗线 + 红色窄体大号码 */
+.st-newsprint .chap-num { font-family: var(--f-cond); font-weight: 600; color: var(--accent); line-height: .95; position: relative; display: inline-block; align-self: var(--align-x);
+  padding-top: .08em; border-top: .045em solid var(--fg); }
+.st-newsprint .bn-row { font-family: var(--f-cond); font-weight: 600; color: var(--accent); }
+.st-newsprint .bn-u { font-family: var(--f-title); font-weight: 900; color: var(--fg); }
+.st-newsprint .bn-l { font-weight: 900; }
+
+/* chips：报纸栏目小标 */
+.st-newsprint .chip { border: 1.5px solid var(--fg); border-radius: 0; background: transparent; color: var(--fg); font-family: var(--f-body); font-weight: 700; }
+.st-newsprint .chip.hot { background: var(--fg); color: var(--bg); }
+
+/* 卡片 / 数据：报纸分栏，顶上粗线 */
+.st-newsprint .card, .st-newsprint .stat, .st-newsprint .side { background: rgba(246, 241, 228, .55); border: none; border-top: 4px solid var(--fg); border-bottom: 1.5px solid var(--fg); border-radius: 0; box-shadow: none; }
+.st-newsprint :is(.card, .stat).on { border-top-color: var(--accent); background: rgba(196, 30, 26, .07); }
+.st-newsprint .card-k { font-family: var(--f-cond); color: var(--accent); font-weight: 600; letter-spacing: .04em; font-size: calc(var(--fs-body) * var(--si) * .92); }
+.st-newsprint .card-t, .st-newsprint .stat-l, .st-newsprint .side-l, .st-newsprint .st-t, .st-newsprint .bar-l { font-weight: 900; }
+.st-newsprint .stat-v, .st-newsprint .side-v { font-family: var(--f-cond); font-weight: 600; color: var(--fg); letter-spacing: 0; }
+.st-newsprint .stat.on .stat-v { color: var(--accent); }
+.st-newsprint :is(.stat-u, .side-u) { font-family: var(--f-title); font-weight: 900; }
+.st-newsprint .side.win { border-top-color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-newsprint .side.win .side-v { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-newsprint .vs { font-family: var(--f-cond); font-weight: 600; color: var(--accent); font-size: calc(var(--fs-body) * var(--si) * 1.1); }
+.st-newsprint .verdict { font-weight: 900; }
+
+/* 列表 */
+.st-newsprint .m-number .mk { font-family: var(--f-cond); font-weight: 600; color: var(--accent); min-width: 1.2em; }
+.st-newsprint .dotm { width: .36em; height: .36em; border-radius: 0; background: var(--fg); vertical-align: .2em; }
+
+/* 步骤：黑方块编号 */
+.st-newsprint .step .badge { border-radius: 0; background: var(--fg); color: var(--bg); font-family: var(--f-cond); font-weight: 600; }
+.st-newsprint .links path { stroke: var(--fg); stroke-width: 2.4; }
+
+/* 时间线 */
+.st-newsprint .tl-dot { border-radius: 0; background: var(--fg); border: none; box-shadow: 0 0 0 calc(5px * var(--si)) var(--bg); }
+.st-newsprint .tl-item.on .tl-dot { background: var(--accent); }
+.st-newsprint .tl-time { font-family: var(--f-cond); font-weight: 600; color: var(--accent); font-size: calc(var(--fs-body) * var(--si) * 1.12); }
+
+/* 条形图：黑色斜纹，重点红色 */
+.st-newsprint .bar-track { background: transparent; border-bottom: 1px solid var(--line); }
+.st-newsprint .bar-fill { border-radius: 0; background: #161412 repeating-linear-gradient(-45deg, rgba(236, 230, 214, .22) 0 3px, transparent 3px 9px); }
+.st-newsprint .bar-row.on .bar-fill { background-color: var(--accent); }
+.st-newsprint .bar-v { font-family: var(--f-cond); font-weight: 600; }
+
+/* 引用 */
+.st-newsprint .qmark { color: var(--accent); font-weight: 900; }
+.st-newsprint .q-text { font-weight: 900; }
+.st-newsprint .q-src { font-family: var(--f-body); font-weight: 700; color: var(--fg2); letter-spacing: .12em; }
+.st-newsprint .q-src::before { content: '—— '; }
+
+/* 代码：纸面 + 黑框 */
+.st-newsprint .code-win { border: 2px solid var(--fg); border-radius: 0; box-shadow: 6px 6px 0 rgba(22, 20, 18, .18); }
+.st-newsprint .code-bar { border-bottom: 1.5px solid var(--fg); color: var(--fg2); }
+.st-newsprint .code-bar i { background: transparent; border: 1.5px solid var(--fg2); border-radius: 0; }
+.st-newsprint .tok-c { color: #8A8172; } .st-newsprint .tok-s { color: #3D6B3A; } .st-newsprint .tok-n { color: #9A6A1E; }
+.st-newsprint .tok-k { color: #C41E1A; font-weight: 700; } .st-newsprint .tok-f { color: #1F3E6B; } .st-newsprint .tok-o { color: #4A443B; }
+
+/* 图片：网点 + 细框 */
+.st-newsprint .f-halftone { border: 2px solid var(--fg); padding: 8px; background: #F4EFE2; }
+
+/* 印章：红色双框 */
+.st-newsprint .stamp { border: 4px double var(--accent); border-radius: 0; color: var(--accent); font-weight: 900; padding: .2em .6em; letter-spacing: .2em;
+  transform: rotate(-8deg); mix-blend-mode: multiply; }
+
+/* 字幕 */
+.st-newsprint .subl { text-shadow: 0 0 8px #ECE6D6, 0 0 3px #ECE6D6; }

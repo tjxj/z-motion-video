@@ -1,0 +1,120 @@
+/* 象牙陶土 ivory-clay：象牙白 + 陶土橙 + 深色章节页 */
+#stage.st-ivory-clay {
+  --bg: #F7F4EC; --fg: #1A1917; --fg2: #5E5A52; --fg3: #A39D90;
+  --accent: #CF6A4C; --accent2: #7D8F6A; --clay-d: #B5542F; --sage: #7D8F6A; --sky: #6F8FB0; --stone: #C9C2B2;
+  --on-accent: #FFFDF8; --hl: #CF6A4C;
+  --line: rgba(26, 25, 23, .12); --line-strong: rgba(26, 25, 23, .5);
+  --card-bg: #FFFDF8; --card-bd: rgba(26, 25, 23, .1); --radius: 16px;
+  --code-bg: #22211F; --code-fg: #EDE8DD; --code-bar: #2C2B28; --code-hl: rgba(207, 106, 76, .22);
+  --sub-fg: #1A1917; --sub-hl: #B5542F;
+  --f-title: "MV Serif", serif; --f-body: "MV Sans", sans-serif; --f-num: "MV Serif", serif;
+  --f-kicker: "MV Mono", "MV Sans", monospace; --f-subl: "MV Sans", sans-serif; --f-quote: "MV Serif", serif;
+  --w-title: 700; --w-num: 600; --w-body: 400; --w-kicker: 500; --w-subl: 500; --w-strong: 700;
+  --track-kicker: .1em; --lh-title: 1.24; --lh-body: 1.55;
+}
+
+/* 页眉：陶土小方块 + 系列名 / 页码；页脚：署名 / 小节；底部分段进度 */
+.st-ivory-clay .ic-top { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 96px); display: flex; justify-content: space-between; align-items: center;
+  font: 500 22px/1 "MV Mono", "MV Sans", monospace; letter-spacing: .08em; color: var(--fg2); }
+.st-ivory-clay .ic-ser i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; background: #CF6A4C; margin-right: 14px; vertical-align: -1px; }
+.st-ivory-clay .ic-pg { color: var(--fg3); }
+.st-ivory-clay .ic-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 74px; display: flex; justify-content: space-between;
+  font: 400 20px/1 "MV Sans", sans-serif; letter-spacing: .06em; color: var(--fg3); }
+.st-ivory-clay.r169 .ic-foot { bottom: 46px; }
+.st-ivory-clay .ic-segs { position: absolute; left: var(--cl); right: var(--cr); bottom: 44px; display: flex; gap: 6px; height: 4px; }
+.st-ivory-clay.r169 .ic-segs { bottom: 24px; }
+.st-ivory-clay .ic-segs i { flex: 1; border-radius: 2px; background: linear-gradient(90deg, #CF6A4C calc(var(--f, 0) * 100%), rgba(26, 25, 23, .1) 0); }
+.st-ivory-clay #chrome[data-tone="dark"] :is(.ic-top, .ic-foot) { color: rgba(247, 244, 236, .6); }
+.st-ivory-clay #chrome[data-tone="dark"] .ic-segs i { background: linear-gradient(90deg, #DD7A5A calc(var(--f, 0) * 100%), rgba(247, 244, 236, .14) 0); }
+.st-ivory-clay #chrome[data-tone="clay"] :is(.ic-top, .ic-foot) { color: rgba(26, 25, 23, .62); }
+.st-ivory-clay #chrome[data-tone="clay"] .ic-ser i { background: #1A1917; }
+.st-ivory-clay #chrome[data-tone="clay"] .ic-segs i { background: linear-gradient(90deg, #1A1917 calc(var(--f, 0) * 100%), rgba(26, 25, 23, .16) 0); }
+
+/* 标题区 */
+.st-ivory-clay .kicker { color: var(--accent); }
+.st-ivory-clay .kicker .kt::before { content: ''; display: inline-block; width: .6em; height: .6em; border-radius: 2px; background: currentColor; margin-right: .6em; vertical-align: .04em; }
+.st-ivory-clay .dek, .st-ivory-clay .note, .st-ivory-clay .cap { color: var(--fg2); }
+.st-ivory-clay .hl { color: color-mix(in srgb, var(--hl) calc(var(--p, 1) * 100%), currentColor);
+  background: linear-gradient(var(--hl), var(--hl)) 0 96% / calc(var(--p, 1) * 100%) .06em no-repeat; }
+.st-ivory-clay :is(.formula, .subl) .hl { background: none; }
+.st-ivory-clay .say .sl { font-weight: 700; }
+
+/* 章节：陶土色大号数字 + 短横线 */
+.st-ivory-clay .chap-num { color: var(--accent); font-weight: 600; position: relative; display: inline-block; align-self: var(--align-x); }
+.st-ivory-clay .chap-num::after { content: ''; display: block; width: .9em; height: .03em; margin-top: .1em; background: currentColor; opacity: .55; }
+.st-ivory-clay .bn-row { color: var(--accent); }
+.st-ivory-clay .scene[data-tone="light"] .bn-row { color: var(--clay-d); }
+.st-ivory-clay .bn-u { color: var(--fg); }
+
+/* chips */
+.st-ivory-clay .chip { border-radius: 999px; border: 1.5px solid var(--line-strong); color: var(--fg2); background: transparent; font-family: var(--f-body); }
+.st-ivory-clay .chip.hot { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+/* 卡片：柔和的象牙卡 */
+.st-ivory-clay .card, .st-ivory-clay .stat, .st-ivory-clay .side { background: var(--card-bg); border: 1.5px solid var(--card-bd); border-radius: 18px;
+  box-shadow: 0 1px 0 rgba(26, 25, 23, .03), 0 14px 32px rgba(26, 25, 23, .06); }
+.st-ivory-clay :is(.card, .stat).on { background: #FBEDE5; border-color: rgba(207, 106, 76, .6); }
+.st-ivory-clay .card-k { font-family: var(--f-kicker); color: var(--accent); font-weight: 600; letter-spacing: .04em; }
+.st-ivory-clay .card-t, .st-ivory-clay .stat-l, .st-ivory-clay .side-l { font-weight: 700; }
+.st-ivory-clay .stat-v, .st-ivory-clay .side-v { color: var(--fg); }
+.st-ivory-clay .stat.on .stat-v { color: var(--clay-d); }
+.st-ivory-clay :is(.stat-u, .side-u) { color: var(--accent); font-family: var(--f-body); }
+.st-ivory-clay .side.win { border-color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), var(--card-bd));
+  background: color-mix(in srgb, #FBEDE5 calc(var(--p, 1) * 100%), var(--card-bg)); }
+.st-ivory-clay .side.win .side-v { color: color-mix(in srgb, var(--clay-d) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-ivory-clay .vs { font-family: var(--f-kicker); color: var(--fg3); font-size: calc(var(--fs-body) * var(--si) * .8); }
+
+/* 列表 */
+.st-ivory-clay .m-number .mk { font-family: var(--f-kicker); color: var(--accent); font-weight: 600; font-size: .74em; min-width: 2.1em; }
+.st-ivory-clay .dotm { width: .4em; height: .4em; border-radius: 2px; background: var(--accent); vertical-align: .16em; }
+.st-ivory-clay .item .nt { color: var(--fg3); }
+
+/* 步骤：陶土实心圆 + 点状连线 */
+.st-ivory-clay .step .badge { background: var(--accent); color: var(--on-accent); font-family: var(--f-body); font-weight: 700;
+  box-shadow: 0 0 0 calc(8px * var(--si)) rgba(207, 106, 76, .14); }
+.st-ivory-clay .links path { stroke: var(--fg3); stroke-width: 3.4; stroke-linecap: round; }
+
+/* 时间线 */
+.st-ivory-clay .tl-dot { background: var(--bg); border: calc(4px * var(--si)) solid var(--accent); box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg); }
+.st-ivory-clay .tl-item.on .tl-dot { background: var(--accent); }
+.st-ivory-clay .tl-time { font-family: var(--f-kicker); color: var(--accent); font-weight: 600; }
+
+/* 条形图：石灰绿、雾蓝打底，重点陶土色 */
+.st-ivory-clay .bar-track { background: rgba(26, 25, 23, .05); border-radius: 8px; }
+.st-ivory-clay .bar-fill { background: var(--stone); border-radius: 8px; }
+.st-ivory-clay .bar-row:nth-child(3n+2) .bar-fill { background: #B9C2AA; }
+.st-ivory-clay .bar-row:nth-child(3n) .bar-fill { background: #B3C3D4; }
+.st-ivory-clay .bar-row.on .bar-fill { background: var(--accent); }
+.st-ivory-clay .bar-v { font-family: var(--f-num); font-weight: 600; }
+
+/* 引用（深色页） */
+.st-ivory-clay .qmark { color: var(--accent); font-family: var(--f-title); font-weight: 700; }
+.st-ivory-clay .q-text { font-weight: 600; }
+.st-ivory-clay .q-src { font-family: var(--f-kicker); color: var(--fg3); letter-spacing: .1em; }
+.st-ivory-clay .q-src::before { content: '— '; }
+
+/* 代码 */
+.st-ivory-clay .code-win { border-radius: 16px; box-shadow: 0 18px 44px rgba(26, 25, 23, .18); }
+.st-ivory-clay .code-bar i { background: #4A4843; }
+.st-ivory-clay .code-bar i:first-child { background: #CF6A4C; }
+.st-ivory-clay .tok-c { color: #8C8578; } .st-ivory-clay .tok-s { color: #A9C08F; } .st-ivory-clay .tok-n { color: #E6A57E; }
+.st-ivory-clay .tok-k { color: #E98B6B; } .st-ivory-clay .tok-f { color: #9DB8D6; } .st-ivory-clay .tok-o { color: #CFC8B8; }
+
+/* 图片 */
+.st-ivory-clay .f-window { border-radius: 16px; border-color: rgba(26, 25, 23, .1); box-shadow: 0 18px 44px rgba(26, 25, 23, .12); }
+.st-ivory-clay .f-window .fbar { background: #EFEAE0; }
+.st-ivory-clay .f-window .fbar i:first-child { background: #CF6A4C; }
+
+/* 印章：陶土圆角标签 */
+.st-ivory-clay .stamp { border: none; border-radius: 10px; background: var(--accent); color: #1A1917; font-family: var(--f-body); font-weight: 700;
+  padding: .3em .7em; transform: rotate(-6deg); letter-spacing: .08em; }
+
+/* 结尾 */
+.st-ivory-clay .cta { color: var(--fg2); }
+
+/* 字幕：跟着当前页深浅换色 */
+.st-ivory-clay .subl { text-shadow: 0 0 8px rgba(247, 244, 236, .9), 0 0 2px rgba(247, 244, 236, .9); }
+.st-ivory-clay #subs[data-tone="dark"] { --sub-fg: #F7F4EC; --sub-hl: #E8906F; }
+.st-ivory-clay #subs[data-tone="dark"] .subl { text-shadow: 0 0 8px rgba(26, 25, 23, .9); }
+.st-ivory-clay #subs[data-tone="clay"] { --sub-fg: #1A1917; --sub-hl: #FFFDF8; }
+.st-ivory-clay #subs[data-tone="clay"] .subl { text-shadow: none; }

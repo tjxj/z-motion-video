@@ -1,0 +1,104 @@
+/* 杂志瓷蓝 porcelain：冷白瓷 + 藏青宋体 + 斜体数字 */
+#stage.st-porcelain {
+  --bg: #E8ECF0; --fg: #18243A; --fg2: #4A5A75; --fg3: #8E9BB0;
+  --accent: #2D5C9E; --accent2: #7FA3D1; --on-accent: #F4F7FA; --hl: #2D5C9E;
+  --line: rgba(24, 36, 58, .14); --line-strong: rgba(24, 36, 58, .42);
+  --card-bg: rgba(255, 255, 255, .7); --card-bd: rgba(24, 36, 58, .08); --radius: 4px;
+  --code-bg: #F8FAFC; --code-fg: #18243A; --code-bar: #E3E9F0; --code-hl: rgba(45, 92, 158, .1);
+  --sub-fg: #18243A; --sub-hl: #2D5C9E;
+  --f-title: "MV Serif", serif; --f-body: "MV Sans", sans-serif; --f-num: "MV Ital", "MV Serif", serif;
+  --f-kicker: "MV Sans", sans-serif; --f-quote: "MV Serif", serif; --f-subl: "MV Sans", sans-serif; --f-ital: "MV Ital", "MV Serif", serif;
+  --w-title: 700; --w-num: 400; --w-body: 400; --w-kicker: 500; --w-subl: 500; --w-strong: 700;
+  --track-kicker: .24em; --lh-title: 1.26; --track-title: .02em;
+  --dim: .55;
+}
+
+/* 刊头、页脚、进度 */
+.st-porcelain .pc-top { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 100px); display: flex; justify-content: space-between; align-items: baseline; }
+.st-porcelain .pc-ser { font: 500 22px/1 "MV Sans", sans-serif; letter-spacing: .32em; color: var(--fg2); }
+.st-porcelain .pc-no { font: italic 400 34px/1 "MV Ital", serif; color: var(--accent); }
+.st-porcelain .pc-no b { font-weight: 400; margin-left: .08em; }
+.st-porcelain .pc-rule { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 62px); height: 1px; background: rgba(24, 36, 58, .4); }
+.st-porcelain .pc-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 60px; display: flex; justify-content: space-between;
+  font: 400 20px/1 "MV Sans", sans-serif; letter-spacing: .12em; color: var(--fg3); }
+.st-porcelain.r169 .pc-foot { bottom: 32px; }
+.st-porcelain .pc-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; }
+.st-porcelain .pc-prog i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; scale: 0 1; }
+
+/* 标题区 */
+.st-porcelain .kicker .kt::before { content: ''; display: inline-block; width: 2.2em; height: 1px; background: currentColor; vertical-align: .32em; margin-right: .8em; }
+.st-porcelain .dek { color: var(--fg2); }
+.st-porcelain .note, .st-porcelain .cap { color: var(--fg2); }
+.st-porcelain .hl { color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), currentColor);
+  background: linear-gradient(transparent 62%, rgba(45, 92, 158, .17) 62%) 0 0 / calc(var(--p, 1) * 100%) 100% no-repeat; }
+.st-porcelain :is(.formula, .subl) .hl { background: none; }
+
+/* 章节：斜体编号 + 背景大页码 */
+.st-porcelain .chap-num { font-family: var(--f-num); font-style: italic; font-weight: 400; color: var(--accent); font-size: calc(var(--fs-chap) * var(--s) * 1.1); }
+.st-porcelain .chap-num::before { content: 'No.'; font-size: .3em; margin-right: .12em; letter-spacing: .02em; }
+.st-porcelain .pc-ghost { position: absolute; right: -.08em; bottom: -.22em; z-index: 0; font: italic 400 calc(var(--H) * .62)/1 "MV Ital", serif;
+  color: rgba(45, 92, 158, .07); pointer-events: none; }
+.st-porcelain .scene .content { z-index: 1; }
+.st-porcelain .say .sl { font-weight: 700; }
+.st-porcelain .bn-row { font-family: var(--f-num); font-style: italic; font-weight: 400; color: var(--accent); }
+.st-porcelain .bn-u { font-style: normal; font-family: var(--f-title); font-weight: 700; color: var(--fg); }
+.st-porcelain .bn-l { font-weight: 700; }
+
+/* chips */
+.st-porcelain .chip { border: 1px solid rgba(24, 36, 58, .35); color: var(--fg2); font-family: var(--f-body); letter-spacing: .08em; background: rgba(255, 255, 255, .5); }
+.st-porcelain .chip.hot { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+/* 卡片：白瓷片 + 顶部细蓝线 */
+.st-porcelain .card, .st-porcelain .stat, .st-porcelain .side { background: var(--card-bg); border: none; border-top: 3px solid var(--accent); border-radius: 2px;
+  box-shadow: 0 14px 34px rgba(24, 36, 58, .08); }
+.st-porcelain :is(.card, .stat).on { background: #fff; border-top-width: 6px; box-shadow: 0 16px 40px rgba(45, 92, 158, .18); }
+.st-porcelain .card-k { font-family: var(--f-num); font-style: italic; font-weight: 400; color: var(--accent); font-size: calc(var(--fs-body) * var(--si) * 1.1); }
+.st-porcelain .card-t, .st-porcelain .stat-l, .st-porcelain .side-l, .st-porcelain .st-t, .st-porcelain .bar-l { font-family: var(--f-title); }
+.st-porcelain .stat-v, .st-porcelain .side-v { font-family: var(--f-num); font-style: italic; font-weight: 400; letter-spacing: -.01em; }
+.st-porcelain :is(.stat-u, .side-u) { font-style: normal; font-family: var(--f-title); }
+.st-porcelain .side { border-top-color: rgba(24, 36, 58, .3); }
+.st-porcelain .side.win { border-top-color: color-mix(in srgb, var(--accent) calc(var(--p, 1) * 100%), rgba(24, 36, 58, .3)); }
+.st-porcelain .vs { font-family: var(--f-num); font-style: italic; font-weight: 400; color: var(--accent); font-size: calc(var(--fs-body) * var(--si) * 1.3); }
+
+/* 列表 */
+.st-porcelain .m-number .mk { font-family: var(--f-num); font-style: italic; font-weight: 400; font-size: 1.18em; line-height: 1; min-width: 1.5em; }
+.st-porcelain .dotm { width: .6em; height: 2px; border-radius: 0; vertical-align: .32em; background: var(--accent); }
+
+/* 步骤 */
+.st-porcelain .step .badge { background: rgba(255, 255, 255, .8); color: var(--accent); border: 1.5px solid var(--accent);
+  font-family: var(--f-num); font-style: italic; font-weight: 400; font-size: calc(46px * var(--si)); }
+.st-porcelain .links path { stroke: var(--accent); stroke-width: 2; opacity: .75; }
+
+/* 时间线 */
+.st-porcelain .tl-dot { background: #E8ECF0; border: calc(3px * var(--si)) solid var(--accent); box-shadow: 0 0 0 calc(6px * var(--si)) #E8ECF0; }
+.st-porcelain .tl-item.on .tl-dot { background: var(--accent); }
+.st-porcelain .tl-time { font-family: var(--f-num); font-style: italic; font-weight: 400; font-size: calc(var(--fs-body) * var(--si) * 1.25); }
+
+/* 条形图 */
+.st-porcelain .bar-fill { background: linear-gradient(90deg, #2D5C9E, #6E95CC); border-radius: 2px; }
+.st-porcelain .bar-row.on .bar-fill { background: #18243A; }
+.st-porcelain .bar-v { font-family: var(--f-num); font-style: italic; font-weight: 400; font-size: calc(var(--fs-body) * var(--si) * 1.2); }
+.st-porcelain .bar-u { font-style: normal; font-family: var(--f-title); }
+
+/* 引用 */
+.st-porcelain .qmark { font-family: var(--f-num); font-style: italic; font-weight: 400; color: var(--accent); font-size: calc(260px * var(--s)); height: calc(130px * var(--s)); }
+.st-porcelain .q-text { font-weight: 700; }
+.st-porcelain .q-src { font-family: var(--f-body); letter-spacing: .16em; color: var(--fg2); }
+.st-porcelain .q-src::before { content: '— '; }
+
+/* 代码 */
+.st-porcelain .code-win { box-shadow: 0 16px 40px rgba(24, 36, 58, .1); border-radius: 6px; }
+.st-porcelain .code-bar { color: var(--fg2); }
+.st-porcelain .code-bar i { background: #C5D0DD; }
+.st-porcelain .tok-c { color: #8E9BB0; } .st-porcelain .tok-s { color: #3C7A6A; } .st-porcelain .tok-n { color: #B0752E; }
+.st-porcelain .tok-k { color: #2D5C9E; font-weight: 700; } .st-porcelain .tok-f { color: #7A4FA0; } .st-porcelain .tok-o { color: #4A5A75; }
+
+/* 图片 */
+.st-porcelain .f-plain .shot { border-radius: 2px; box-shadow: 0 18px 44px rgba(24, 36, 58, .16); }
+
+/* 印章 */
+.st-porcelain .stamp { border: 2px solid var(--accent); border-radius: 50%; width: 4em; height: 4em; padding: 0; display: grid; place-items: center;
+  font: italic 400 calc(40px * var(--s))/1 "MV Ital", "MV Serif", serif; transform: rotate(-12deg); }
+
+/* 字幕 */
+.st-porcelain .subl { text-shadow: 0 0 8px #E8ECF0, 0 0 3px #E8ECF0; }

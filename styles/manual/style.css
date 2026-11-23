@@ -1,0 +1,163 @@
+/* 装配说明书 manual：说明书白纸 + 墨黑 + 安全橙 + 虚线箭头 */
+#stage.st-manual {
+  --bg: #F5F4EF; --fg: #1B1B1B; --fg2: #55534D; --fg3: #9A978F;
+  --accent: #FF5B1F; --accent-t: #E8470C; --accent2: #1B1B1B; --on-accent: #1B1B1B; --hl: #E8470C; --band: #FF5B1F;
+  --kt-bg: #1B1B1B; --kt-fg: #F5F4EF;
+  --line: rgba(27, 27, 27, .14); --line-strong: rgba(27, 27, 27, .7);
+  --card-bg: #FFFFFF; --card-bd: #1B1B1B; --radius: 4px;
+  --code-bg: #1B1B1B; --code-fg: #F1EFE8; --code-bar: #2A2A2A; --code-hl: rgba(255, 91, 31, .24);
+  --sub-fg: #1B1B1B; --sub-hl: #E8470C;
+  --f-title: "MV Sans", sans-serif; --f-body: "MV Sans", sans-serif; --f-num: "MV Grot", "MV Sans", sans-serif;
+  --f-kicker: "MV Mono", "MV Sans", monospace; --f-subl: "MV Sans", sans-serif; --f-quote: "MV Sans", sans-serif;
+  --w-title: 900; --w-num: 800; --w-body: 400; --w-kicker: 700; --w-subl: 700; --w-strong: 900;
+  --track-title: 0; --track-kicker: .08em; --lh-title: 1.2; --lh-body: 1.5;
+  --dim: .5;
+}
+
+/* 页眉页脚 */
+.st-manual .mn-top { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 104px); display: flex; justify-content: space-between;
+  align-items: center; gap: 24px; font: 600 21px/1 "MV Mono", "MV Sans", monospace; letter-spacing: .06em; color: var(--fg2); white-space: nowrap; }
+.st-manual .mn-l { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.st-manual .mn-no { display: inline-grid; place-items: center; min-width: 52px; height: 34px; padding: 0 8px; background: #1B1B1B; color: #F5F4EF;
+  font: 800 21px/1 "MV Grot", sans-serif; letter-spacing: .02em; }
+.st-manual .mn-sec { overflow: hidden; text-overflow: ellipsis; }
+.st-manual .mn-rule { position: absolute; left: var(--cl); right: var(--cr); top: calc(var(--ct) - 56px); height: 2px; background: #1B1B1B; }
+.st-manual .mn-rule::before { content: ''; position: absolute; left: 0; top: -3px; width: 72px; height: 8px; background: #FF5B1F; }
+.st-manual .mn-foot { position: absolute; left: var(--cl); right: var(--cr); bottom: 56px; display: flex; justify-content: space-between;
+  font: 500 20px/1 "MV Mono", "MV Sans", monospace; letter-spacing: .06em; color: var(--fg3); }
+.st-manual.r169 .mn-foot { bottom: 30px; }
+
+/* 四角裁切标记 */
+.st-manual .mn-crop { position: absolute; width: 34px; height: 34px; border: 0 solid #1B1B1B; }
+.st-manual .mn-crop.tl { left: 24px; top: 24px; border-left-width: 2px; border-top-width: 2px; }
+.st-manual .mn-crop.tr { right: 24px; top: 24px; border-right-width: 2px; border-top-width: 2px; }
+.st-manual .mn-crop.bl { left: 24px; bottom: 24px; border-left-width: 2px; border-bottom-width: 2px; }
+.st-manual .mn-crop.br { right: 24px; bottom: 24px; border-right-width: 2px; border-bottom-width: 2px; }
+
+/* 左侧刻度尺 = 进度条 */
+.st-manual .mn-ruler { position: absolute; left: 12px; width: 64px; color: rgba(27, 27, 27, .5); }
+.st-manual .mn-ruler svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.st-manual .mn-ruler path { stroke: currentColor; stroke-width: 1.5; fill: none; }
+.st-manual .mn-ruler text { fill: currentColor; font: 500 12px "MV Mono", monospace; }
+.st-manual .mn-fill { position: absolute; left: 12px; top: 0; width: 4px; height: 100%; background: #FF5B1F; transform-origin: 50% 0; scale: 1 0; }
+.st-manual .mn-ptr { position: absolute; left: -2px; top: -7px; width: 0; height: 0; border-left: 11px solid #FF5B1F;
+  border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+
+/* 橙色章节页 / 墨黑结尾页上的页眉 */
+.st-manual #chrome[data-tone="orange"] :is(.mn-top, .mn-foot) { color: rgba(27, 27, 27, .72); }
+.st-manual #chrome[data-tone="orange"] .mn-rule::before { background: #F5F4EF; }
+.st-manual #chrome[data-tone="orange"] .mn-fill { background: #1B1B1B; }
+.st-manual #chrome[data-tone="orange"] .mn-ptr { border-left-color: #1B1B1B; }
+.st-manual #chrome[data-tone="orange"] .mn-ruler { color: rgba(27, 27, 27, .6); }
+.st-manual #chrome[data-tone="dark"] :is(.mn-top, .mn-foot) { color: rgba(245, 244, 239, .6); }
+.st-manual #chrome[data-tone="dark"] .mn-rule { background: #F5F4EF; }
+.st-manual #chrome[data-tone="dark"] .mn-no { background: #FF5B1F; color: #1B1B1B; }
+.st-manual #chrome[data-tone="dark"] .mn-crop { border-color: #F5F4EF; }
+.st-manual #chrome[data-tone="dark"] .mn-ruler { color: rgba(245, 244, 239, .45); }
+
+/* 标题区：黑底白字型号标签 */
+.st-manual .kicker { color: var(--fg); }
+.st-manual .kicker .kt { display: inline-block; background: var(--kt-bg); color: var(--kt-fg); padding: .28em .6em .24em; line-height: 1.2; }
+.st-manual .title { color: var(--fg); }
+.st-manual .dek { color: var(--fg2); font-weight: 500; }
+.st-manual .hl { color: inherit; background: linear-gradient(var(--band), var(--band)) 0 90% / calc(var(--p, 1) * 100%) .3em no-repeat; }
+.st-manual :is(.subl, .formula) .hl { background: none; }
+.st-manual .subl .hl { color: var(--sub-hl); }
+.st-manual .formula .hl { color: color-mix(in srgb, var(--accent-t) calc(var(--p, 1) * 100%), currentColor); }
+.st-manual :is(.note, .cap) { color: var(--fg2); }
+.st-manual .cap::before { content: 'FIG. '; font: 700 .9em "MV Mono", monospace; color: var(--fg); letter-spacing: .06em; }
+
+/* 章节：橙色整页 + 黑色大号数字 */
+.st-manual .chap-num { font-family: "MV Grot", sans-serif; font-weight: 900; color: var(--fg); letter-spacing: -.03em; line-height: .9; }
+.st-manual .chap-num::before { content: 'PART'; display: block; font: 700 calc(28px * var(--s)) / 1 "MV Mono", monospace; letter-spacing: .2em;
+  margin-bottom: calc(16px * var(--s)); }
+
+/* 金句：带警示三角的说明框 */
+.st-manual .tpl-statement .say { position: relative; background: #FFFFFF; border: 3px solid #1B1B1B; box-shadow: 10px 10px 0 #FF5B1F;
+  padding: calc(60px * var(--s)) calc(48px * var(--s)) calc(44px * var(--s)); }
+.st-manual .tpl-statement .say::before { content: '!'; position: absolute; left: calc(40px * var(--s)); top: 0; translate: 0 -55%;
+  width: calc(66px * var(--s)); height: calc(58px * var(--s)); display: grid; place-items: end center; padding-bottom: calc(6px * var(--s));
+  background: #FF5B1F; clip-path: polygon(50% 0, 100% 100%, 0 100%); font: 900 calc(34px * var(--s)) / 1 "MV Grot", sans-serif; color: #1B1B1B; }
+.st-manual .bn-row { color: var(--accent); }
+.st-manual .bn-u { color: var(--fg); }
+
+/* chips */
+.st-manual .chip { border-radius: 3px; border: 2px solid var(--fg); color: var(--fg); background: var(--card-bg); font-family: "MV Mono", "MV Sans", monospace;
+  font-weight: 600; box-shadow: 3px 3px 0 var(--fg); }
+.st-manual .chip.hot { background: #FF5B1F; border-color: #1B1B1B; color: #1B1B1B; }
+
+/* 卡片：白卡 + 黑框 + 硬投影 */
+.st-manual :is(.card, .stat, .side) { background: var(--card-bg); border: 3px solid var(--card-bd); border-radius: 4px; box-shadow: 6px 6px 0 var(--card-bd); }
+.st-manual :is(.card, .stat).on { box-shadow: 8px 8px 0 #FF5B1F; }
+.st-manual .card-k { display: inline-block; justify-self: start; align-self: start; background: #1B1B1B; color: #F5F4EF; padding: .22em .45em;
+  font-family: "MV Grot", sans-serif; font-weight: 800; font-size: calc(var(--fs-body) * var(--si) * .78); letter-spacing: .02em; }
+.st-manual .cards.rows .card-k { font-size: calc(var(--fs-body) * var(--si) * .9); }
+.st-manual .card.on .card-k { background: #FF5B1F; color: #1B1B1B; }
+.st-manual .stat-v { color: var(--fg); }
+.st-manual .stat.on .stat-v { color: var(--accent-t); }
+.st-manual :is(.stat-u, .side-u) { font-family: "MV Mono", monospace; color: var(--fg2); }
+.st-manual .side-v { color: var(--fg); }
+.st-manual .side.win { box-shadow: 8px 8px 0 color-mix(in srgb, #FF5B1F calc(var(--p, 1) * 100%), #1B1B1B); }
+.st-manual .side.win .side-v { color: color-mix(in srgb, var(--accent-t) calc(var(--p, 1) * 100%), var(--fg)); }
+.st-manual .vs { display: grid; place-items: center; width: 2.2em; height: 2.2em; border-radius: 50%; background: #1B1B1B; color: #F5F4EF;
+  font-family: "MV Grot", sans-serif; font-weight: 900; font-size: calc(var(--fs-body) * var(--si) * .6); }
+.st-manual .verdict { font-weight: 900; }
+
+/* 列表 */
+.st-manual .m-number .mk { min-width: 0; }
+.st-manual .mn-n { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; border-radius: 50%; background: #1B1B1B; color: #F5F4EF;
+  font: 800 .62em/1 "MV Grot", sans-serif; vertical-align: .12em; }
+.st-manual .item.is-cur .mn-n { background: #FF5B1F; color: #1B1B1B; }
+.st-manual .mn-tri { display: inline-block; width: .5em; height: .56em; background: #FF5B1F; clip-path: polygon(0 0, 100% 50%, 0 100%); vertical-align: .06em; }
+.st-manual .ic-check path { stroke: #22A45D; }
+.st-manual .ic-cross path { stroke: #E0352B; }
+
+/* 步骤：黑色圆形序号 + 虚线箭头，讲到哪步哪步变橙 */
+.st-manual .step .badge { background: #1B1B1B; color: #F5F4EF; font-family: "MV Grot", sans-serif; font-weight: 800;
+  box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg); }
+.st-manual .step.is-cur .badge { background: #FF5B1F; color: #1B1B1B; }
+.st-manual .links path { stroke: #1B1B1B; stroke-width: 3; stroke-linecap: butt; }
+
+/* 时间线：菱形节点 */
+.st-manual .tl-dot { border-radius: 0; background: #1B1B1B; transform: rotate(45deg); box-shadow: 0 0 0 calc(6px * var(--si)) var(--bg); }
+.st-manual :is(.tl-item.on, .tl-item.is-cur) .tl-dot { background: #FF5B1F; }
+.st-manual .tl-time { color: var(--fg); font-weight: 800; }
+.st-manual .tl-item.on .tl-time { color: var(--accent-t); }
+
+/* 条形图：刻度底轨 + 黑条，重点橙色 */
+.st-manual .bar-track { background: repeating-linear-gradient(90deg, rgba(27, 27, 27, .3) 0 2px, transparent 2px 24px) 0 100% / 100% 22% no-repeat; }
+.st-manual .bar-fill { background: #1B1B1B; border-radius: 2px; }
+.st-manual .bar-row.on .bar-fill { background: #FF5B1F; box-shadow: 4px 4px 0 #1B1B1B; }
+.st-manual .bar-v { font-weight: 800; }
+
+/* 引用：左侧橙色粗竖条 */
+.st-manual .tpl-quote .qt { border-left: calc(12px * var(--s)) solid #FF5B1F; padding-left: calc(44px * var(--s)); }
+.st-manual .qmark { color: var(--fg); font-family: "MV Grot", sans-serif; font-weight: 900; }
+.st-manual .q-text { font-weight: 900; }
+.st-manual .q-src { font-family: "MV Mono", monospace; color: var(--fg2); letter-spacing: .06em; }
+.st-manual .q-src::before { content: '— '; }
+
+/* 代码 */
+.st-manual .code-win { border: 3px solid #1B1B1B; border-radius: 4px; box-shadow: 8px 8px 0 #FF5B1F; }
+.st-manual .code-bar i { border-radius: 2px; background: #555; }
+.st-manual .code-bar i:first-child { background: #FF5B1F; }
+.st-manual .tok-c { color: #8E8C85; } .st-manual .tok-s { color: #9BD58F; } .st-manual .tok-n { color: #FFB38A; }
+.st-manual .tok-k { color: #FF7A45; font-weight: 700; } .st-manual .tok-f { color: #8EC5FF; } .st-manual .tok-o { color: #C9C7BE; }
+
+/* 图片：白边黑框 + 硬投影 */
+.st-manual .f-plain { background: #FFFFFF; border: 3px solid #1B1B1B; padding: 10px; box-shadow: 8px 8px 0 #1B1B1B; }
+.st-manual .f-plain .shot { border-radius: 0; }
+
+/* 印章：橙底黑框标签 */
+.st-manual .stamp { border: 4px solid #1B1B1B; border-radius: 2px; background: #FF5B1F; color: #1B1B1B; font-family: var(--f-title); font-weight: 900;
+  padding: .25em .7em; transform: rotate(-5deg); box-shadow: 5px 5px 0 #1B1B1B; letter-spacing: .1em; }
+
+/* 结尾 */
+.st-manual .cta { color: var(--fg2); }
+
+/* 字幕：跟着当前页换色 */
+.st-manual .subl { text-shadow: 0 0 8px rgba(245, 244, 239, .95), 0 0 2px rgba(245, 244, 239, .95); }
+.st-manual #subs[data-tone="dark"] { --sub-fg: #F5F4EF; --sub-hl: #FF7A45; }
+.st-manual #subs[data-tone="dark"] .subl { text-shadow: 0 0 8px rgba(27, 27, 27, .95); }
+.st-manual #subs[data-tone="orange"] { --sub-fg: #1B1B1B; --sub-hl: #FFFFFF; }
+.st-manual #subs[data-tone="orange"] .subl { text-shadow: none; }
