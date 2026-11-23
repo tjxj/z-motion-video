@@ -471,4 +471,5 @@ my-video/
 - 代码：MIT，见 [LICENSE](LICENSE)。
 - `vendor/katex/`：KaTeX 0.19.1，MIT。
 - 字体：不随仓库分发，运行时下载（或使用本机已装的同款），均为 SIL OFL 1.1：Noto Serif SC、Noto Sans SC、LXGW WenKai、JetBrains Mono、Oswald、Instrument Serif、Inter、Courier Prime。
+- 第三方组件的授权说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 - 示例：`examples/leap-year` 里的文字和日历配图是为演示自制的。
